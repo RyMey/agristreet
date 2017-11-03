@@ -19,7 +19,6 @@ class Pebisnis extends Model{
     public $table = Pebisnis::TABLE_NAME;
     public $primaryKey = Pebisnis::PRIMARY_KEY;
 
-
     public static function generateId(){
         $output = Manager::table(Pebisnis::TABLE_NAME)
             ->orderBy(Pebisnis::PRIMARY_KEY,'DESC')
@@ -50,6 +49,16 @@ class Pebisnis extends Model{
 
     public static function getSelfPebisnis($id_pebisnis){
         $pebisnis = Manager::table(Pebisnis::TABLE_NAME)->where(Pebisnis::PRIMARY_KEY, '=', $id_pebisnis)
+            ->first([Pebisnis::TABLE_NAME . '.' . Pebisnis::PRIMARY_KEY,
+                Pebisnis::TABLE_NAME . '.nama_pebisnis',
+                Pebisnis::TABLE_NAME . '.no_telp',
+                Pebisnis::TABLE_NAME . '.foto',
+                Pebisnis::TABLE_NAME . '.token']);
+        return $pebisnis;
+    }
+
+    public static function getPebisnisByToken($token) {
+        $pebisnis = Manager::table(Pebisnis::TABLE_NAME)->where('token', '=', $token)
             ->first([Pebisnis::TABLE_NAME . '.' . Pebisnis::PRIMARY_KEY,
                 Pebisnis::TABLE_NAME . '.nama_pebisnis',
                 Pebisnis::TABLE_NAME . '.no_telp',
@@ -124,27 +133,7 @@ class Pebisnis extends Model{
 
     }
 
-    public static function login($no_telp){
-        if ($no_telp == null or $no_telp == "") {
-            throw new \Exception("Invalid no_telp!");
-        }
-
-        $result = Manager::table(User::TABLE_NAME)
-            ->where('no_telp', '=', $no_telp)
-            ->first([Pebisnis::PRIMARY_KEY, "nama_pebisnis", "no_telp", "foto", "token"]);
-
-        return $result;
-    }
-
-    public static function getUserByToken($token) {
-        $result = Manager::table(Pebisnis::TABLE_NAME)
-            ->where('token', '=', $token)
-            ->first([Pebisnis::PRIMARY_KEY, "nama_pebisnis", "no_telp", "foto", "token"]);
-
-        return $result;
-    }
-
-    public static function updateProfile($token, $nama_pebisnis, $foto) {
+    public static function updateProfile($token, $no_telp, $nama_pebisnis, $foto) {
         $pebisnis = Pebisnis::query()
             ->where('token', '=', $token)
             ->first();
@@ -157,14 +146,25 @@ class Pebisnis extends Model{
             if ($foto != null && $foto != "") {
                 $pebisnis->foto = $foto;
             }
+            if ($no_telp != null && $no_telp != "") {
+                $telp = Pebisnis::query()
+                    ->where('no_telp', '=', $no_telp)
+                    ->first();
 
+                if($telp==null) {
+                    $pebisnis->no_telp = $no_telp;
+                }else{
+                    throw new \Exception("Number has been exist");
+                }
+                //$pebisnis->no_telp = $no_telp;
+            }
             $pebisnis->save();
         }
 
-        return Pebisnis::getUserByToken($token);
+        return Pebisnis::getPebisnisByToken($token);
     }
 
-    public static function addAlamat($id_pebisnis,$alamat,$latitude,$longitude){
+    public static function addAlamat($token,$alamat,$latitude,$longitude){
 
     }
 }

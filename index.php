@@ -36,17 +36,9 @@ $slim->get("/", function (ServerRequestInterface $req, ResponseInterface $res) {
     }
 });
 
-$slim->get("/pebisnis/id", function (ServerRequestInterface $req, ResponseInterface $res) {
+$slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
-        return ResultWrapper::getResult(Pebisnis::generateId(), $res);
-    } catch (Exception $e) {
-        return ResultWrapper::getError($e->getMessage(), $res);
-    }
-});
-
-$slim->get("/pebisnis/phone", function (ServerRequestInterface $req, ResponseInterface $res) {
-    try {
-        return ResultWrapper::getResult(Pebisnis::getIdByPhone('6281377668035'), $res);
+        return ResultWrapper::getResult(Pebisnis::getPebisnis($id), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
@@ -80,9 +72,15 @@ $slim->post("/pebisnis/auth", function (ServerRequestInterface $req, ResponseInt
     }
 });
 
-$slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
-        return ResultWrapper::getResult(Pebisnis::getPebisnis($id), $res);
+        $params = $req->getParsedBody();
+        $pebisnis = Pebisnis::updateProfile($req->getHeader('token'),$params['no_telp'],$params['nama_pebisnis'],$params['foto']);
+
+        if ($pebisnis == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($pebisnis, $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
