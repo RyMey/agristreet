@@ -14,9 +14,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Container;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use AgriStreet\Api\Model\Pebisnis;
+use AgriStreet\Api\Model\KategoriKomoditas;
 
-use AgriStreet\Api\Model\Barcode;
-use AgriStreet\Api\Model\BarcodeShared;
 use AgriStreet\Api\Model\User;
 use AgriStreet\Api\Model\UserShared;
 use AgriStreet\Api\Util\ResultWrapper;
@@ -43,6 +42,16 @@ $slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInter
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
+
+
+$slim->get("/komoditas/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(KategoriKomoditas::getKategoriKomoditas($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+/*--------------------------------------------------------------------------------------------*/
 
 $slim->post("/pebisnis/verify-phone", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
@@ -71,6 +80,8 @@ $slim->post("/pebisnis/auth", function (ServerRequestInterface $req, ResponseInt
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
+
+/*--------------------------------------------------------------------------------------------*/
 
 $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
