@@ -3,8 +3,9 @@
 namespace AgriStreet\Api\Model;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Databse\Capsule\Manager;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
+
 
 class KategoriKomoditas extends Model{
 	const TABLE_NAME = "kategori_komoditas";
