@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Container;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use AgriStreet\Api\Model\Pebisnis;
+use AgriStreet\Api\Model\Alamat;
 
 use AgriStreet\Api\Model\Barcode;
 use AgriStreet\Api\Model\BarcodeShared;
@@ -44,6 +45,25 @@ $slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInter
     }
 });
 
+
+
+$slim->get("/alamat/getAlamatById/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(Alamat::getAlamatById($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+
+$slim->get("/alamat/getAlamatByPebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(Alamat::getAlamatByPebisnis($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->post("/pebisnis/verify-phone", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
@@ -57,6 +77,8 @@ $slim->post("/pebisnis/verify-phone", function (ServerRequestInterface $req, Res
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
+
+
 
 $slim->post("/pebisnis/auth", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
@@ -85,5 +107,8 @@ $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, Re
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
+
+
+
 
 $slim->run();

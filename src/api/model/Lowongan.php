@@ -17,7 +17,7 @@ class Lowongan extends Model{
     public $table = Lowongan::TABLE_NAME;
     public $primaryKey = Lowongan::PRIMARY_KEY;
 
-    public static function makeLowongan($id_pebisnis,$id_kategori,$id_alamat_pengiriman,$judul_lowongan,$deskripsi_lowongan, $jumlah_komoditas, $tgl_buka, $tgl_tutup, $harga_awal){
+    public static function makeAlamat($id_pebisnis,$id_kategori,$id_alamat_pengiriman,$judul_lowongan,$deskripsi_lowongan, $jumlah_komoditas, $tgl_buka, $tgl_tutup, $harga_awal){
         $lowongan = new Lowongan();
         $lowongan->id_pebisnis= $id_pebisnis;
         $lowongan->id_kategori = $id_kategori;
