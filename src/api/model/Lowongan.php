@@ -8,7 +8,6 @@
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
-use \AgriStreet\Api\Model\Pebisnis;
 
 class Lowongan extends Model{
     const TABLE_NAME = "lowongan";
