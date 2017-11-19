@@ -20,8 +20,8 @@ class KategoriKomoditas extends Model{
 		$kategori = Manager::table(KategoriKomoditas::TABLE_NAME)->where(KategoriKomoditas::PRIMARY_KEY, '=', $id_kategori)
             ->first([KategoriKomoditas::TABLE_NAME . '.' . KategoriKomoditas::PRIMARY_KEY,
                 KategoriKomoditas::TABLE_NAME . '.nama_kategori',
-                KategoriKomoditas::TABLE_NAME . '.deskripsi_komoditas',
-                KategoriKomoditas::TABLE_NAME . '.foto_kategori',
+                KategoriKomoditas::TABLE_NAME . '.deskripsi_kategori',
+                KategoriKomoditas::TABLE_NAME . '.foto_kategori'
             ]);
         return $kategori;
 	}

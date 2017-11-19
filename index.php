@@ -18,6 +18,7 @@ use AgriStreet\Api\Model\Pebisnis;
 use AgriStreet\Api\Model\Alamat;
 
 use AgriStreet\Api\Model\KategoriKomoditas;
+use AgriStreet\Api\Model\LamaranPetani;
 
 use AgriStreet\Api\Model\User;
 use AgriStreet\Api\Model\UserShared;
@@ -54,15 +55,42 @@ $slim->get("/alamat/getAlamatById/{id}",function (ServerRequestInterface $req, R
     }
 });
 
-
 $slim->get("/alamat/getAlamatByPebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
-        return ResultWrapper::getResult(Alamat::getAlamatByPebisnis($id), $res);
+        return ResultWrapper::getResult(Alamat::getALamatByPebisnis($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
 
 $slim->get("/komoditas/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(KategoriKomoditas::getKategoriKomoditas($id), $res);
->>>>>>> d0f6178fb5e437bdd7850b1937c853337c991a53
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/lamaran/getLamaranById/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(LamaranPetani::getLamaranById($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+
+$slim->get("/lamaran/getLamaranByPetani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(LamaranPetani::getLamaranByPetani($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/lowongan/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(Lowongan::get($id), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
