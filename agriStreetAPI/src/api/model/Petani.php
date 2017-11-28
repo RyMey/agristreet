@@ -17,7 +17,6 @@ class Petani extends Model{
     public $table = Petani::TABLE_NAME;
     public $primaryKey = Petani::PRIMARY_KEY;
 
-
     public static function generateId(){
         $lastId = Manager::table(Petani::TABLE_NAME)
             ->first(Petani::PRIMARY_KEY)
@@ -43,6 +42,71 @@ class Petani extends Model{
         return $petani;
     }
 
+    public static function getSelfPetani($id_petani){
+        $petani = Manager::table(Petani::TABLE_NAME)->where(Petani::PRIMARY_KEY, '=', $id_petani)
+            ->first([Pebisnis::TABLE_NAME . '.' . Pebisnis::PRIMARY_KEY,
+                Petani::TABLE_NAME . '.nama_petani',
+                Petani::TABLE_NAME . '.no_telp',
+                Petani::TABLE_NAME . '.foto',
+                Petani::TABLE_NAME . '.token']);
+        return $petani;
+    }
+
+    public static function getPetaniByToken($token) {
+        $petani = Manager::table(Petani::TABLE_NAME)->where('token', '=', $token)
+            ->first([Petani::TABLE_NAME . '.' . Petani::PRIMARY_KEY,
+                Petani::TABLE_NAME . '.nama_petani',
+                Petani::TABLE_NAME . '.no_telp',
+                Petani::TABLE_NAME . '.foto',
+                Petani::TABLE_NAME . '.token']);
+        return $petani;
+    }
+
+    public static function getIdByPhone($no_telp){
+        $id = Manager::table(Petani::TABLE_NAME)->where('no_telp', '=', $no_telp)
+            ->first([Petani::TABLE_NAME . '.' . Petani::PRIMARY_KEY]);
+        return $id;
+    }
+
+    public static function verifyPhone($no_telp){
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,"https://api.nexmo.com/verify/json");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&number=$no_telp&brand=AgriStreet");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+
+        $raw_data = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($raw_data);
+        return $data->request_id;
+    }
+
+    public static function auth($no_telp, $request_id, $code){
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,"https://api.nexmo.com/verify/check/json");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&request_id=$request_id&code=$code");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+
+        $raw_data = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($raw_data);
+        $status = $data->status;
+
+        if($status == 0){
+            $id = self::getIdByPhone($no_telp);
+            if($id != null or $id != ""){
+                return self::getSelfPetani($id->id_petani);
+            }else{
+                return self::register("",$no_telp,"");
+            }
+        }
+
+        throw new \Exception($data->error_text);
+    }
+
     public static function register($nama_petani, $no_telp, $foto){
         $petani = new Petani();
         $petani->id_petani= self::generateId();
@@ -64,27 +128,7 @@ class Petani extends Model{
 
     }
 
-    public static function login($no_telp){
-        if ($no_telp == null or $no_telp == "") {
-            throw new \Exception("Invalid no_telp!");
-        }
-
-        $result = Manager::table(User::TABLE_NAME)
-            ->where('no_telp', '=', $no_telp)
-            ->first([Petani::PRIMARY_KEY, "nama_petani", "no_telp", "foto", "token"]);
-
-        return $result;
-    }
-
-    public static function getUserByToken($token) {
-        $result = Manager::table(Petani::TABLE_NAME)
-            ->where('token', '=', $token)
-            ->first([Petani::PRIMARY_KEY, "nama_petani", "no_telp", "foto", "token"]);
-
-        return $result;
-    }
-
-    public static function updateProfile($token, $nama_petani, $foto) {
+    public static function updateProfile($token, $no_telp, $nama_petani, $foto) {
         $petani = Petani::query()
             ->where('token', '=', $token)
             ->first();
@@ -97,10 +141,21 @@ class Petani extends Model{
             if ($foto != null && $foto != "") {
                 $petani->foto = $foto;
             }
+            if ($no_telp != null && $no_telp != "") {
+                $telp = Pebisnis::query()
+                    ->where('no_telp', '=', $no_telp)
+                    ->first();
 
+                if($telp==null) {
+                    $petani->no_telp = $no_telp;
+                }else{
+                    throw new \Exception("Number has been exist");
+                }
+            }
             $petani->save();
         }
 
-        return Petani::getUserByToken($token);
+        return Pebisnis::getPebisnisByToken($token);
     }
+
 }

@@ -13,15 +13,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Container;
 use Slim\Handlers\Strategies\RequestResponseArgs;
-use AgriStreet\Api\Model\Pebisnis;
-
 use AgriStreet\Api\Model\Alamat;
-
 use AgriStreet\Api\Model\KategoriKomoditas;
 use AgriStreet\Api\Model\LamaranPetani;
-
-use AgriStreet\Api\Model\User;
-use AgriStreet\Api\Model\UserShared;
+use AgriStreet\Api\Model\Lowongan;
+use AgriStreet\Api\Model\Pebisnis;
+use AgriStreet\Api\Model\Petani;
 use AgriStreet\Api\Util\ResultWrapper;
 
 $container = new Container();
@@ -42,6 +39,14 @@ $slim->get("/", function (ServerRequestInterface $req, ResponseInterface $res) {
 $slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(Pebisnis::getPebisnis($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/petani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(Petani::getPetani($id), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
@@ -78,7 +83,6 @@ $slim->get("/lamaran/getLamaranById/{id}",function (ServerRequestInterface $req,
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
-
 
 $slim->get("/lamaran/getLamaranByPetani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
@@ -124,6 +128,34 @@ $slim->post("/pebisnis/auth", function (ServerRequestInterface $req, ResponseInt
     }
 });
 
+$slim->post("/petani/verify-phone", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $data = Petani::verifyPhone($params['no_telp']);
+
+        if ($data == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($data, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->post("/petani/auth", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $petani = Petani::auth($params['no_telp'],$params['request_id'],$params['code']);
+
+        if ($petani == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($petani, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
@@ -138,7 +170,18 @@ $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, Re
     }
 });
 
+$slim->put("/petani/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $petani = Petani::updateProfile($req->getHeader('token'),$params['no_telp'],$params['nama_petani'],$params['foto']);
 
-
+        if ($petani == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($petani, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
 
 $slim->run();
