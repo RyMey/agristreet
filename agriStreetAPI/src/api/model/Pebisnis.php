@@ -164,7 +164,4 @@ class Pebisnis extends Model{
         return Pebisnis::getPebisnisByToken($token);
     }
 
-    public static function addAlamat($token,$alamat,$latitude,$longitude){
-
-    }
 }
