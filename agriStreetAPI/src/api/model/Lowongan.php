@@ -5,6 +5,7 @@
  * Date: 11/2/17
  * Time: 10:01 PM
  */
+namespace AgriStreet\Api\Model;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
