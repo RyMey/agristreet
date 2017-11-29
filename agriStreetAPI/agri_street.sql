@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 18, 2017 at 11:34 AM
+-- Generation Time: Nov 29, 2017 at 10:38 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -29,10 +29,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `alamat` (
   `id_alamat` int(11) NOT NULL,
   `id_pebisnis` varchar(10) NOT NULL,
-  `alamat` text NOT NULL,
+  `deskripsi` text NOT NULL,
   `latitude` text NOT NULL,
   `longitude` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `alamat`
+--
+
+INSERT INTO `alamat` (`id_alamat`, `id_pebisnis`, `deskripsi`, `latitude`, `longitude`) VALUES
+(1, 'pb2', 'Jl malabar no 24 Bogor Tengah', '-28638216', '1235182.8193719');
 
 -- --------------------------------------------------------
 
@@ -54,10 +61,18 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `kategori_komoditas` (
-  `id_kategori` varchar(10) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
   `nama_kategori` varchar(30) NOT NULL,
-  `deskripsi_kategori` text NOT NULL
+  `deskripsi_kategori` text NOT NULL,
+  `foto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori_komoditas`
+--
+
+INSERT INTO `kategori_komoditas` (`id_kategori`, `nama_kategori`, `deskripsi_kategori`, `foto`) VALUES
+(1, 'Serealia', 'sekelompok tanaman yang ditanam untuk dipanen biji atau bulirnya sebagai sumber karbohidrat/pati.\r\nContoh: padi, jagung, gandum, juwawut, jali', 'http://res.cloudinary.com/dde2jdlxd/image/upload/v1511944439/serealia_h95hqh.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,7 +84,7 @@ CREATE TABLE `kerja_sama` (
   `id_kerjasama` varchar(10) NOT NULL,
   `id_pebisnis` varchar(10) NOT NULL,
   `id_petani` varchar(10) NOT NULL,
-  `id_lowongan` varchar(10) NOT NULL,
+  `id_lowongan` int(11) NOT NULL,
   `tgl_kerjasama` date NOT NULL,
   `harga_sepakat` int(20) NOT NULL,
   `status_lamaran` varchar(20) NOT NULL
@@ -84,7 +99,7 @@ CREATE TABLE `kerja_sama` (
 CREATE TABLE `lamaran_petani` (
   `id_lamar` varchar(10) NOT NULL,
   `id_petani` varchar(10) NOT NULL,
-  `id_lowongan` varchar(10) NOT NULL,
+  `id_lowongan` int(11) NOT NULL,
   `tgl_lamar` date NOT NULL,
   `harga_tawar` int(20) NOT NULL,
   `deskripsi_lamaran` text NOT NULL
@@ -97,9 +112,9 @@ CREATE TABLE `lamaran_petani` (
 --
 
 CREATE TABLE `lowongan` (
-  `id_lowongan` varchar(10) NOT NULL,
+  `id_lowongan` int(10) NOT NULL,
   `id_pebisnis` varchar(10) NOT NULL,
-  `id_kategori` varchar(10) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
   `id_alamat_pengiriman` int(11) NOT NULL,
   `judul_lowongan` varchar(100) NOT NULL,
   `deskripsi_lowongan` text NOT NULL,
@@ -107,8 +122,16 @@ CREATE TABLE `lowongan` (
   `tgl_buka` date NOT NULL,
   `tgl_tutup` date NOT NULL,
   `harga_awal` int(20) NOT NULL,
-  `status lowongan` varchar(20) NOT NULL
+  `status_lowongan` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lowongan`
+--
+
+INSERT INTO `lowongan` (`id_lowongan`, `id_pebisnis`, `id_kategori`, `id_alamat_pengiriman`, `judul_lowongan`, `deskripsi_lowongan`, `jumlah_komoditas`, `tgl_buka`, `tgl_tutup`, `harga_awal`, `status_lowongan`) VALUES
+(1, 'pb2', 1, 1, 'Butuh Padi PT Mau Maju', 'saya butuh padi 5kg', 5, '2017-11-28', '2017-12-30', 50000, 'buka'),
+(2, 'pb2', 1, 1, 'Butuh gandung PT Sudah Jaya', 'segera gandum', 50, '2017-11-20', '2017-12-30', 500000, 'buka');
 
 -- --------------------------------------------------------
 
@@ -121,7 +144,7 @@ CREATE TABLE `pebisnis` (
   `token` text NOT NULL,
   `nama_pebisnis` varchar(50) DEFAULT NULL,
   `no_telp` varchar(15) NOT NULL,
-  `foto` varchar(50) DEFAULT NULL
+  `foto` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -131,7 +154,7 @@ CREATE TABLE `pebisnis` (
 INSERT INTO `pebisnis` (`id_pebisnis`, `token`, `nama_pebisnis`, `no_telp`, `foto`) VALUES
 ('pb1', 'pb1', 'pb1', 'pb1', 'pb1'),
 ('pb2', 'pb2', 'pb2', 'pb2', 'pb2'),
-('pb3', 'aa1db5fec4b7d8bc0e4b58b99de0a4e8', 'Rya', '6285879894380', '');
+('pb3', 'aa1db5fec4b7d8bc0e4b58b99de0a4e8', 'Rya Mey', '000', '');
 
 -- --------------------------------------------------------
 
@@ -149,6 +172,13 @@ CREATE TABLE `petani` (
   `no_telp` varchar(15) NOT NULL,
   `foto` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `petani`
+--
+
+INSERT INTO `petani` (`id_petani`, `token`, `nama_petani`, `alamat`, `latitude`, `longitude`, `no_telp`, `foto`) VALUES
+('pt1', '231dwfe32r2', 'Sutarman', 'Jl kiyai langgeng', '76756775', '-9879879', '6281234567890', '');
 
 --
 -- Indexes for dumped tables
@@ -221,7 +251,27 @@ ALTER TABLE `petani`
 -- AUTO_INCREMENT for table `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `id_alamat` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_alamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `kategori_komoditas`
+--
+ALTER TABLE `kategori_komoditas`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `kerja_sama`
+--
+ALTER TABLE `kerja_sama`
+  MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `lamaran_petani`
+--
+ALTER TABLE `lamaran_petani`
+  MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `lowongan`
+--
+ALTER TABLE `lowongan`
+  MODIFY `id_lowongan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
