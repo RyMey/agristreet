@@ -94,7 +94,7 @@ $slim->get("/lamaran/getLamaranByPetani/{id}",function (ServerRequestInterface $
 
 $slim->get("/lowongan/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
-        return ResultWrapper::getResult(Lowongan::get($id), $res);
+        return ResultWrapper::getResult(Lowongan::getLowongan($id), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
@@ -156,6 +156,22 @@ $slim->post("/petani/auth", function (ServerRequestInterface $req, ResponseInter
     }
 });
 
+$slim->post("/lowongan/make-lowongan", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $lowongan = Lowongan::makeLowongan($req->getHeader('token'),$params['id_kategori'],$params['id_alamat_pengiriman'],
+                    $params['judul_lowongan'], $params['deskripsi_lowongan'], $params['jumlah_komoditas'],
+                    $params['tgl_buka'], $params['tgl_tutup'], $params['harga_awal'], $params['status']);
+
+        if ($lowongan == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($lowongan, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
@@ -179,6 +195,22 @@ $slim->put("/petani/update-profile", function (ServerRequestInterface $req, Resp
             throw new Exception ("Ups, something wrong!");
         }
         return ResultWrapper::getResult($petani, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->put("/lowongan/update-lowongan", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $lowongan = Lowongan::updateLowongan($req->getHeader('token'),$params['id_lowongan'],$params['id_alamat_pengiriman'],
+                    $params['judul_lowongan'],$params['deskripsi_lowongan'], $params['jumlah_komoditas'],
+                    $params['tgl_buka'], $params['tgl_tutup'], $params['harga_awal'], $params['status']);
+
+        if ($lowongan == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($lowongan, $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
