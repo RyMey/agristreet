@@ -156,7 +156,6 @@ class Pebisnis extends Model{
                 }else{
                     throw new \Exception("Number has been exist");
                 }
-                //$pebisnis->no_telp = $no_telp;
             }
             $pebisnis->save();
         }
