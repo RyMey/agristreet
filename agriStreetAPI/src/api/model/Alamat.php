@@ -21,7 +21,7 @@ class Alamat extends Model{
     public $table = Alamat::TABLE_NAME;
     public $primaryKey = Alamat::PRIMARY_KEY;
 
-    public static function makeAlamat($id_pebisnis,$alamat,$latitude,$longitude){
+    public static function makeAlamat($id_pebisnis,$deskripsi,$latitude,$longitude){
         $pebisnis = Pebisnis::query()
             ->where('id_pebisnis', '=', $id_pebisnis)
             ->first();
@@ -31,14 +31,13 @@ class Alamat extends Model{
         }else{
             $alamat = new Alamat();
             $alamat->id_pebisnis = $id_pebisnis;
-            $alamat->alamat = $alamat;
+            $alamat->deskripsi = $deskripsi;
             $alamat->latitude = $latitude;
             $alamat->longitude = $longitude;
 
-
             $alamat->save();
             $result = Manager::table(Alamat::TABLE_NAME)
-                ->first([Alamat::PRIMARY_KEY, "alamat", "latitude", "longitude"]);
+                ->first([Alamat::PRIMARY_KEY, "deskripsi", "latitude", "longitude"]);
             return $result;
         }
     }
@@ -47,7 +46,7 @@ class Alamat extends Model{
         $alamat = Manager::table(Alamat::TABLE_NAME)->where(Alamat::PRIMARY_KEY, '=', $id_alamat)
             ->first([Alamat::TABLE_NAME . '.' . Alamat::PRIMARY_KEY,
                 Alamat::TABLE_NAME . '.id_pebisnis',
-                Alamat::TABLE_NAME . '.alamat',
+                Alamat::TABLE_NAME . '.deskripsi',
 				Alamat::TABLE_NAME . '.latitude',
                 Alamat::TABLE_NAME . '.longitude']);
 
