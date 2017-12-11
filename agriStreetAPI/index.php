@@ -76,7 +76,7 @@ $slim->get("/komoditas/{id}",function (ServerRequestInterface $req, ResponseInte
     }
 });
 
-$slim->get("/lamaran/getLamaranById/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/getLamaranById/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(LamaranPetani::getLamaranById($id), $res);
     } catch (Exception $e) {
@@ -84,7 +84,7 @@ $slim->get("/lamaran/getLamaranById/{id}",function (ServerRequestInterface $req,
     }
 });
 
-$slim->get("/lamaran/getLamaranByPetani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/getLamaranByPetani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(LamaranPetani::getLamaranByPetani($id), $res);
     } catch (Exception $e) {
