@@ -19,6 +19,7 @@ use AgriStreet\Api\Model\LamaranPetani;
 use AgriStreet\Api\Model\Lowongan;
 use AgriStreet\Api\Model\Pebisnis;
 use AgriStreet\Api\Model\Petani;
+use AgriStreet\Api\Model\Kerjasamas;
 use AgriStreet\Api\Util\ResultWrapper;
 
 $container = new Container();
@@ -100,6 +101,16 @@ $slim->get("/lowongan/{id}",function (ServerRequestInterface $req, ResponseInter
     }
 });
 
+$slim->get("/kerjasama/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(Kerjasama::getKerjasama($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+
+
 $slim->post("/pebisnis/verify-phone", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
@@ -172,6 +183,36 @@ $slim->post("/lowongan/make-lowongan", function (ServerRequestInterface $req, Re
     }
 });
 
+$slim->post("/lamaranPetani/make-LamaranPetani", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $lamaranPetani = LamaranPetani::makeLamaranPetani($req->getHeader('token'),$params['id_lowongan'],$params['tgl_lamar'],
+                    $params['harga_tawar'], $params['deskripsi_lamaran']);
+
+        if ($lamaranPetani == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($lamaranPetani, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->post("/kerjasama/make-kerjasama", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $kerjasama = Kerjasama::makeKerjasama($req->getHeader('token'),$params['id_petani'],$params['id_lowongan'],
+                    $params['status_lamaran'], $params['tgl_kerjasama'], $params['harga_sepakat']);
+
+        if ($kerjasama == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($kerjasama, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->put("/pebisnis/update-profile", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
@@ -211,6 +252,20 @@ $slim->put("/lowongan/update-lowongan", function (ServerRequestInterface $req, R
             throw new Exception ("Ups, something wrong!");
         }
         return ResultWrapper::getResult($lowongan, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+  
+$slim->put("/kerjasama/update-StatusLamaran", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $kerjasama = Kerjasama::updateStatusLamaran($req->getHeader('token'),$params['kerjasama'],$params['status_lamaran']);
+
+        if ($kerjasama == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($kerjasama, $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }

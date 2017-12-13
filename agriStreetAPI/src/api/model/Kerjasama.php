@@ -53,14 +53,16 @@ class Kerjasama extends Model{
         return $kerjasama;
     }
 
-    public static function updateStatusLamaran($id_kerjasama, $status_lamaran){
-        
+    public static function updateStatusLamaran($token,$id_kerjasama, $status_lamaran){
+         $pebisnis = Pebisnis::getPebisnisByToken($token);
         $kerjasama = Kerjasama::query()
             ->where(Kerjasama::PRIMARY_KEY, '=', $id_kerjasama)
             ->first();
 
         if($kerjasama == null){
             throw new \Exception("Kerjsama was not exist");
+        }else if($pebisnis == null){
+            throw new \Exception("Session expired");
         }else{
            
             if($status_lamaran!=null){
