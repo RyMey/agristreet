@@ -256,6 +256,21 @@ $slim->put("/lowongan/update-lowongan", function (ServerRequestInterface $req, R
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
+
+$slim->put("/alamat/update-alamat", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $alamat = Alamat::updateAlamat($req->getHeader('token'),$params['id_alamat'],$params['deskripsi'],
+                    $params['latitude'],$params['longitude']);
+
+        if ($alamat == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($alamat, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
   
 $slim->put("/kerjasama/update-StatusLamaran", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
