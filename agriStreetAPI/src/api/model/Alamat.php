@@ -17,7 +17,7 @@ use \AgriStreet\Api\Model\Pebisnis;
 class Alamat extends Model{
     const TABLE_NAME = "alamat";
     const PRIMARY_KEY = "id_alamat";
-
+	public $timestamps = false;
     public $table = Alamat::TABLE_NAME;
     public $primaryKey = Alamat::PRIMARY_KEY;
 
@@ -63,7 +63,7 @@ class Alamat extends Model{
              $result2 = Manager::table(Alamat::TABLE_NAME)->where(Alamat::TABLE_NAME.'.id_pebisnis', '=', $pebisnis)
                 ->first([Alamat::TABLE_NAME . '.' . Alamat::PRIMARY_KEY,
                     Alamat::TABLE_NAME . '.id_pebisnis',
-                    Alamat::TABLE_NAME . '.alamat',
+                    Alamat::TABLE_NAME . '.deskripsi',
                     Alamat::TABLE_NAME . '.latitude',
                     Alamat::TABLE_NAME . '.longitude']);
             return $result2;
@@ -71,27 +71,33 @@ class Alamat extends Model{
             throw new \Exception("Pebisnis is not exist");
         }
     }
-	
-	public static function updateAlamat($token, $id_alamat, $alamat, $latitude, $longitude) {
+		
+	  public static function updateAlamat($token, $id_alamat, $deskripsi, $latitude, $longitude) {
         $pebisnis = Pebisnis::query()
             ->where('token', '=', $token)
             ->first();
+				
 			
-			
-		$alamat2 = Alamat::query()->where('id_alamat', '=', $id_alamat)->first();
-      
-			
-        if ($token == null or $token == "" or $pebisnis== null) {
+        if ($token == null or $token == "" or $pebisnis == null) {
             throw new \Exception("Session expired, please re-login");
-        } else if($alamat2 == null){
-            throw new \Exception("Alamat is not exist");
         } else {
-			$alamat2->alamat = $alamat;
-			$alamat2->latitude = $latitude;
-			$alamat2->longitude = $longitude;
-            $alamat2->save();
-            
+			 $alamat = Alamat::query()
+            ->where('id_alamat', '=', $id_alamat)
+            ->first();
+			
+            if ($alamat != null && $alamat != "") {
+                $alamat->deskripsi = $deskripsi;
+            }
+            if ($latitude != null && $latitude != "") {
+                $alamat->latitude = $latitude;
+            }
+            if ($longitude != null && $longitude != "") {
+                $alamat->longitude= $longitude;
+            }
+            $alamat->save();
         }
+
+        return Alamat::getAlamatById($id_alamat);
     }
 	 
 }
