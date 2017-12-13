@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 29, 2017 at 10:38 AM
--- Server version: 10.1.9-MariaDB
--- PHP Version: 5.6.15
+-- Host: 127.0.0.1
+-- Generation Time: Dec 13, 2017 at 02:20 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -39,19 +41,32 @@ CREATE TABLE `alamat` (
 --
 
 INSERT INTO `alamat` (`id_alamat`, `id_pebisnis`, `deskripsi`, `latitude`, `longitude`) VALUES
-(1, 'pb2', 'Jl malabar no 24 Bogor Tengah', '-28638216', '1235182.8193719');
+(1, 'pb2', 'jl malabar-ujung', '600', '100');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `feedback_pebisnis`
 --
 
-CREATE TABLE `feedback` (
-  `id_pengguna` varchar(10) NOT NULL,
+CREATE TABLE `feedback_pebisnis` (
+  `id_feedback` int(10) NOT NULL,
+  `id_pebisnis` varchar(10) NOT NULL,
   `saran` text NOT NULL,
-  `tipe_ikon` varchar(100) NOT NULL,
-  `jumlah` int(5) NOT NULL
+  `tipe_ikon` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback_petani`
+--
+
+CREATE TABLE `feedback_petani` (
+  `id_feedback` int(10) NOT NULL,
+  `id_petani` varchar(10) NOT NULL,
+  `saran` text NOT NULL,
+  `tipe_ikon` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -81,7 +96,7 @@ INSERT INTO `kategori_komoditas` (`id_kategori`, `nama_kategori`, `deskripsi_kat
 --
 
 CREATE TABLE `kerja_sama` (
-  `id_kerjasama` varchar(10) NOT NULL,
+  `id_kerjasama` int(10) NOT NULL,
   `id_pebisnis` varchar(10) NOT NULL,
   `id_petani` varchar(10) NOT NULL,
   `id_lowongan` int(11) NOT NULL,
@@ -112,7 +127,7 @@ CREATE TABLE `lamaran_petani` (
 --
 
 CREATE TABLE `lowongan` (
-  `id_lowongan` int(10) NOT NULL,
+  `id_lowongan` int(11) NOT NULL,
   `id_pebisnis` varchar(10) NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `id_alamat_pengiriman` int(11) NOT NULL,
@@ -192,10 +207,18 @@ ALTER TABLE `alamat`
   ADD KEY `id_pebisnis` (`id_pebisnis`);
 
 --
--- Indexes for table `feedback`
+-- Indexes for table `feedback_pebisnis`
 --
-ALTER TABLE `feedback`
-  ADD KEY `id_pengguna` (`id_pengguna`);
+ALTER TABLE `feedback_pebisnis`
+  ADD PRIMARY KEY (`id_feedback`),
+  ADD KEY `id_pebisnis` (`id_pebisnis`);
+
+--
+-- Indexes for table `feedback_petani`
+--
+ALTER TABLE `feedback_petani`
+  ADD PRIMARY KEY (`id_feedback`),
+  ADD KEY `id_petani` (`id_petani`);
 
 --
 -- Indexes for table `kategori_komoditas`
@@ -252,26 +275,43 @@ ALTER TABLE `petani`
 --
 ALTER TABLE `alamat`
   MODIFY `id_alamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `feedback_pebisnis`
+--
+ALTER TABLE `feedback_pebisnis`
+  MODIFY `id_feedback` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `feedback_petani`
+--
+ALTER TABLE `feedback_petani`
+  MODIFY `id_feedback` int(10) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `kategori_komoditas`
 --
 ALTER TABLE `kategori_komoditas`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `kerja_sama`
 --
 ALTER TABLE `kerja_sama`
-  MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kerjasama` int(10) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `lamaran_petani`
 --
 ALTER TABLE `lamaran_petani`
   MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `lowongan`
 --
 ALTER TABLE `lowongan`
-  MODIFY `id_lowongan` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- Constraints for dumped tables
 --
@@ -283,11 +323,16 @@ ALTER TABLE `alamat`
   ADD CONSTRAINT `alamat_ibfk_1` FOREIGN KEY (`id_pebisnis`) REFERENCES `pebisnis` (`id_pebisnis`);
 
 --
--- Constraints for table `feedback`
+-- Constraints for table `feedback_pebisnis`
 --
-ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pebisnis` (`id_pebisnis`),
-  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `petani` (`id_petani`);
+ALTER TABLE `feedback_pebisnis`
+  ADD CONSTRAINT `feedback_pebisnis_ibfk_1` FOREIGN KEY (`id_pebisnis`) REFERENCES `pebisnis` (`id_pebisnis`);
+
+--
+-- Constraints for table `feedback_petani`
+--
+ALTER TABLE `feedback_petani`
+  ADD CONSTRAINT `feedback_petani_ibfk_1` FOREIGN KEY (`id_petani`) REFERENCES `petani` (`id_petani`);
 
 --
 -- Constraints for table `kerja_sama`
@@ -312,6 +357,7 @@ ALTER TABLE `lowongan`
   ADD CONSTRAINT `lowongan_ibfk_2` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_komoditas` (`id_kategori`),
   ADD CONSTRAINT `lowongan_ibfk_3` FOREIGN KEY (`id_alamat_pengiriman`) REFERENCES `alamat` (`id_alamat`),
   ADD CONSTRAINT `lowongan_ibfk_4` FOREIGN KEY (`id_pebisnis`) REFERENCES `pebisnis` (`id_pebisnis`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
