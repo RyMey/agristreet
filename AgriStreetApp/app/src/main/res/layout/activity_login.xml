@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="id.agristreet.agristreetapp.ui.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher_round"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/_62"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/et_nomor_telepon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:hint="@string/hint_nomor_telepon"
+                android:inputType="phone"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"/>
+
+            <ImageView
+                android:id="@+id/iv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="16dp"
+                android:src="@drawable/ic_cancel_white"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_masuk"
+            android:layout_width="200dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/divider"
+            android:enabled="false"
+            android:text="@string/masuk"
+            android:textColor="@color/secondaryTextColor"/>
+
+    </LinearLayout>
+</RelativeLayout>
