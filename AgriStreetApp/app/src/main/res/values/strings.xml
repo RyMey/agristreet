@@ -1,0 +1,13 @@
+<resources>
+    <!--choose-->
+    <string name="app_name">AgriStreetApp</string>
+    <string name="label_pengusaha">Pengusaha</string>
+    <string name="label_petani">Petani</string>
+    <string name="masuk_sebagai">Masuk Sebagai:</string>
+    <string name="deskripsi_user">Anda dapat memilih menjadi pengusaha atau petani. Sebagai pengusaha Anda dapat membuka lowongan komoditas dan sebagai petani Anda dapat menawarkan komoditas pada sebuah lowongan yang dibuka.</string>
+
+    <!--login-->
+    <string name="masuk">Masuk</string>
+    <string name="_62">+62</string>
+    <string name="hint_nomor_telepon">Nomor Telepon</string>
+</resources>
