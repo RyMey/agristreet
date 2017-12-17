@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="id.agristreet.agristreetapp.ui.LoginActivity">
+    tools:context="id.agristreet.agristreetapp.ui.VerifyPhoneActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -95,9 +95,10 @@
                 app:civ_border_width="2dp"/>
 
             <TextView
+                android:id="@+id/pebisnis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_pengusaha"
+                android:text="@string/label_pebisnis"
                 android:textColor="@color/white"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"

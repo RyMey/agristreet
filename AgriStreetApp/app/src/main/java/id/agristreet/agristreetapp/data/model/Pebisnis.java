@@ -1,61 +1,30 @@
 package id.agristreet.agristreetapp.data.model;
 
+import java.util.List;
+
 /**
  * Created by RyMey on 12/10/17.
  */
 
-public class Pebisnis {
-    private String id;
-    private String nama;
-    private String token;
-    private String noTelp;
-    private String foto;
+public class Pebisnis extends User{
+    private List<Alamat> daftarAlamat;
 
-    public Pebisnis(String id, String nama, String token, String noTelp, String foto) {
-        this.id = id;
-        this.nama = nama;
-        this.token = token;
-        this.noTelp = noTelp;
-        this.foto = foto;
+    public List<Alamat> getDaftarAlamat() {
+        return daftarAlamat;
     }
 
-    public String getId() {
-        return id;
+    public void setDaftarAlamat(List<Alamat> daftarAlamat) {
+        this.daftarAlamat = daftarAlamat;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getNoTelp() {
-        return noTelp;
-    }
-
-    public void setNoTelp(String noTelp) {
-        this.noTelp = noTelp;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
+    @Override
+    public String toString() {
+        return "Pebisnis{" +
+                "id='" + getId() + '\'' +
+                ", nama='" + getNama() + '\'' +
+                ", noTelp='" + getNoTelp() + '\'' +
+                ", foto='" + getFoto() + '\'' +
+                ", daftarAlamat=" + daftarAlamat +
+                '}';
     }
 }
