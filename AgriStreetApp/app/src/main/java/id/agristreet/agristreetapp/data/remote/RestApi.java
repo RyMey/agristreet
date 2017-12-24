@@ -6,25 +6,14 @@ package id.agristreet.agristreetapp.data.remote;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
-import id.agristreet.agristreetapp.data.model.Pebisnis;
 import id.agristreet.agristreetapp.data.model.User;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -32,7 +21,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -51,7 +39,7 @@ public class RestApi {
                 .build();
 
         api = new Retrofit.Builder()
-                .baseUrl("http://alamatServer")
+                .baseUrl("http://128.199.215.222")
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -99,9 +87,7 @@ public class RestApi {
 
                     return akun;
                 })
-                .doOnNext(akun -> {
-                    PengelolaDataLokal.getInstance(context).simpanAkun(akun);
-                });
+                .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
     }
 
     private interface Api {

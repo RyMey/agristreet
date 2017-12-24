@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="id.agristreet.agristreetapp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="id.agristreet.agristreetapp">
 
     <application
         android:allowBackup="true"
@@ -9,17 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ChooseUserActivity">
+        <activity
+            android:name=".ui.ChooseUserActivity"
+            android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LoginActivity">
+
         </activity>
         <activity android:name=".ui.ProfileActivity">
         </activity>
+
+        <activity
+            android:name=".ui.VerifyPhoneActivity"
+            android:noHistory="true" />
     </application>
 
 </manifest>
