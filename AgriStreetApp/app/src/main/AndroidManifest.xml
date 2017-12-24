@@ -19,14 +19,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity">
-
-        </activity>
         <activity android:name=".ui.ProfileActivity">
         </activity>
 
         <activity
             android:name=".ui.VerifyPhoneActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".ui.PutCodeActivity"
             android:noHistory="true" />
     </application>
 

@@ -1,11 +1,13 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 
 public class ChooseUserActivity extends AppCompatActivity {
 
@@ -18,11 +20,17 @@ public class ChooseUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.pebisnis)
     public void openPebisnisLoginPage() {
-        startActivity(VerifyPhoneActivity.generateIntent(this, VerifyPhoneActivity.USER_TYPE_PEBISNIS));
+        PengelolaDataLokal.getInstance(this).simpanUserType(PengelolaDataLokal.UserType.PEBISNIS);
+        startActivity();
     }
 
     @OnClick(R.id.petani)
     public void openPetaniLoginPage() {
-        startActivity(VerifyPhoneActivity.generateIntent(this, VerifyPhoneActivity.USER_TYPE_PETANI));
+        PengelolaDataLokal.getInstance(this).simpanUserType(PengelolaDataLokal.UserType.PETANI);
+        startActivity();
+    }
+
+    private void startActivity() {
+        startActivity(new Intent(this, VerifyPhoneActivity.class));
     }
 }

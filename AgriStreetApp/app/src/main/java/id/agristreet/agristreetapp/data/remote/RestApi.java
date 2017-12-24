@@ -16,6 +16,7 @@ import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
 import id.agristreet.agristreetapp.data.model.User;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,9 +34,13 @@ public class RestApi {
     private RestApi(Context context) {
         this.context = context;
 
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BODY);
+
         httpClient = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
+                .addNetworkInterceptor(httpLoggingInterceptor)
                 .build();
 
         api = new Retrofit.Builder()
@@ -56,6 +61,15 @@ public class RestApi {
 
     public Observable<String> verifyPhonePebisnis(String noTelp) {
         return api.verifyPhonePebisnis(noTelp)
+                .map(json -> json.optString("result"))
+                .doOnNext(reqId -> {
+                    PengelolaDataLokal.getInstance(context).simpanNoTelp(noTelp);
+                    PengelolaDataLokal.getInstance(context).simpanRequestId(reqId);
+                });
+    }
+
+    public Observable<String> verifyPhonePetani(String noTelp) {
+        return api.verifyPhonePetani(noTelp)
                 .map(json -> json.optString("result"))
                 .doOnNext(reqId -> {
                     PengelolaDataLokal.getInstance(context).simpanNoTelp(noTelp);
@@ -93,8 +107,12 @@ public class RestApi {
     private interface Api {
 
         @FormUrlEncoded
-        @POST("/pebisnis/verifyPhone")
+        @POST("/pebisnis/verify-phone")
         Observable<JSONObject> verifyPhonePebisnis(@Field("no_telp") String noTelp);
+
+        @FormUrlEncoded
+        @POST("/petani/verify-phone")
+        Observable<JSONObject> verifyPhonePetani(@Field("no_telp") String noTelp);
 
         @FormUrlEncoded
         @POST("/pebisnis/auth")

@@ -1,9 +1,9 @@
 package id.agristreet.agristreetapp.ui;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,20 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.presenter.VerifyPhonePresenter;
 
 public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhonePresenter.View {
-    public static final int USER_TYPE_PEBISNIS = 1;
-    public static final int USER_TYPE_PETANI = 2;
-    private static final String USER_TYPE = "user_type";
-
     @BindView(R.id.et_nomor_telepon)
     EditText etNomorTelepon;
     @BindView(R.id.bt_masuk)
@@ -39,14 +35,6 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
     private VerifyPhonePresenter presenter;
     private ProgressDialog progressDialog;
 
-    private int userType;
-
-    public static Intent generateIntent(Context context, int userType) {
-        Intent intent = new Intent(context, VerifyPhoneActivity.class);
-        intent.putExtra(USER_TYPE, userType);
-        return intent;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +44,11 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
         presenter = new VerifyPhonePresenter(this, this);
         progressDialog = new ProgressDialog(this);
 
-        userType = getIntent().getIntExtra(USER_TYPE, 1);
         setupUserTypeView();
     }
 
     private void setupUserTypeView() {
-        if (userType == USER_TYPE_PEBISNIS) {
+        if (PengelolaDataLokal.getInstance(this).getUserType() == PengelolaDataLokal.UserType.PEBISNIS) {
             ivUserType.setImageResource(R.drawable.ic_pengusaha);
             tvUserType.setText(R.string.label_pebisnis);
         } else {
@@ -78,7 +65,7 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
     @OnClick(R.id.bt_masuk)
     public void masuk() {
         if (etNomorTelepon.getText().length() >= 10) {
-            presenter.verifyPhonePebisnis(etNomorTelepon.getText().toString());
+            presenter.verifyPhone("62" + etNomorTelepon.getText().toString());
         }
     }
 
@@ -104,12 +91,12 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
 
     @Override
     public void onVerifyPhoneSuccess() {
-        Toast.makeText(this, "Sukses, yeeee!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, PutCodeActivity.class));
     }
 
     @Override
     public void showError(String errorMessage) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+        Snackbar.make(btMasuk.getRootView(), errorMessage, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
