@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -48,14 +47,13 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
 
         putCodePresenter = new PutCodePresenter(this, this);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Mohon Tunggu...");
     }
 
     @OnClick(R.id.iv_cancel)
     public void cancelPhoneNumber() {
         etKodeVerifikasi.setText("");
 
-        btKirimUlang.setBackgroundColor(ContextCompat.getColor(this, R.color.divider));
-        btKirimUlang.setTextColor(ContextCompat.getColor(this, R.color.secondaryTextColor));
         btKirimUlang.setText("Kirim Ulang Kode");
         ivCancel.setVisibility(View.INVISIBLE);
         btKirimUlang.setEnabled(false);
@@ -72,17 +70,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
 
     @OnTextChanged(R.id.et_kode_verifikasi)
     public void setNomorTelepon(CharSequence str) {
-        if (str.length() <= 0) {
-            btKirimUlang.setBackgroundColor(ContextCompat.getColor(this, R.color.primaryColor));
-            btKirimUlang.setTextColor(ContextCompat.getColor(this, R.color.white));
-            btKirimUlang.setText("Kirim Ulang Kode");
-            btKirimUlang.setEnabled(false);
-        } else {
-            btKirimUlang.setBackgroundColor(ContextCompat.getColor(this, R.color.secondaryColor));
-            btKirimUlang.setTextColor(ContextCompat.getColor(this, R.color.primaryTextColor));
-            btKirimUlang.setText("Kirim");
-            btKirimUlang.setEnabled(true);
-        }
+        btKirimUlang.setText(str.length() <= 0 ? "Kirim Ulang Kode" : "Kirim");
 
         if (etKodeVerifikasi.getText().toString().equals("")) {
             ivCancel.setVisibility(View.INVISIBLE);
@@ -97,9 +85,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
             Util.hideKeyboard(this);
             putCodePresenter.verifyCode(etKodeVerifikasi.getText().toString());
         } else {
-            btKirimUlang.setBackgroundColor(ContextCompat.getColor(this, R.color.divider));
-            btKirimUlang.setTextColor(ContextCompat.getColor(this, R.color.secondaryTextColor));
-            btKirimUlang.setEnabled(false);
+            //TODO kirim ulang kode
         }
     }
 
@@ -118,7 +104,6 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
 
     @Override
     public void showLoading() {
-        progressDialog.setMessage("Mohon Tunggu...");
         progressDialog.show();
     }
 

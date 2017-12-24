@@ -2,6 +2,7 @@ package id.agristreet.agristreetapp.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -46,7 +47,8 @@ public class PengelolaDataLokal {
     }
 
     public void simpanRequestId(String reqId) {
-        sharedPreferences.edit().putString("reqId", gson.toJson(reqId)).apply();
+        Log.d("ZETRA", "Simpan req id: "+reqId);
+        sharedPreferences.edit().putString("reqId", reqId).apply();
     }
 
     public String getReqId() {
