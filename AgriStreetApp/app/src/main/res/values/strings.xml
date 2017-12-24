@@ -34,12 +34,18 @@
     <string name="bid">BID</string>
     <string name="deskripsi">Deskripsi</string>
 
-    <!--put code-->
+    <!-- Masukan code-->
     <string name="masukan_kode_verifikasi">Masukan Kode Verifikasi</string>
     <string name="ubah_nomor_telepon">Ubah Nomor Telepon</string>
     <string name="hint_kode_verifikasi">Kode Verifikasi</string>
     <string name="desc_nomor_telepon">Kami telah mengirimkan pesan ke nomor</string>
     <string name="kirim_ulang_kode">Kirim Ulang Kode</string>
+
+    <!-- Pengajuan Bid -->
+    <string name="ajukan_bid">Ajukan Bid</string>
+    <string name="keterangan_promosikan">Keterangan (Promosikan Komoditas Anda)</string>
+    <string name="harga_tawar">Harga Tawar</string>
+    <string name="bid_sekarang">Bid Sekarang</string>
 
 
 </resources>
