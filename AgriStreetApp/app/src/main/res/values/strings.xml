@@ -25,4 +25,14 @@
     <string name="riwayat">Riwayat</string>
     <string name="feedback">Feedback</string>
 
+
+    <!-- Deskripsi Lowongan -->
+    <string name="deskripsi_lowongan">Deskripsi Lowongan</string>
+    <string name="judul">Judul</string>
+    <string name="kategori">Kategori</string>
+    <string name="tanggal_tutup">Tanggal Tutup</string>
+    <string name="jumlah_komoditas">Jumlah Komoditas</string>
+    <string name="bid">BID</string>
+    <string name="deskripsi">Deskripsi</string>
+
 </resources>
