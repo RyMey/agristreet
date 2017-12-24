@@ -8,21 +8,21 @@ use InvalidArgumentException;
 class FactoryBuilder
 {
     /**
-     * The model definitions in the container.
+     * The Model definitions in the container.
      *
      * @var array
      */
     protected $definitions;
 
     /**
-     * The model being built.
+     * The Model being built.
      *
      * @var string
      */
     protected $class;
 
     /**
-     * The name of the model being built.
+     * The name of the Model being built.
      *
      * @var string
      */
@@ -115,7 +115,7 @@ class FactoryBuilder
     }
 
     /**
-     * Make an instance of the model with the given attributes.
+     * Make an instance of the Model with the given attributes.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model

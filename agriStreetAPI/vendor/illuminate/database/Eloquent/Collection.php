@@ -8,7 +8,7 @@ use Illuminate\Support\Collection as BaseCollection;
 class Collection extends BaseCollection
 {
     /**
-     * Find a model in the collection by key.
+     * Find a Model in the collection by key.
      *
      * @param  mixed  $key
      * @param  mixed  $default

@@ -121,7 +121,7 @@ class MorphToMany extends BelongsToMany
     }
 
     /**
-     * Create a new pivot model instance.
+     * Create a new pivot Model instance.
      *
      * @param  array  $attributes
      * @param  bool   $exists
@@ -149,7 +149,7 @@ class MorphToMany extends BelongsToMany
     }
 
     /**
-     * Get the class name of the parent model.
+     * Get the class name of the parent Model.
      *
      * @return string
      */

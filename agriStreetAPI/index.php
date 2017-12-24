@@ -7,7 +7,7 @@
  */
 
 require "vendor/autoload.php";
-require "src/api/util/Database.php";
+require "src/Api/Util/Database.php";
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

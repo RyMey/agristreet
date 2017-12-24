@@ -7,14 +7,14 @@ use RuntimeException;
 class ModelNotFoundException extends RuntimeException
 {
     /**
-     * Name of the affected Eloquent model.
+     * Name of the affected Eloquent Model.
      *
      * @var string
      */
     protected $model;
 
     /**
-     * Set the affected Eloquent model.
+     * Set the affected Eloquent Model.
      *
      * @param  string   $model
      * @return $this
@@ -23,13 +23,13 @@ class ModelNotFoundException extends RuntimeException
     {
         $this->model = $model;
 
-        $this->message = "No query results for model [{$model}].";
+        $this->message = "No query results for Model [{$model}].";
 
         return $this;
     }
 
     /**
-     * Get the affected Eloquent model.
+     * Get the affected Eloquent Model.
      *
      * @return string
      */
