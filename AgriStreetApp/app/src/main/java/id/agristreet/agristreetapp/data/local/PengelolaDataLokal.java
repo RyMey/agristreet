@@ -53,6 +53,13 @@ public class PengelolaDataLokal {
         return sharedPreferences.getString("reqId", null);
     }
 
+    public void simpanUserType(UserType userType) {
+        sharedPreferences.edit().putString("user_type", userType.name()).apply();
+    }
+
+    public UserType getUserType() {
+        return UserType.valueOf(sharedPreferences.getString("user_type", "PEBISNIS"));
+    }
 
     public void cacheLastImagePath(String path) {
         sharedPreferences.edit().putString("last_image_path", path).apply();
@@ -66,4 +73,9 @@ public class PengelolaDataLokal {
         sharedPreferences.edit().clear().apply();
     }
 
+
+    public enum UserType {
+        PEBISNIS,
+        PETANI
+    }
 }

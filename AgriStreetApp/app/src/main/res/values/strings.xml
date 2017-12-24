@@ -25,7 +25,6 @@
     <string name="riwayat">Riwayat</string>
     <string name="feedback">Feedback</string>
 
-
     <!-- Deskripsi Lowongan -->
     <string name="deskripsi_lowongan">Deskripsi Lowongan</string>
     <string name="judul">Judul</string>
@@ -34,5 +33,13 @@
     <string name="jumlah_komoditas">Jumlah Komoditas</string>
     <string name="bid">BID</string>
     <string name="deskripsi">Deskripsi</string>
+
+    <!--put code-->
+    <string name="masukan_kode_verifikasi">Masukan Kode Verifikasi</string>
+    <string name="ubah_nomor_telepon">Ubah Nomor Telepon</string>
+    <string name="hint_kode_verifikasi">Kode Verifikasi</string>
+    <string name="desc_nomor_telepon">Kami telah mengirimkan pesan ke nomor</string>
+    <string name="kirim_ulang_kode">Kirim Ulang Kode</string>
+
 
 </resources>

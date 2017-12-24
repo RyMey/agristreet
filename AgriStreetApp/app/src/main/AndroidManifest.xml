@@ -28,6 +28,9 @@
 
         <activity android:name=".ui.DeskripsiLowonganActivity"/>
 
+        <activity
+            android:name=".ui.PutCodeActivity"
+            android:noHistory="true" />
     </application>
 
 </manifest>
