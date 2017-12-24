@@ -21,7 +21,7 @@ class Builder
     protected $query;
 
     /**
-     * The model being queried.
+     * The Model being queried.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
@@ -70,7 +70,7 @@ class Builder
     }
 
     /**
-     * Find a model by its primary key.
+     * Find a Model by its primary key.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -88,7 +88,7 @@ class Builder
     }
 
     /**
-     * Find a model by its primary key.
+     * Find a Model by its primary key.
      *
      * @param  array  $ids
      * @param  array  $columns
@@ -106,7 +106,7 @@ class Builder
     }
 
     /**
-     * Find a model by its primary key or throw an exception.
+     * Find a Model by its primary key or throw an exception.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -243,7 +243,7 @@ class Builder
     {
         $results = $this->query->lists($column, $key);
 
-        // If the model has a mutator for the requested column, we will spin through
+        // If the Model has a mutator for the requested column, we will spin through
         // the results and mutate the values so that the mutated version of these
         // columns are returned as you would expect from these Eloquent models.
         if ($this->model->hasGetMutator($column)) {
@@ -816,7 +816,7 @@ class Builder
     }
 
     /**
-     * Call the given model scope on the underlying model.
+     * Call the given Model scope on the underlying Model.
      *
      * @param  string  $scope
      * @param  array   $parameters
@@ -876,7 +876,7 @@ class Builder
     }
 
     /**
-     * Get the model instance being queried.
+     * Get the Model instance being queried.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -886,7 +886,7 @@ class Builder
     }
 
     /**
-     * Set a model instance for the model being queried.
+     * Set a Model instance for the Model being queried.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return $this

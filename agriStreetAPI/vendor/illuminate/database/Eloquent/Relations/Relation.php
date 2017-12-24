@@ -19,14 +19,14 @@ abstract class Relation
     protected $query;
 
     /**
-     * The parent model instance.
+     * The parent Model instance.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
     protected $parent;
 
     /**
-     * The related model instance.
+     * The related Model instance.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
@@ -212,7 +212,7 @@ abstract class Relation
     }
 
     /**
-     * Get the parent model of the relation.
+     * Get the parent Model of the relation.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -232,7 +232,7 @@ abstract class Relation
     }
 
     /**
-     * Get the related model of the relation.
+     * Get the related Model of the relation.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -262,7 +262,7 @@ abstract class Relation
     }
 
     /**
-     * Get the name of the related model's "updated at" column.
+     * Get the name of the related Model's "updated at" column.
      *
      * @return string
      */
@@ -301,7 +301,7 @@ abstract class Relation
     }
 
     /**
-     * Builds a table-keyed array from model class names.
+     * Builds a table-keyed array from Model class names.
      *
      * @param  string[]|null  $models
      * @return array|null

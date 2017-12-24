@@ -5,14 +5,14 @@ namespace Illuminate\Contracts\Routing;
 interface UrlRoutable
 {
     /**
-     * Get the value of the model's route key.
+     * Get the value of the Model's route key.
      *
      * @return mixed
      */
     public function getRouteKey();
 
     /**
-     * Get the route key for the model.
+     * Get the route key for the Model.
      *
      * @return string
      */

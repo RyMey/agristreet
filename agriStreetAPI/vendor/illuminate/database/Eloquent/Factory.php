@@ -27,7 +27,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * The model definitions in the container.
+     * The Model definitions in the container.
      *
      * @var array
      */
@@ -82,7 +82,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Create an instance of the given model and persist it to the database.
+     * Create an instance of the given Model and persist it to the database.
      *
      * @param  string  $class
      * @param  array  $attributes
@@ -94,7 +94,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Create an instance of the given model and type and persist it to the database.
+     * Create an instance of the given Model and type and persist it to the database.
      *
      * @param  string  $class
      * @param  string  $name
@@ -107,7 +107,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Create an instance of the given model.
+     * Create an instance of the given Model.
      *
      * @param  string  $class
      * @param  array  $attributes
@@ -119,7 +119,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Create an instance of the given model and type.
+     * Create an instance of the given Model and type.
      *
      * @param  string  $class
      * @param  string  $name
@@ -132,7 +132,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Get the raw attribute array for a given named model.
+     * Get the raw attribute array for a given named Model.
      *
      * @param  string  $class
      * @param  string  $name
@@ -145,7 +145,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Get the raw attribute array for a given model.
+     * Get the raw attribute array for a given Model.
      *
      * @param  string  $class
      * @param  array  $attributes
@@ -160,7 +160,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Create a builder for the given model.
+     * Create a builder for the given Model.
      *
      * @param  string  $class
      * @param  string  $name

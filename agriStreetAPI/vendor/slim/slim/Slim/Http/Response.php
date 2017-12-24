@@ -391,7 +391,7 @@ class Response extends Message implements ResponseInterface
      * Note: This method is not part of the PSR-7 standard.
      *
      * @return bool
-     * @api
+     * @Api
      */
     public function isForbidden()
     {

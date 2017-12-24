@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Collection;
 abstract class HasOneOrMany extends Relation
 {
     /**
-     * The foreign key of the parent model.
+     * The foreign key of the parent Model.
      *
      * @var string
      */
     protected $foreignKey;
 
     /**
-     * The local key of the parent model.
+     * The local key of the parent Model.
      *
      * @var string
      */
@@ -180,7 +180,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Build model dictionary keyed by the relation's foreign key.
+     * Build Model dictionary keyed by the relation's foreign key.
      *
      * @param  \Illuminate\Database\Eloquent\Collection  $results
      * @return array
@@ -202,7 +202,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Attach a model instance to the parent model.
+     * Attach a Model instance to the parent Model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Model
@@ -230,7 +230,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Find a model by its primary key or return new instance of the related model.
+     * Find a Model by its primary key or return new instance of the related Model.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -248,7 +248,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Get the first related model record matching the attributes or instantiate it.
+     * Get the first related Model record matching the attributes or instantiate it.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
@@ -298,7 +298,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Create a new instance of the related model.
+     * Create a new instance of the related Model.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
@@ -318,7 +318,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Create an array of new instances of the related model.
+     * Create an array of new instances of the related Model.
      *
      * @param  array  $records
      * @return array

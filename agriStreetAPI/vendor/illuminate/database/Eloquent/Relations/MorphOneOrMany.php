@@ -15,7 +15,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     protected $morphType;
 
     /**
-     * The class name of the parent model.
+     * The class name of the parent Model.
      *
      * @var string
      */
@@ -82,7 +82,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Attach a model instance to the parent model.
+     * Attach a Model instance to the parent Model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return \Illuminate\Database\Eloquent\Model
@@ -95,7 +95,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Find a related model by its primary key or return new instance of the related model.
+     * Find a related Model by its primary key or return new instance of the related Model.
      *
      * @param  mixed  $id
      * @param  array  $columns
@@ -108,7 +108,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
 
             // When saving a polymorphic relationship, we need to set not only the foreign
             // key, but also the foreign key type, which is typically the class name of
-            // the parent model. This makes the polymorphic item unique in the table.
+            // the parent Model. This makes the polymorphic item unique in the table.
             $this->setForeignAttributesForCreate($instance);
         }
 
@@ -116,7 +116,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Get the first related model record matching the attributes or instantiate it.
+     * Get the first related Model record matching the attributes or instantiate it.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
@@ -128,7 +128,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
 
             // When saving a polymorphic relationship, we need to set not only the foreign
             // key, but also the foreign key type, which is typically the class name of
-            // the parent model. This makes the polymorphic item unique in the table.
+            // the parent Model. This makes the polymorphic item unique in the table.
             $this->setForeignAttributesForCreate($instance);
         }
 
@@ -169,7 +169,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Create a new instance of the related model.
+     * Create a new instance of the related Model.
      *
      * @param  array  $attributes
      * @return \Illuminate\Database\Eloquent\Model
@@ -180,7 +180,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
 
         // When saving a polymorphic relationship, we need to set not only the foreign
         // key, but also the foreign key type, which is typically the class name of
-        // the parent model. This makes the polymorphic item unique in the table.
+        // the parent Model. This makes the polymorphic item unique in the table.
         $this->setForeignAttributesForCreate($instance);
 
         $instance->save();
@@ -189,7 +189,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Set the foreign ID and type for creating a related model.
+     * Set the foreign ID and type for creating a related Model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
@@ -222,7 +222,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
-     * Get the class name of the parent model.
+     * Get the class name of the parent Model.
      *
      * @return string
      */

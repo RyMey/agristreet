@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 13, 2017 at 02:20 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Host: localhost
+-- Generation Time: Dec 24, 2017 at 07:26 AM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -131,6 +129,7 @@ CREATE TABLE `lowongan` (
   `id_pebisnis` varchar(10) NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `id_alamat_pengiriman` int(11) NOT NULL,
+  `foto` text NOT NULL,
   `judul_lowongan` varchar(100) NOT NULL,
   `deskripsi_lowongan` text NOT NULL,
   `jumlah_komoditas` int(10) NOT NULL,
@@ -144,9 +143,9 @@ CREATE TABLE `lowongan` (
 -- Dumping data for table `lowongan`
 --
 
-INSERT INTO `lowongan` (`id_lowongan`, `id_pebisnis`, `id_kategori`, `id_alamat_pengiriman`, `judul_lowongan`, `deskripsi_lowongan`, `jumlah_komoditas`, `tgl_buka`, `tgl_tutup`, `harga_awal`, `status_lowongan`) VALUES
-(1, 'pb2', 1, 1, 'Butuh Padi PT Mau Maju', 'saya butuh padi 5kg', 5, '2017-11-28', '2017-12-30', 50000, 'buka'),
-(2, 'pb2', 1, 1, 'Butuh gandung PT Sudah Jaya', 'segera gandum', 50, '2017-11-20', '2017-12-30', 500000, 'buka');
+INSERT INTO `lowongan` (`id_lowongan`, `id_pebisnis`, `id_kategori`, `id_alamat_pengiriman`, `foto`, `judul_lowongan`, `deskripsi_lowongan`, `jumlah_komoditas`, `tgl_buka`, `tgl_tutup`, `harga_awal`, `status_lowongan`) VALUES
+(1, 'pb2', 1, 1, '', 'Butuh Padi PT Mau Maju', 'saya butuh padi 5kg', 5, '2017-11-28', '2017-12-30', 50000, 'buka'),
+(2, 'pb2', 1, 1, '', 'Butuh gandung PT Sudah Jaya', 'segera gandum', 50, '2017-11-20', '2017-12-30', 500000, 'buka');
 
 -- --------------------------------------------------------
 
@@ -275,43 +274,36 @@ ALTER TABLE `petani`
 --
 ALTER TABLE `alamat`
   MODIFY `id_alamat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `feedback_pebisnis`
 --
 ALTER TABLE `feedback_pebisnis`
   MODIFY `id_feedback` int(10) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `feedback_petani`
 --
 ALTER TABLE `feedback_petani`
   MODIFY `id_feedback` int(10) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `kategori_komoditas`
 --
 ALTER TABLE `kategori_komoditas`
   MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `kerja_sama`
 --
 ALTER TABLE `kerja_sama`
   MODIFY `id_kerjasama` int(10) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `lamaran_petani`
 --
 ALTER TABLE `lamaran_petani`
   MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `lowongan`
 --
 ALTER TABLE `lowongan`
   MODIFY `id_lowongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- Constraints for dumped tables
 --
@@ -357,7 +349,6 @@ ALTER TABLE `lowongan`
   ADD CONSTRAINT `lowongan_ibfk_2` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_komoditas` (`id_kategori`),
   ADD CONSTRAINT `lowongan_ibfk_3` FOREIGN KEY (`id_alamat_pengiriman`) REFERENCES `alamat` (`id_alamat`),
   ADD CONSTRAINT `lowongan_ibfk_4` FOREIGN KEY (`id_pebisnis`) REFERENCES `pebisnis` (`id_pebisnis`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

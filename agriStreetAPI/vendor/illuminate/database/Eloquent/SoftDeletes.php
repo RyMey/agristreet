@@ -5,14 +5,14 @@ namespace Illuminate\Database\Eloquent;
 trait SoftDeletes
 {
     /**
-     * Indicates if the model is currently force deleting.
+     * Indicates if the Model is currently force deleting.
      *
      * @var bool
      */
     protected $forceDeleting = false;
 
     /**
-     * Boot the soft deleting trait for a model.
+     * Boot the soft deleting trait for a Model.
      *
      * @return void
      */
@@ -22,7 +22,7 @@ trait SoftDeletes
     }
 
     /**
-     * Force a hard delete on a soft deleted model.
+     * Force a hard delete on a soft deleted Model.
      *
      * @return void
      */
@@ -36,7 +36,7 @@ trait SoftDeletes
     }
 
     /**
-     * Perform the actual delete query on this model instance.
+     * Perform the actual delete query on this Model instance.
      *
      * @return mixed
      */
@@ -50,7 +50,7 @@ trait SoftDeletes
     }
 
     /**
-     * Perform the actual delete query on this model instance.
+     * Perform the actual delete query on this Model instance.
      *
      * @return void
      */
@@ -64,7 +64,7 @@ trait SoftDeletes
     }
 
     /**
-     * Restore a soft-deleted model instance.
+     * Restore a soft-deleted Model instance.
      *
      * @return bool|null
      */
@@ -79,7 +79,7 @@ trait SoftDeletes
 
         $this->{$this->getDeletedAtColumn()} = null;
 
-        // Once we have saved the model, we will fire the "restored" event so this
+        // Once we have saved the Model, we will fire the "restored" event so this
         // developer will do anything they need to after a restore operation is
         // totally finished. Then we will return the result of the save call.
         $this->exists = true;
@@ -92,7 +92,7 @@ trait SoftDeletes
     }
 
     /**
-     * Determine if the model instance has been soft-deleted.
+     * Determine if the Model instance has been soft-deleted.
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ trait SoftDeletes
     }
 
     /**
-     * Register a restoring model event with the dispatcher.
+     * Register a restoring Model event with the dispatcher.
      *
      * @param  \Closure|string  $callback
      * @return void
@@ -137,7 +137,7 @@ trait SoftDeletes
     }
 
     /**
-     * Register a restored model event with the dispatcher.
+     * Register a restored Model event with the dispatcher.
      *
      * @param  \Closure|string  $callback
      * @return void

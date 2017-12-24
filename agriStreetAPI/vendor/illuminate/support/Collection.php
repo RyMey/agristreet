@@ -799,7 +799,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
                     : asort($results, $options);
 
         // Once we have sorted all of the keys in the array, we will loop through them
-        // and grab the corresponding model so we can set the underlying items list
+        // and grab the corresponding Model so we can set the underlying items list
         // to the sorted version. Then we'll just return the collection instance.
         foreach (array_keys($results) as $key) {
             $results[$key] = $this->items[$key];

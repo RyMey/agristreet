@@ -75,7 +75,7 @@ class Pebisnis extends Model{
 
     public static function verifyPhone($no_telp){
         $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://api.nexmo.com/verify/json");
+        curl_setopt($ch,CURLOPT_URL,"https://Api.nexmo.com/verify/json");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&number=$no_telp&brand=AgriStreet");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -89,7 +89,7 @@ class Pebisnis extends Model{
 
     public static function auth($no_telp, $request_id, $code){
         $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://api.nexmo.com/verify/check/json");
+        curl_setopt($ch,CURLOPT_URL,"https://Api.nexmo.com/verify/check/json");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&request_id=$request_id&code=$code");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
