@@ -16,6 +16,11 @@ public class ChooseUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_user);
         ButterKnife.bind(this);
+        if (PengelolaDataLokal.getInstance(this).getAkun() != null) {
+            startActivity(new Intent(this, MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            overridePendingTransition(0, 0);
+        }
     }
 
     @OnClick(R.id.pebisnis)
