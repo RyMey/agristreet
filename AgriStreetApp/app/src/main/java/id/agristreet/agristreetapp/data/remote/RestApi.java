@@ -7,8 +7,7 @@ package id.agristreet.agristreetapp.data.remote;
 
 import android.content.Context;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -61,7 +60,7 @@ public class RestApi {
 
     public Observable<String> verifyPhonePebisnis(String noTelp) {
         return api.verifyPhonePebisnis(noTelp)
-                .map(json -> json.optString("result"))
+                .map(json -> json.get("result").getAsString())
                 .doOnNext(reqId -> {
                     PengelolaDataLokal.getInstance(context).simpanNoTelp(noTelp);
                     PengelolaDataLokal.getInstance(context).simpanRequestId(reqId);
@@ -70,7 +69,7 @@ public class RestApi {
 
     public Observable<String> verifyPhonePetani(String noTelp) {
         return api.verifyPhonePetani(noTelp)
-                .map(json -> json.optString("result"))
+                .map(json -> json.get("result").getAsString())
                 .doOnNext(reqId -> {
                     PengelolaDataLokal.getInstance(context).simpanNoTelp(noTelp);
                     PengelolaDataLokal.getInstance(context).simpanRequestId(reqId);
@@ -86,16 +85,43 @@ public class RestApi {
                     User user = new User();
 
                     try {
-                        JSONObject result = json.getJSONObject("result");
+                        JsonObject result = json.get("result").getAsJsonObject();
 
-                        user.setId(result.getString("id_pebisnis"));
-                        user.setNama(result.getString("nama_pebisnis"));
-                        user.setNoTelp(result.getString("no_telp"));
-                        user.setFoto(result.getString("foto"));
+                        user.setId(result.get("id_pebisnis").getAsString());
+                        user.setNama(result.get("nama_pebisnis").getAsString());
+                        user.setNoTelp(result.get("no_telp").getAsString());
+                        user.setFoto(result.get("foto").getAsString());
 
-                        akun.setToken(result.getString("token"));
+                        akun.setToken(result.get("token").getAsString());
                         akun.setUser(user);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return akun;
+                })
+                .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
+    }
+
+    public Observable<Akun> authPetani(String code) {
+        return api.authPetani(PengelolaDataLokal.getInstance(context).getNoTelp(),
+                PengelolaDataLokal.getInstance(context).getReqId(),
+                code)
+                .map(json -> {
+                    Akun akun = new Akun();
+                    User user = new User();
+
+                    try {
+                        JsonObject result = json.get("result").getAsJsonObject();
+
+                        user.setId(result.get("id_petani").getAsString());
+                        user.setNama(result.get("nama_petani").getAsString());
+                        user.setNoTelp(result.get("no_telp").getAsString());
+                        user.setFoto(result.get("foto").getAsString());
+
+                        akun.setToken(result.get("token").getAsString());
+                        akun.setUser(user);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -108,17 +134,23 @@ public class RestApi {
 
         @FormUrlEncoded
         @POST("/pebisnis/verify-phone")
-        Observable<JSONObject> verifyPhonePebisnis(@Field("no_telp") String noTelp);
+        Observable<JsonObject> verifyPhonePebisnis(@Field("no_telp") String noTelp);
 
         @FormUrlEncoded
         @POST("/petani/verify-phone")
-        Observable<JSONObject> verifyPhonePetani(@Field("no_telp") String noTelp);
+        Observable<JsonObject> verifyPhonePetani(@Field("no_telp") String noTelp);
 
         @FormUrlEncoded
         @POST("/pebisnis/auth")
-        Observable<JSONObject> authPebisnis(@Field("no_telp") String noTelp,
+        Observable<JsonObject> authPebisnis(@Field("no_telp") String noTelp,
                                             @Field("request_id") String reqId,
                                             @Field("code") String code);
+
+        @FormUrlEncoded
+        @POST("/petani/auth")
+        Observable<JsonObject> authPetani(@Field("no_telp") String noTelp,
+                                          @Field("request_id") String reqId,
+                                          @Field("code") String code);
 
     }
 }
