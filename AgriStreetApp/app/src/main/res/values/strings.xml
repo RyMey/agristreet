@@ -11,4 +11,18 @@
     <string name="_62">+62</string>
     <string name="hint_nomor_telepon">Nomor Telepon</string>
     <string name="ubah">Ubah</string>
+
+    <!-- Profil Pengguna -->
+    <string name="profil">Profil Pengguna</string>
+    <string name="desc_welcome">Selamat Datang! Silahkan lengkapi data anda.</string>
+    <string name="hint_nama">Nama Lengkap</string>
+    <string name="hint_no_id">No ID KTP/KTM/NISN dsb..</string>
+    <string name="simpan">Simpan</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="desc_nomor_telepon_profile">Anda masuk dengan nomor telepon +62</string>
+    <string name="alamat">Alamat</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="feedback">Feedback</string>
+
 </resources>
