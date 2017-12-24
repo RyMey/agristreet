@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 24, 2017 at 07:18 AM
+-- Generation Time: Dec 24, 2017 at 07:26 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -130,7 +130,6 @@ CREATE TABLE `lowongan` (
   `id_kategori` int(11) NOT NULL,
   `id_alamat_pengiriman` int(11) NOT NULL,
   `foto` text NOT NULL,
-  `jumlah_pelamar` int(11) NOT NULL,
   `judul_lowongan` varchar(100) NOT NULL,
   `deskripsi_lowongan` text NOT NULL,
   `jumlah_komoditas` int(10) NOT NULL,
@@ -144,9 +143,9 @@ CREATE TABLE `lowongan` (
 -- Dumping data for table `lowongan`
 --
 
-INSERT INTO `lowongan` (`id_lowongan`, `id_pebisnis`, `id_kategori`, `id_alamat_pengiriman`, `foto`, `jumlah_pelamar`, `judul_lowongan`, `deskripsi_lowongan`, `jumlah_komoditas`, `tgl_buka`, `tgl_tutup`, `harga_awal`, `status_lowongan`) VALUES
-(1, 'pb2', 1, 1, '', 0, 'Butuh Padi PT Mau Maju', 'saya butuh padi 5kg', 5, '2017-11-28', '2017-12-30', 50000, 'buka'),
-(2, 'pb2', 1, 1, '', 0, 'Butuh gandung PT Sudah Jaya', 'segera gandum', 50, '2017-11-20', '2017-12-30', 500000, 'buka');
+INSERT INTO `lowongan` (`id_lowongan`, `id_pebisnis`, `id_kategori`, `id_alamat_pengiriman`, `foto`, `judul_lowongan`, `deskripsi_lowongan`, `jumlah_komoditas`, `tgl_buka`, `tgl_tutup`, `harga_awal`, `status_lowongan`) VALUES
+(1, 'pb2', 1, 1, '', 'Butuh Padi PT Mau Maju', 'saya butuh padi 5kg', 5, '2017-11-28', '2017-12-30', 50000, 'buka'),
+(2, 'pb2', 1, 1, '', 'Butuh gandung PT Sudah Jaya', 'segera gandum', 50, '2017-11-20', '2017-12-30', 500000, 'buka');
 
 -- --------------------------------------------------------
 
