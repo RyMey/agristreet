@@ -189,7 +189,7 @@ $slim->post("/lowongan/make-lowongan", function (ServerRequestInterface $req, Re
     try {
         $params = $req->getParsedBody();
         $lowongan = Lowongan::makeLowongan($req->getHeader('token'),$params['id_kategori'],$params['id_alamat_pengiriman'],
-                    $params['judul_lowongan'], $params['deskripsi_lowongan'], $params['jumlah_komoditas'],
+                    $params['judul_lowongan'], $params['foto'], $params['deskripsi_lowongan'], $params['jumlah_komoditas'],
                     $params['tgl_buka'], $params['tgl_tutup'], $params['harga_awal'], $params['status']);
 
         if ($lowongan == null) {

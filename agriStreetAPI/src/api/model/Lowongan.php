@@ -18,7 +18,7 @@ class Lowongan extends Model{
     public $table = Lowongan::TABLE_NAME;
     public $primaryKey = Lowongan::PRIMARY_KEY;
 
-    public static function makeLowongan($token,$id_kategori,$id_alamat_pengiriman,$judul_lowongan,$deskripsi_lowongan, $jumlah_komoditas, $tgl_buka, $tgl_tutup, $harga_awal, $status){
+    public static function makeLowongan($token,$id_kategori,$id_alamat_pengiriman,$judul_lowongan,$foto,$deskripsi_lowongan, $jumlah_komoditas, $tgl_buka, $tgl_tutup, $harga_awal, $status){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
         $kategori = KategoriKomoditas::query()
             ->where('id_kategori', '=', $id_kategori)
@@ -38,6 +38,7 @@ class Lowongan extends Model{
             $lowongan->id_kategori = $id_kategori;
             $lowongan->id_alamat_pengiriman = $id_alamat_pengiriman;
             $lowongan->judul_lowongan = $judul_lowongan;
+            $lowongan->foto = $foto;
             $lowongan->deskripsi_lowongan = $deskripsi_lowongan;
             $lowongan->jumlah_komoditas = $jumlah_komoditas;
             $lowongan->tgl_buka = $tgl_buka;
@@ -55,7 +56,9 @@ class Lowongan extends Model{
     public static function getLowongan($id_lowongan){
         $lowongan = Manager::table(Lowongan::TABLE_NAME)->where(Lowongan::PRIMARY_KEY, '=', $id_lowongan)
             ->first([Lowongan::TABLE_NAME . '.' . Lowongan::PRIMARY_KEY,
+                Lowongan::TABLE_NAME . '.judul_lowongan',
                 Lowongan::TABLE_NAME . '.deskripsi_lowongan',
+                Lowongan::TABLE_NAME . '.foto',
                 Lowongan::TABLE_NAME . '.jumlah_komoditas',
                 Lowongan::TABLE_NAME . '.tgl_buka',
                 Lowongan::TABLE_NAME . '.tgl_tutup']);
