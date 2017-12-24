@@ -1,13 +1,16 @@
 package id.agristreet.agristreetapp.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -18,12 +21,31 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.presenter.VerifyPhonePresenter;
 
 public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhonePresenter.View {
-    @BindView(R.id.et_nomor_telepon) EditText etNomorTelepon;
-    @BindView(R.id.bt_masuk) Button btMasuk;
-    @BindView(R.id.iv_cancel) ImageView ivCancel;
+    public static final int USER_TYPE_PEBISNIS = 1;
+    public static final int USER_TYPE_PETANI = 2;
+    private static final String USER_TYPE = "user_type";
+
+    @BindView(R.id.et_nomor_telepon)
+    EditText etNomorTelepon;
+    @BindView(R.id.bt_masuk)
+    Button btMasuk;
+    @BindView(R.id.iv_cancel)
+    ImageView ivCancel;
+    @BindView(R.id.img_pengusaha)
+    ImageView ivUserType;
+    @BindView(R.id.pebisnis)
+    TextView tvUserType;
 
     private VerifyPhonePresenter presenter;
     private ProgressDialog progressDialog;
+
+    private int userType;
+
+    public static Intent generateIntent(Context context, int userType) {
+        Intent intent = new Intent(context, VerifyPhoneActivity.class);
+        intent.putExtra(USER_TYPE, userType);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +55,24 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
 
         presenter = new VerifyPhonePresenter(this, this);
         progressDialog = new ProgressDialog(this);
+
+        userType = getIntent().getIntExtra(USER_TYPE, 1);
+        setupUserTypeView();
+    }
+
+    private void setupUserTypeView() {
+        if (userType == USER_TYPE_PEBISNIS) {
+            ivUserType.setImageResource(R.drawable.ic_pengusaha);
+            tvUserType.setText(R.string.label_pebisnis);
+        } else {
+            ivUserType.setImageResource(R.drawable.ic_petani);
+            tvUserType.setText(R.string.label_petani);
+        }
+    }
+
+    @OnClick(R.id.ubah)
+    public void changeUserType() {
+        startActivity(new Intent(this, ChooseUserActivity.class));
     }
 
     @OnClick(R.id.bt_masuk)
@@ -43,7 +83,7 @@ public class VerifyPhoneActivity extends AppCompatActivity implements VerifyPhon
     }
 
     @OnClick(R.id.iv_cancel)
-    public void cancelPhoneNumber(){
+    public void cancelPhoneNumber() {
         etNomorTelepon.setText("");
     }
 
