@@ -1,14 +1,40 @@
 package id.agristreet.agristreetapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by RyMey on 12/17/17.
  */
 
-public class Alamat {
+public class Alamat implements Parcelable {
     private int id;
     private String deskripsi;
     private String longitude;
     private String latitude;
+
+    public Alamat() {
+
+    }
+
+    protected Alamat(Parcel in) {
+        id = in.readInt();
+        deskripsi = in.readString();
+        longitude = in.readString();
+        latitude = in.readString();
+    }
+
+    public static final Creator<Alamat> CREATOR = new Creator<Alamat>() {
+        @Override
+        public Alamat createFromParcel(Parcel in) {
+            return new Alamat(in);
+        }
+
+        @Override
+        public Alamat[] newArray(int size) {
+            return new Alamat[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -49,5 +75,18 @@ public class Alamat {
                 ", longitude='" + longitude + '\'' +
                 ", latitude='" + latitude + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(deskripsi);
+        dest.writeString(longitude);
+        dest.writeString(latitude);
     }
 }

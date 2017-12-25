@@ -1,12 +1,36 @@
 package id.agristreet.agristreetapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by RyMey on 12/17/17.
  */
 
-public class Akun {
+public class Akun implements Parcelable {
     private User user;
     private String token;
+
+    public Akun() {
+
+    }
+
+    protected Akun(Parcel in) {
+        user = in.readParcelable(User.class.getClassLoader());
+        token = in.readString();
+    }
+
+    public static final Creator<Akun> CREATOR = new Creator<Akun>() {
+        @Override
+        public Akun createFromParcel(Parcel in) {
+            return new Akun(in);
+        }
+
+        @Override
+        public Akun[] newArray(int size) {
+            return new Akun[size];
+        }
+    };
 
     public User getUser() {
         return user;
@@ -30,5 +54,16 @@ public class Akun {
                 "user=" + user +
                 ", token='" + token + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(user, flags);
+        dest.writeString(token);
     }
 }
