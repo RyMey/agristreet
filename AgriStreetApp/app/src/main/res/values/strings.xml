@@ -19,7 +19,7 @@
     <string name="hint_no_id">No ID KTP/KTM/NISN dsb..</string>
     <string name="simpan">Simpan</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="desc_nomor_telepon_profile">Anda masuk dengan nomor telepon +62</string>
+    <string name="desc_nomor_telepon_profile">Anda masuk dengan nomor telepon +</string>
     <string name="alamat">Alamat</string>
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="riwayat">Riwayat</string>

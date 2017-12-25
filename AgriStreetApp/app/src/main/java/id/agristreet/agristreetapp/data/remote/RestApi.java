@@ -21,7 +21,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import rx.Observable;
 
 public class RestApi {
@@ -130,6 +132,58 @@ public class RestApi {
                 .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
     }
 
+    public Observable<Akun> updateProfilePebisnis(String nama, String foto) {
+        return api.updateProfilePebisnis(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                nama, foto)
+                .map(json -> {
+                    Akun akun = new Akun();
+                    User user = new User();
+
+                    try {
+                        JsonObject result = json.get("result").getAsJsonObject();
+
+                        user.setId(result.get("id_pebisnis").getAsString());
+                        user.setNama(result.get("nama_pebisnis").getAsString());
+                        user.setNoTelp(result.get("no_telp").getAsString());
+                        user.setFoto(result.get("foto").getAsString());
+
+                        akun.setToken(result.get("token").getAsString());
+                        akun.setUser(user);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return akun;
+                })
+                .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
+    }
+
+    public Observable<Akun> updateProfilePetani(String nama, String foto) {
+        return api.updateProfilePetani(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                nama, foto)
+                .map(json -> {
+                    Akun akun = new Akun();
+                    User user = new User();
+
+                    try {
+                        JsonObject result = json.get("result").getAsJsonObject();
+
+                        user.setId(result.get("id_petani").getAsString());
+                        user.setNama(result.get("nama_petani").getAsString());
+                        user.setNoTelp(result.get("no_telp").getAsString());
+                        user.setFoto(result.get("foto").getAsString());
+
+                        akun.setToken(result.get("token").getAsString());
+                        akun.setUser(user);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return akun;
+                })
+                .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -152,5 +206,16 @@ public class RestApi {
                                           @Field("request_id") String reqId,
                                           @Field("code") String code);
 
+        @FormUrlEncoded
+        @PUT("/pebisnis/update-profile")
+        Observable<JsonObject> updateProfilePebisnis(@Header("token") String token,
+                                                     @Field("nama_pebisnis") String nama,
+                                                     @Field("foto") String foto);
+
+        @FormUrlEncoded
+        @PUT("/petani/update-profile")
+        Observable<JsonObject> updateProfilePetani(@Header("token") String token,
+                                                   @Field("nama_petani") String nama,
+                                                   @Field("foto") String foto);
     }
 }

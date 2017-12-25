@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
+import id.agristreet.agristreetapp.data.model.Akun;
 
 public class ChooseUserActivity extends AppCompatActivity {
 
@@ -16,8 +17,9 @@ public class ChooseUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_user);
         ButterKnife.bind(this);
-        if (PengelolaDataLokal.getInstance(this).getAkun() != null) {
-            startActivity(new Intent(this, MainActivity.class)
+        Akun akun = PengelolaDataLokal.getInstance(this).getAkun();
+        if (akun != null) {
+            startActivity(new Intent(this, akun.getUser().getNama().isEmpty() ? ProfileActivity.class : MainActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
             overridePendingTransition(0, 0);
         }
