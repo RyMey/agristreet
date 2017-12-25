@@ -1,10 +1,16 @@
 package id.agristreet.agristreetapp.presenter;
 
 import android.content.Context;
+import android.util.Log;
+
+import java.io.File;
 
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
+import id.agristreet.agristreetapp.data.model.Akun;
 import id.agristreet.agristreetapp.data.model.User;
+import id.agristreet.agristreetapp.data.remote.ImageUploader;
 import id.agristreet.agristreetapp.data.remote.RestApi;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -56,6 +62,31 @@ public class ProfilePresenter extends BasePresenter<ProfilePresenter.View> {
                 .compose(bindToLifecycle())
                 .subscribe(akun -> {
                     view.onSavedProfile();
+                    view.dismissLoading();
+                }, throwable -> {
+                    view.showError(throwable.getMessage());
+                    view.dismissLoading();
+                });
+    }
+
+    public void uploadAvatar(File imageFile) {
+        view.showLoading();
+        User user = PengelolaDataLokal.getInstance(context).getAkun().getUser();
+        Observable<String> uploadImageTask = ImageUploader.getInstance(context).upload(imageFile);
+        Observable<Akun> updateProfileTask;
+        if (PengelolaDataLokal.getInstance(context).getUserType() == PengelolaDataLokal.UserType.PEBISNIS) {
+            updateProfileTask = uploadImageTask.flatMap(imgUrl ->
+                    RestApi.getInstance(context).updateProfilePebisnis(user.getNama(), imgUrl));
+        } else {
+            updateProfileTask = uploadImageTask.flatMap(imgUrl ->
+                    RestApi.getInstance(context).updateProfilePetani(user.getNama(), imgUrl));
+        }
+
+        updateProfileTask.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(bindToLifecycle())
+                .subscribe(akun -> {
+                    view.onAvatarUploaded();
                     view.dismissLoading();
                 }, throwable -> {
                     view.showError(throwable.getMessage());

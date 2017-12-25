@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -44,7 +46,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
     ImageView ivPhoto;
 
     private ProfilePresenter profilePresenter;
-    private boolean isUbahProfile;
     private ProgressDialog progressDialog;
     private Akun akun;
 
@@ -55,10 +56,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
         ButterKnife.bind(this);
         Util.hideKeyboard(this);
 
-        isUbahProfile = getIntent().getBooleanExtra("isUbahProfile", false);
         tvPhoneNumber.setText(String.format("%s%s", getString(R.string.desc_nomor_telepon_profile),
                 PengelolaDataLokal.getInstance(this).getNoTelp()));
 
+        boolean isUbahProfile = getIntent().getBooleanExtra("isUbahProfile", false);
         if (isUbahProfile) {
             ivBack.setVisibility(View.VISIBLE);
             tvDesc.setVisibility(View.GONE);
@@ -71,10 +72,19 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
         progressDialog = new ProgressDialog(this);
         akun = PengelolaDataLokal.getInstance(this).getAkun();
 
+        bindUserData();
+    }
+
+    private void bindUserData() {
         if (akun != null) {
             etNama.setText(akun.getUser().getNama());
             if (akun.getUser().getFoto() != null) {
-                Glide.with(this).load(akun.getUser().getFoto()).centerCrop().into(ivPhoto);
+                Glide.with(this)
+                        .load(akun.getUser().getFoto())
+                        .error(R.drawable.ic_person)
+                        .placeholder(R.drawable.ic_person)
+                        .dontAnimate()
+                        .centerCrop().into(ivPhoto);
             } else {
                 ivPhoto.setImageResource(R.drawable.ic_person);
             }
@@ -120,17 +130,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Util.CAMERA_REQUEST) {
             try {
-                Glide.with(this).load(FileUtil.from(this, Uri.parse(PengelolaDataLokal.getInstance(this)
-                        .getLastImagePath()))).into(ivPhoto);
-                //profilePresenter.uploadAvatar(PengelolaDataLokal.getInstance(this).getLastImagePath());
+                File imageFile = FileUtil.from(this, Uri.parse(PengelolaDataLokal.getInstance(this)
+                        .getLastImagePath()));
+                profilePresenter.uploadAvatar(imageFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (resultCode == RESULT_OK && requestCode == Util.GALLERY_REQUEST) {
             try {
-                Glide.with(this).load(FileUtil.from(this, data.getData()))
-                        .into(ivPhoto);
-                //profilePresenter.uploadAvatar(FileUtil.from(this, data.getData()).toString());
+                File imageFile = FileUtil.from(this, data.getData());
+                profilePresenter.uploadAvatar(imageFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -167,5 +176,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
     @Override
     public void onAvatarUploaded() {
         Snackbar.make(etNama.getRootView(), "Photo berhasil diubah", Snackbar.LENGTH_LONG).show();
+        akun = PengelolaDataLokal.getInstance(this).getAkun();
+        bindUserData();
     }
 }
