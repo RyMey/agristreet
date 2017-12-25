@@ -1,10 +1,36 @@
 package id.agristreet.agristreetapp.data.model;
 
-public class Kategori {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Kategori implements Parcelable {
     private int id;
     private String name;
     private String imgUrl;
     private String description;
+
+    public Kategori() {
+
+    }
+
+    protected Kategori(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        imgUrl = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<Kategori> CREATOR = new Creator<Kategori>() {
+        @Override
+        public Kategori createFromParcel(Parcel in) {
+            return new Kategori(in);
+        }
+
+        @Override
+        public Kategori[] newArray(int size) {
+            return new Kategori[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -61,5 +87,18 @@ public class Kategori {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(imgUrl);
+        dest.writeString(description);
     }
 }

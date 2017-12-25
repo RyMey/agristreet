@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +31,7 @@
                     android:paddingRight="8dp"
                     android:paddingStart="0dp"
                     android:paddingTop="8dp"
-                    android:src="@drawable/ic_arrow_back_white"/>
+                    android:src="@drawable/ic_arrow_back_white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -44,7 +43,7 @@
                     android:paddingStart="4dp"
                     android:text="@string/deskripsi_lowongan"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -53,9 +52,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="128dp"
-        android:background="@color/primaryLightColor"/>
+        android:background="@color/primaryLightColor" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/judul"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/judul"
@@ -88,7 +88,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/kategori"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/kategori"
@@ -112,7 +112,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/tanggal_tutup"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tgl_tutup"
@@ -136,7 +136,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/deskripsi"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/deskripsi"
@@ -160,7 +160,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -172,7 +172,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/jumlah_komoditas"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/jumlah_komoditas"
@@ -184,7 +184,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -196,36 +196,43 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/alamat"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/alamat"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/jumlah_pelamar"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:rotation="180"
-                    android:src="@drawable/ic_arrow_back_white"
-                    android:tint="@color/primaryTextColor"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/jumlah_pelamar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/bid"
@@ -236,8 +243,7 @@
                 android:background="@color/secondaryColor"
                 android:enabled="false"
                 android:text="@string/bid"
-                android:textColor="@color/primaryTextColor"
-                android:visibility="gone"/>
+                android:textColor="@color/primaryTextColor" />
 
         </LinearLayout>
 

@@ -30,6 +30,7 @@
     <string name="kategori">Kategori</string>
     <string name="tanggal_tutup">Tanggal Tutup</string>
     <string name="jumlah_komoditas">Jumlah Komoditas</string>
+    <string name="jumlah_pelamar">Jumlah Pelamar</string>
     <string name="bid">BID</string>
     <string name="deskripsi">Deskripsi</string>
 

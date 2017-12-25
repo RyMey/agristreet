@@ -1,8 +1,11 @@
 package id.agristreet.agristreetapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Lowongan {
+public class Lowongan implements Parcelable {
     private int id;
     private Pebisnis creator;
     private Kategori kategori;
@@ -16,6 +19,38 @@ public class Lowongan {
     private int jumlahPelamar;
     private Alamat alamat;
     private String status;
+
+    public Lowongan() {
+
+    }
+
+    protected Lowongan(Parcel in) {
+        id = in.readInt();
+        creator = in.readParcelable(Pebisnis.class.getClassLoader());
+        kategori = in.readParcelable(Kategori.class.getClassLoader());
+        createdAt = new Date(in.readLong());
+        expiredAt = new Date(in.readLong());
+        title = in.readString();
+        description = in.readString();
+        imageUrl = in.readString();
+        hargaAwal = in.readLong();
+        jumlahKomoditas = in.readInt();
+        jumlahPelamar = in.readInt();
+        alamat = in.readParcelable(Alamat.class.getClassLoader());
+        status = in.readString();
+    }
+
+    public static final Creator<Lowongan> CREATOR = new Creator<Lowongan>() {
+        @Override
+        public Lowongan createFromParcel(Parcel in) {
+            return new Lowongan(in);
+        }
+
+        @Override
+        public Lowongan[] newArray(int size) {
+            return new Lowongan[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -153,5 +188,27 @@ public class Lowongan {
                 ", alamat=" + alamat +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeParcelable(creator, flags);
+        dest.writeParcelable(kategori, flags);
+        dest.writeLong(createdAt.getTime());
+        dest.writeLong(expiredAt.getTime());
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(imageUrl);
+        dest.writeLong(hargaAwal);
+        dest.writeInt(jumlahKomoditas);
+        dest.writeInt(jumlahPelamar);
+        dest.writeParcelable(alamat, flags);
+        dest.writeString(status);
     }
 }

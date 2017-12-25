@@ -3,10 +3,12 @@ package id.agristreet.agristreetapp.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,9 +26,10 @@ import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
  * Created by RyMey on 3/30/17.
  */
 
-public class Util {
+public final class Util {
     public static final int CAMERA_REQUEST = 172;
     public static final int GALLERY_REQUEST = 161;
+    private static Random rand = new Random();
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -86,7 +89,11 @@ public class Util {
     }
 
     public static int randInt(int min, int max) {
-        Random rand = new Random();
         return rand.nextInt((max - min) + 1) + min;
+    }
+
+    @ColorInt
+    public static int randomColor() {
+        return Color.argb(100, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
     }
 }

@@ -65,7 +65,7 @@ final class ModelParser {
         lowongan.setImageUrl(json.get("foto").getAsString());
         lowongan.setHargaAwal(json.get("harga_awal").getAsInt());
         lowongan.setJumlahKomoditas(json.get("jumlah_komoditas").getAsInt());
-        lowongan.setJumlahPelamar(1);
+        lowongan.setJumlahPelamar(json.get("pelamar").getAsInt());
         lowongan.setStatus(json.get("status_lowongan").getAsString());
         lowongan.setAlamat(parseAlamat(json.get("alamat").getAsJsonObject()));
         try {
