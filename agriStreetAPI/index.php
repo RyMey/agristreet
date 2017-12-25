@@ -19,7 +19,7 @@ use AgriStreet\Api\Model\LamaranPetani;
 use AgriStreet\Api\Model\Lowongan;
 use AgriStreet\Api\Model\Pebisnis;
 use AgriStreet\Api\Model\Petani;
-use AgriStreet\Api\Model\Kerjasamas;
+use AgriStreet\Api\Model\Kerjasama;
 use AgriStreet\Api\Model\FeedbackPetani;
 use AgriStreet\Api\Model\FeedbackPebisnis;
 use AgriStreet\Api\Util\ResultWrapper;
@@ -170,7 +170,7 @@ $slim->put("/alamat/update-alamat", function (ServerRequestInterface $req, Respo
     }
 });
 
-$slim->get("/komoditas/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/kategori/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(KategoriKomoditas::getKategoriKomoditas($id), $res);
     } catch (Exception $e) {
@@ -209,7 +209,7 @@ $slim->post("/lamaran/make-lamaran-petani", function (ServerRequestInterface $re
     }
 });
 
-$slim->get("/lowongan/",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/lowongan",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(Lowongan::getAllLowongan(), $res);
     } catch (Exception $e) {

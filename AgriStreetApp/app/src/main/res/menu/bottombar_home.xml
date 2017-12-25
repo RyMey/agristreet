@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bar_beranda"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_beranda"
         android:title="Beranda"/>
 
     <item
         android:id="@+id/bar_kerja_sama"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_kerjasama"
         android:title="Kerja Sama"/>
 
     <item
         android:id="@+id/bar_akunku"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_user"
         android:title="Akunku"/>
 </menu>
