@@ -43,7 +43,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
         ButterKnife.bind(this);
         Util.hideKeyboard(this);
         phoneNumber = PengelolaDataLokal.getInstance(this).getNoTelp();
-        tvDescNomor.setText(getString(R.string.desc_nomor_telepon) + " +62" + phoneNumber);
+        tvDescNomor.setText(getString(R.string.desc_nomor_telepon) + " +" + phoneNumber);
 
         putCodePresenter = new PutCodePresenter(this, this);
         progressDialog = new ProgressDialog(this);
