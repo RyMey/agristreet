@@ -15,20 +15,23 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.ui.fragment.BerandaFragment;
 import id.agristreet.agristreetapp.ui.fragment.KerjasamaFragment;
 
-public class MainActivity extends AppCompatActivity implements OnMenuTabClickListener {
+public class MainActivity extends AppCompatActivity implements OnMenuTabClickListener, BerandaFragment.Listener {
     private static final int INDEX_BERANDA = FragNavController.TAB1;
     private static final int INDEX_KERJASAMA = FragNavController.TAB2;
     private static final int INDEX_AKUNKU = FragNavController.TAB3;
 
     private BottomBar bottomBar;
     private FragNavController navController;
+    private BerandaFragment berandaFragment;
+    private boolean isSearchViewVisible;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        berandaFragment = new BerandaFragment();
         navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
-                Arrays.asList(new BerandaFragment(), new KerjasamaFragment(), new BerandaFragment()));
+                Arrays.asList(berandaFragment, new KerjasamaFragment(), berandaFragment));
         bottomBar = BottomBar.attach(this, savedInstanceState);
         bottomBar.useOnlyStatusBarTopOffset();
         bottomBar.setMaxFixedTabs(2);
@@ -68,5 +71,19 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         bottomBar.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onToggleSearchViewVisibility(boolean visible) {
+        isSearchViewVisible = visible;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == INDEX_BERANDA) {
+            berandaFragment.hideSearchView();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

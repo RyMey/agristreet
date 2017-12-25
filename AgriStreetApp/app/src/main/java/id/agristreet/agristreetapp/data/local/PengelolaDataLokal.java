@@ -5,8 +5,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import id.agristreet.agristreetapp.data.model.Akun;
+import id.agristreet.agristreetapp.data.model.KeywordSuggestion;
 
 /**
  * Created by RyMey on 12/17/17.
@@ -71,10 +76,32 @@ public class PengelolaDataLokal {
         return sharedPreferences.getString("last_image_path", "");
     }
 
+    public void addKeywordHistory(String keyword) {
+        if (keyword == null || keyword.trim().equals("")) {
+            return;
+        }
+        List<KeywordSuggestion> keywordSuggestions = getLastKeyword();
+        KeywordSuggestion keywordSuggestion = new KeywordSuggestion(keyword);
+        keywordSuggestions.remove(keywordSuggestion);
+        keywordSuggestions.add(0, keywordSuggestion);
+        if (keywordSuggestions.size() > 5) {
+            keywordSuggestions = keywordSuggestions.subList(0, 5);
+        }
+        sharedPreferences.edit().putString("last_keywords", gson.toJson(keywordSuggestions)).apply();
+    }
+
+    public List<KeywordSuggestion> getLastKeyword() {
+        List<KeywordSuggestion> keywordSuggestions = gson.fromJson(sharedPreferences.getString("last_keywords", ""),
+                new TypeToken<List<KeywordSuggestion>>() {}.getType());
+        if (keywordSuggestions == null) {
+            keywordSuggestions = new ArrayList<>();
+        }
+        return keywordSuggestions;
+    }
+
     public void clearData() {
         sharedPreferences.edit().clear().apply();
     }
-
 
     public enum UserType {
         PEBISNIS,

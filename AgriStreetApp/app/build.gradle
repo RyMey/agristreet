@@ -68,4 +68,5 @@ dependencies {
 
     compile 'com.roughike:bottom-bar:1.4.0'
     compile 'com.ncapdevi:frag-nav:1.0.3'
+    compile 'com.github.arimorty:floatingsearchview:2.0.1'
 }
