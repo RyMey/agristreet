@@ -15,14 +15,9 @@ class KategoriKomoditas extends Model{
 	public $primaryKey = KategoriKomoditas::PRIMARY_KEY;
 
 	public static function getKategoriKomoditas($id_kategori){
-
-
-		$kategori = Manager::table(KategoriKomoditas::TABLE_NAME)->where(KategoriKomoditas::PRIMARY_KEY, '=', $id_kategori)
-            ->first([KategoriKomoditas::TABLE_NAME . '.' . KategoriKomoditas::PRIMARY_KEY,
-                KategoriKomoditas::TABLE_NAME . '.nama_kategori',
-                KategoriKomoditas::TABLE_NAME . '.deskripsi_kategori',
-                KategoriKomoditas::TABLE_NAME . '.foto_kategori'
-            ]);
+		$kategori = Manager::table(KategoriKomoditas::TABLE_NAME)
+            ->where(KategoriKomoditas::PRIMARY_KEY, '=', $id_kategori)
+            ->first();
         return $kategori;
 	}
 }

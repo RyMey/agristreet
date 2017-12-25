@@ -170,7 +170,7 @@ $slim->put("/alamat/update-alamat", function (ServerRequestInterface $req, Respo
     }
 });
 
-$slim->get("/komoditas/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/kategori/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(KategoriKomoditas::getKategoriKomoditas($id), $res);
     } catch (Exception $e) {

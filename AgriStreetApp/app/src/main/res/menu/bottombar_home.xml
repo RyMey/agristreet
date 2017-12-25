@@ -6,9 +6,9 @@
         android:title="Beranda"/>
 
     <item
-        android:id="@+id/bar_lowonganku"
+        android:id="@+id/bar_kerja_sama"
         android:icon="@drawable/ic_kerjasama"
-        android:title="Lowonganku"/>
+        android:title="Kerja Sama"/>
 
     <item
         android:id="@+id/bar_akunku"

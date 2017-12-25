@@ -72,6 +72,12 @@ class Lowongan extends Model{
                     ->where('tgl_tutup','>=',date('Y-m-d'))
                     ->get();
 
+        foreach ($lowongans as $lowongan) {
+            $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
+            $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
+            $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
+        }
+
         return $lowongans;
 
     }
