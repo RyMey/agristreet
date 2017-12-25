@@ -7,13 +7,18 @@ package id.agristreet.agristreetapp.data.remote;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
-import id.agristreet.agristreetapp.data.model.User;
+import id.agristreet.agristreetapp.data.model.Lowongan;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,6 +26,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -31,6 +37,7 @@ public class RestApi {
     private final Context context;
     private final OkHttpClient httpClient;
     private final Api api;
+    private Gson gson;
 
     private RestApi(Context context) {
         this.context = context;
@@ -84,18 +91,10 @@ public class RestApi {
                 code)
                 .map(json -> {
                     Akun akun = new Akun();
-                    User user = new User();
-
                     try {
                         JsonObject result = json.get("result").getAsJsonObject();
-
-                        user.setId(result.get("id_pebisnis").getAsString());
-                        user.setNama(result.get("nama_pebisnis").getAsString());
-                        user.setNoTelp(result.get("no_telp").getAsString());
-                        user.setFoto(result.get("foto").getAsString());
-
                         akun.setToken(result.get("token").getAsString());
-                        akun.setUser(user);
+                        akun.setUser(ModelParser.parsePebisnis(result));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -111,18 +110,10 @@ public class RestApi {
                 code)
                 .map(json -> {
                     Akun akun = new Akun();
-                    User user = new User();
-
                     try {
                         JsonObject result = json.get("result").getAsJsonObject();
-
-                        user.setId(result.get("id_petani").getAsString());
-                        user.setNama(result.get("nama_petani").getAsString());
-                        user.setNoTelp(result.get("no_telp").getAsString());
-                        user.setFoto(result.get("foto").getAsString());
-
                         akun.setToken(result.get("token").getAsString());
-                        akun.setUser(user);
+                        akun.setUser(ModelParser.parsePetani(result));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -136,19 +127,10 @@ public class RestApi {
         return api.updateProfilePebisnis(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
                 nama, foto)
                 .map(json -> {
-                    Akun akun = new Akun();
-                    User user = new User();
-
+                    Akun akun = PengelolaDataLokal.getInstance(context).getAkun();
                     try {
                         JsonObject result = json.get("result").getAsJsonObject();
-
-                        user.setId(result.get("id_pebisnis").getAsString());
-                        user.setNama(result.get("nama_pebisnis").getAsString());
-                        user.setNoTelp(result.get("no_telp").getAsString());
-                        user.setFoto(result.get("foto").getAsString());
-
-                        akun.setToken(result.get("token").getAsString());
-                        akun.setUser(user);
+                        akun.setUser(ModelParser.parsePebisnis(result));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -162,19 +144,10 @@ public class RestApi {
         return api.updateProfilePetani(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
                 nama, foto)
                 .map(json -> {
-                    Akun akun = new Akun();
-                    User user = new User();
-
+                    Akun akun = PengelolaDataLokal.getInstance(context).getAkun();
                     try {
                         JsonObject result = json.get("result").getAsJsonObject();
-
-                        user.setId(result.get("id_petani").getAsString());
-                        user.setNama(result.get("nama_petani").getAsString());
-                        user.setNoTelp(result.get("no_telp").getAsString());
-                        user.setFoto(result.get("foto").getAsString());
-
-                        akun.setToken(result.get("token").getAsString());
-                        akun.setUser(user);
+                        akun.setUser(ModelParser.parsePetani(result));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -182,6 +155,18 @@ public class RestApi {
                     return akun;
                 })
                 .doOnNext(akun -> PengelolaDataLokal.getInstance(context).simpanAkun(akun));
+    }
+
+    public Observable<List<Lowongan>> getLowongan() {
+        return api.getLowongan()
+                .map(json -> {
+                    JsonArray jsonArray = json.get("result").getAsJsonArray();
+                    List<Lowongan> daftarLowongan = new ArrayList<>();
+                    for (JsonElement jsonElement : jsonArray) {
+                        daftarLowongan.add(ModelParser.parseLowongan(jsonElement.getAsJsonObject()));
+                    }
+                    return daftarLowongan;
+                });
     }
 
     private interface Api {
@@ -217,5 +202,8 @@ public class RestApi {
         Observable<JsonObject> updateProfilePetani(@Header("token") String token,
                                                    @Field("nama_petani") String nama,
                                                    @Field("foto") String foto);
+
+        @GET("/lowongan")
+        Observable<JsonObject> getLowongan();
     }
 }
