@@ -99,6 +99,17 @@
 
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/tv_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/desc_nomor_telepon_profile"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,14 +149,6 @@
                     android:tint="@color/primaryTextColor"/>
 
             </LinearLayout>
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_nomor_telepon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/nomor_telepon"
-                android:inputType="phone"
-                android:maxLines="1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -91,8 +91,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
 
     @Override
     public void onVerifyCodeSuccess() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra("isUbahProfile", false);
+        Intent intent = new Intent(this, ProfileActivity.class);;
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
