@@ -44,11 +44,7 @@ class Kerjasama extends Model{
 
     public static function getKerjasama($id_kerjasama){
         $kerjasama = Manager::table(Kerjasama::TABLE_NAME)->where(Kerjasama::PRIMARY_KEY, '=', $id_kerjasama)
-            ->first([Kerjasama::TABLE_NAME . '.' . Kerjasama::PRIMARY_KEY,
-                Kerjasama::TABLE_NAME . '.id_petani',
-                Kerjasama::TABLE_NAME . '.status_lamaran',
-                Kerjasama::TABLE_NAME . '.tgl_kerjasama',
-                Kerjasama::TABLE_NAME . '.harga_sepakat']);
+            ->first();
 
         return $kerjasama;
     }

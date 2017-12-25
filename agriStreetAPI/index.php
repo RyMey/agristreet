@@ -19,7 +19,7 @@ use AgriStreet\Api\Model\LamaranPetani;
 use AgriStreet\Api\Model\Lowongan;
 use AgriStreet\Api\Model\Pebisnis;
 use AgriStreet\Api\Model\Petani;
-use AgriStreet\Api\Model\Kerjasamas;
+use AgriStreet\Api\Model\Kerjasama;
 use AgriStreet\Api\Model\FeedbackPetani;
 use AgriStreet\Api\Model\FeedbackPebisnis;
 use AgriStreet\Api\Util\ResultWrapper;
