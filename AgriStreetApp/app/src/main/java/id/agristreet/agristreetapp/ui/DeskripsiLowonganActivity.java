@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.util.DateUtil;
@@ -70,5 +71,10 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         jumlahKomoditas.setText(String.format("%d", lowongan.getJumlahKomoditas()));
         alamat.setText(lowongan.getAlamat().getDeskripsi());
         jumlahPelamar.setText(String.format("%d", lowongan.getJumlahPelamar()));
+    }
+
+    @OnClick(R.id.iv_back)
+    public void back() {
+        onBackPressed();
     }
 }
