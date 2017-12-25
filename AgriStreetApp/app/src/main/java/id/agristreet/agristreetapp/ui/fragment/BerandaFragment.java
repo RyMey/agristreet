@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.presenter.BerandaPresenter;
+import id.agristreet.agristreetapp.ui.DeskripsiLowonganActivity;
 import id.agristreet.agristreetapp.ui.fragment.adapter.LowonganAdapter;
 
 public class BerandaFragment extends Fragment implements BerandaPresenter.View {
@@ -57,7 +58,7 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View {
     }
 
     private void onItemClick(Lowongan lowongan) {
-        Log.d("ZETRA", "Click: " + lowongan);
+        startActivity(DeskripsiLowonganActivity.generateIntent(getActivity(), lowongan));
     }
 
     @Override
