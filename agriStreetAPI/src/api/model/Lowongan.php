@@ -66,6 +66,14 @@ class Lowongan extends Model{
         return $lowongan;
     }
 
+    public static function getAllLowongan(){
+
+        $lowongans = Manager::table(Lowongan::TABLE_NAME)->get();
+
+        return $lowongans;
+
+    }
+
     public static function updateLowongan($token, $id_lowongan, $id_alamat_pengiriman,$judul_lowongan,$deskripsi_lowongan, $jumlah_komoditas, $tgl_buka, $tgl_tutup, $harga_awal, $status){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
         $lowongan = Lowongan::query()
@@ -108,5 +116,23 @@ class Lowongan extends Model{
         }
 
         return self::getLowongan($id_lowongan);
+    }
+
+    public static function searchLowongan($keywoard){
+        $lowongans = Manager::table(Lowongan::TABLE_NAME)
+            ->where(Lowongan::PRIMARY_KEY,'LIKE', "%{$keywoard}%")
+            ->orWhere('id_pebisnis', 'LIKE', "%{$keywoard}%")
+            ->orWhere('id_kategori', 'LIKE', "%{$keywoard}%")
+            ->orWhere('id_alamat_pengiriman', 'LIKE', "%{$keywoard}%")
+            ->orWhere('judul_lowongan', 'LIKE', "%{$keywoard}%")
+            ->orWhere('deskripsi_lowongan', 'LIKE', "%{$keywoard}%")
+            ->orWhere('jumlah_komoditas', 'LIKE', "%{$keywoard}%")
+            ->orWhere('tgl_buka','LIKE', "%{$keywoard}%")
+            ->orWhere('tgl_tutup', 'LIKE', "%{$keywoard}%")
+            ->orWhere('harga_awal', 'LIKE', "%{$keywoard}%")
+            ->orWhere('status_lowongan', 'LIKE', "%{$keywoard}%")
+            ->get();
+
+        return $lowongans;
     }
 }
