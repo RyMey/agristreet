@@ -24,7 +24,13 @@ use AgriStreet\Api\Model\FeedbackPetani;
 use AgriStreet\Api\Model\FeedbackPebisnis;
 use AgriStreet\Api\Util\ResultWrapper;
 
-$container = new Container();
+$configuration = [
+    'settings' => [
+        'displayErrorDetails' =>true,
+    ],
+];
+
+$container = new Container($configuration);
 $container['foundHandler'] = function () {
     return new RequestResponseArgs();
 };
@@ -178,9 +184,25 @@ $slim->get("/kategori/{id}",function (ServerRequestInterface $req, ResponseInter
     }
 });
 
+$slim->get("/kategori",function (ServerRequestInterface $req, ResponseInterface $res){
+    try {
+        return ResultWrapper::getResult(KategoriKomoditas::getKategori(), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->get("/lamaran/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(LamaranPetani::getLamaranById($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/lamaran/{id_lowongan}/{id_petani}",function (ServerRequestInterface $req, ResponseInterface $res, $id_lowongan, $id_petani){
+    try {
+        return ResultWrapper::getResult(LamaranPetani::getLamaran($id_lowongan,$id_petani), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
@@ -217,9 +239,9 @@ $slim->post("/lamaran/make-lamaran-petani", function (ServerRequestInterface $re
     }
 });
 
-$slim->get("/lowongan",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/lowongan",function (ServerRequestInterface $req, ResponseInterface $res){
     try {
-        return ResultWrapper::getResult(Lowongan::getAllLowongan(), $res);
+        return ResultWrapper::getResult(Lowongan::getAllLowongan($req->getHeader('token')), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }

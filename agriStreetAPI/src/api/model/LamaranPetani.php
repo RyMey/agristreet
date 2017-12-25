@@ -48,6 +48,15 @@ class LamaranPetani extends Model{
         return $lamarans;
     }
 
+    public static function getLamaran($id_lowongan,$id_petani){
+        $lamaran =  Manager::table(LamaranPetani::TABLE_NAME)
+                    ->where('id_lowongan', '=', $id_lowongan)
+                    ->where('id_petani','=',$id_petani)
+                    ->first();
+
+        return $lamaran;
+    }
+
     public static function getLamaranById($id_lamar){
         $lamaran = Manager::table(LamaranPetani::TABLE_NAME)->where(LamaranPetani::PRIMARY_KEY, '=', $id_lamar)
             ->first([LamaranPetani::TABLE_NAME . '.' . LamaranPetani::PRIMARY_KEY,
