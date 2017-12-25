@@ -68,6 +68,7 @@ final class ModelParser {
         lowongan.setJumlahPelamar(json.get("pelamar").getAsInt());
         lowongan.setStatus(json.get("status_lowongan").getAsString());
         lowongan.setAlamat(parseAlamat(json.get("alamat").getAsJsonObject()));
+        lowongan.setBid(json.get("isBid").getAsBoolean());
         try {
             lowongan.setCreatedAt(dateFormat.parse(json.get("tgl_buka").getAsString()));
             lowongan.setExpiredAt(dateFormat.parse(json.get("tgl_tutup").getAsString()));

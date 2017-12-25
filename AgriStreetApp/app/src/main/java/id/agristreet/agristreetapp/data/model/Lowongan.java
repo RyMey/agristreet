@@ -19,6 +19,7 @@ public class Lowongan implements Parcelable {
     private int jumlahPelamar;
     private Alamat alamat;
     private String status;
+    private boolean bid;
 
     public Lowongan() {
 
@@ -38,6 +39,7 @@ public class Lowongan implements Parcelable {
         jumlahPelamar = in.readInt();
         alamat = in.readParcelable(Alamat.class.getClassLoader());
         status = in.readString();
+        bid = in.readByte() == 1;
     }
 
     public static final Creator<Lowongan> CREATOR = new Creator<Lowongan>() {
@@ -156,6 +158,14 @@ public class Lowongan implements Parcelable {
         this.status = status;
     }
 
+    public boolean isBid() {
+        return bid;
+    }
+
+    public void setBid(boolean bid) {
+        this.bid = bid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -187,12 +197,13 @@ public class Lowongan implements Parcelable {
                 ", jumlahPelamar=" + jumlahPelamar +
                 ", alamat=" + alamat +
                 ", status='" + status + '\'' +
+                ", bid=" + bid +
                 '}';
     }
 
     @Override
     public int describeContents() {
-        return 0;
+        return hashCode();
     }
 
     @Override
@@ -210,5 +221,6 @@ public class Lowongan implements Parcelable {
         dest.writeInt(jumlahPelamar);
         dest.writeParcelable(alamat, flags);
         dest.writeString(status);
+        dest.writeByte((byte) (bid ? 0 : 1));
     }
 }
