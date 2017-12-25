@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import butterknife.ButterKnife;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.presenter.BerandaPresenter;
+import id.agristreet.agristreetapp.ui.fragment.adapter.LowonganAdapter;
 
 public class BerandaFragment extends Fragment implements BerandaPresenter.View {
 
@@ -26,12 +29,13 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View {
 
     private BerandaPresenter berandaPresenter;
     private ProgressDialog progressDialog;
+    private LowonganAdapter lowonganAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_beranda, container, false);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -41,8 +45,19 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Mohon Tunggu...");
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        lowonganAdapter = new LowonganAdapter(getActivity());
+        lowonganAdapter.setOnItemClickListener((view, position) ->
+                onItemClick(lowonganAdapter.getData().get(position)));
+        recyclerView.setAdapter(lowonganAdapter);
+
         berandaPresenter = new BerandaPresenter(getActivity(), this);
         berandaPresenter.loadLowongan();
+    }
+
+    private void onItemClick(Lowongan lowongan) {
+        Log.d("ZETRA", "Click: " + lowongan);
     }
 
     @Override
@@ -62,8 +77,6 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View {
 
     @Override
     public void showLowongan(List<Lowongan> daftarLowongan) {
-        for (Lowongan lowongan : daftarLowongan) {
-            Log.d("ZETRA", "Show: " + lowongan);
-        }
+        lowonganAdapter.addOrUpdate(daftarLowongan);
     }
 }
