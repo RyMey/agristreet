@@ -209,7 +209,7 @@ $slim->post("/lamaran/make-lamaran-petani", function (ServerRequestInterface $re
     }
 });
 
-$slim->get("/lowongan/",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/lowongan",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(Lowongan::getAllLowongan(), $res);
     } catch (Exception $e) {
