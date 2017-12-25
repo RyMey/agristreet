@@ -13,22 +13,23 @@ use Illuminate\Database\Eloquent\Model;
 class Petani extends Model{
     const TABLE_NAME = "petani";
     const PRIMARY_KEY = "id_petani";
+    public $timestamps = false;
 
     public $table = Petani::TABLE_NAME;
     public $primaryKey = Petani::PRIMARY_KEY;
 
     public static function generateId(){
         $lastId = Manager::table(Petani::TABLE_NAME)
-            ->first(Petani::PRIMARY_KEY)
             ->orderBy(Petani::PRIMARY_KEY,'DESC')
-            ->limit(1);
+            ->limit(1)
+            ->first([Petani::PRIMARY_KEY]);
 
         if($lastId != null){
             $id = (int) substr($lastId,2);
             $id = $id + 1;
-            $new_id = $id.'pb';
+            $new_id = 'pt'.$id;
         }else{
-            $new_id = 'pb1';
+            $new_id = 'pt1';
         }
         return $new_id;
     }
@@ -44,7 +45,7 @@ class Petani extends Model{
 
     public static function getSelfPetani($id_petani){
         $petani = Manager::table(Petani::TABLE_NAME)->where(Petani::PRIMARY_KEY, '=', $id_petani)
-            ->first([Pebisnis::TABLE_NAME . '.' . Pebisnis::PRIMARY_KEY,
+            ->first([Petani::TABLE_NAME . '.' . Petani::PRIMARY_KEY,
                 Petani::TABLE_NAME . '.nama_petani',
                 Petani::TABLE_NAME . '.no_telp',
                 Petani::TABLE_NAME . '.foto',
@@ -100,19 +101,22 @@ class Petani extends Model{
             if($id != null or $id != ""){
                 return self::getSelfPetani($id->id_petani);
             }else{
-                return self::register("",$no_telp,"");
+                return self::register("",$no_telp,"","","","");
             }
         }
 
         throw new \Exception($data->error_text);
     }
 
-    public static function register($nama_petani, $no_telp, $foto){
+    public static function register($nama_petani, $no_telp, $foto, $alamat, $latitude,$longitude){
         $petani = new Petani();
         $petani->id_petani= self::generateId();
         $petani->nama_petani = $nama_petani;
         $petani->no_telp = $no_telp;
         $petani->foto = $foto;
+        $petani->alamat = $alamat;
+        $petani->latitude = $latitude;
+        $petani->longitude = $longitude;
         $petani->token = md5(uniqid($no_telp, true));
 
         if (Manager::table(Petani::TABLE_NAME)->where('no_telp', '=', $no_telp)->first() == null) {
@@ -142,7 +146,7 @@ class Petani extends Model{
                 $petani->foto = $foto;
             }
             if ($no_telp != null && $no_telp != "") {
-                $telp = Pebisnis::query()
+                $telp = Petani::query()
                     ->where('no_telp', '=', $no_telp)
                     ->first();
 
@@ -155,7 +159,7 @@ class Petani extends Model{
             $petani->save();
         }
 
-        return Pebisnis::getPebisnisByToken($token);
+        return Petani::getPetaniByToken($token);
     }
 
 }
