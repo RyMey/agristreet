@@ -158,7 +158,7 @@ public class RestApi {
     }
 
     public Observable<List<Lowongan>> getLowongan() {
-        return api.getLowongan()
+        return api.getLowongan(PengelolaDataLokal.getInstance(context).getAkun().getToken())
                 .map(json -> {
                     JsonArray jsonArray = json.get("result").getAsJsonArray();
                     List<Lowongan> daftarLowongan = new ArrayList<>();
@@ -204,6 +204,6 @@ public class RestApi {
                                                    @Field("foto") String foto);
 
         @GET("/lowongan")
-        Observable<JsonObject> getLowongan();
+        Observable<JsonObject> getLowongan(@Header("token") String token);
     }
 }
