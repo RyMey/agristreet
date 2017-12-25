@@ -20,4 +20,10 @@ class KategoriKomoditas extends Model{
             ->first();
         return $kategori;
 	}
+
+    public static function getKategori(){
+        $kategoris = Manager::table(KategoriKomoditas::TABLE_NAME)
+            ->get();
+        return $kategoris;
+    }
 }
