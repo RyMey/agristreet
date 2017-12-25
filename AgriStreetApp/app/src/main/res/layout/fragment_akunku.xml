@@ -72,12 +72,35 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:paddingTop="8dp"
-                android:text="@string/judul"
+                android:text="@string/hint_nama"
                 android:textColor="@color/secondaryTextColor"
                 android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/alamat"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
