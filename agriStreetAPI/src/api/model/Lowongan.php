@@ -66,7 +66,7 @@ class Lowongan extends Model{
         return $lowongan;
     }
 
-    public static function getAllLowongan(){
+    public static function getAllLowongan($token){
 
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
                     ->where('tgl_tutup','>=',date('Y-m-d'))
@@ -77,6 +77,14 @@ class Lowongan extends Model{
             $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
             $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
             $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
+
+            $petani = Petani::getPetaniByToken($token);
+            $exist = LamaranPetani::getLamaran($lowongan->id_lowongan,$petani->id_petani);
+            if($exist==null or $petani==null)
+                $lowongan->isBid = false;
+            else
+                $lowongan->isBid = true;
+
         }
 
         return $lowongans;
