@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="14dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -73,8 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/keterangan_promosikan"
-                    android:inputType="textAutoComplete"
-                    android:maxLines="1"/>
+                    android:inputType="textAutoComplete"/>
 
             </android.support.design.widget.TextInputLayout>
 

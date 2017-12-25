@@ -23,7 +23,6 @@
     <string name="alamat">Alamat</string>
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="riwayat">Riwayat</string>
-    <string name="feedback">Feedback</string>
 
     <!-- Deskripsi Lowongan -->
     <string name="deskripsi_lowongan">Deskripsi Lowongan</string>
@@ -50,6 +49,6 @@
     <!-- Beri Feedback -->
     <string name="feedback_icon">Apa yang Anda rasakan?</string>
     <string name="feedback_kesan">Masukan kesan dan pesan</string>
-
+    <string name="feedback">Feedback</string>
 
 </resources>
