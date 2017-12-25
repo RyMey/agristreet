@@ -194,6 +194,14 @@ $slim->get("/lamaran/petani/{id}",function (ServerRequestInterface $req, Respons
     }
 });
 
+$slim->get("/lamaran/lowongan/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+    try {
+        return ResultWrapper::getResult(LamaranPetani::getLamaranByLowongan($id), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->post("/lamaran/make-lamaran-petani", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();

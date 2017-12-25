@@ -17,13 +17,11 @@ class LamaranPetani extends Model{
     public $primaryKey = LamaranPetani::PRIMARY_KEY;
 
     public static function makeLamaranPetani($token,$id_lowongan,$tgl_lamar,$harga_tawar,$deskripsi_lamaran){
-        $petani = Petani::getPetaniisByToken($token);
-        $lowongan = Lowongan::query()
-            ->where('id_lowongan', '=', $id_lowongan)
-            ->first();
-        $lowongan = Lowongan::getLowonganById($id_lowongan);
+        $petani = Petani::getPetaniByToken($token);
 
-        $lamaran = new lamaran();
+        $lowongan = Lowongan::getLowongan($id_lowongan);
+
+        $lamaran = new LamaranPetani();
 
         if ($petani == null){
             throw new \Exception("Petani was not exist");
@@ -43,6 +41,12 @@ class LamaranPetani extends Model{
         }
     }
 
+    public static function getLamaranByLowongan($id_lowongan){
+        $lamarans =  Manager::table(LamaranPetani::TABLE_NAME)->where('id_lowongan', '=', $id_lowongan)
+                    ->get();
+
+        return $lamarans;
+    }
 
     public static function getLamaranById($id_lamar){
         $lamaran = Manager::table(LamaranPetani::TABLE_NAME)->where(LamaranPetani::PRIMARY_KEY, '=', $id_lamar)

@@ -76,6 +76,7 @@ class Lowongan extends Model{
             $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
             $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
             $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
+            $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
         }
 
         return $lowongans;
