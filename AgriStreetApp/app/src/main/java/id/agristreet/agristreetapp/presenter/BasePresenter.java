@@ -1,7 +1,5 @@
 package id.agristreet.agristreetapp.presenter;
 
-import android.support.annotation.NonNull;
-
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 

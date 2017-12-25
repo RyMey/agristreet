@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.util.List;
 
-import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.data.remote.RestApi;
 import rx.android.schedulers.AndroidSchedulers;
