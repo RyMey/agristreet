@@ -1,4 +1,4 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter.viewholder;
+package id.agristreet.agristreetapp.ui.adapter.viewholder;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
-import id.agristreet.agristreetapp.ui.fragment.adapter.ItemClickListener;
-import id.agristreet.agristreetapp.ui.fragment.adapter.ItemLongClickListener;
+import id.agristreet.agristreetapp.ui.adapter.ItemClickListener;
+import id.agristreet.agristreetapp.ui.adapter.ItemLongClickListener;
 import id.agristreet.agristreetapp.util.DateUtil;
 
 public class KerjasamaViewHolder extends BaseItemViewHolder<Kerjasama> {

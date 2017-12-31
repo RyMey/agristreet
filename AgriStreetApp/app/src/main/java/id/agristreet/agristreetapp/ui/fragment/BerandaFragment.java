@@ -27,7 +27,7 @@ import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.presenter.BerandaPresenter;
 import id.agristreet.agristreetapp.ui.AddLowonganActivity;
 import id.agristreet.agristreetapp.ui.DeskripsiLowonganActivity;
-import id.agristreet.agristreetapp.ui.fragment.adapter.LowonganAdapter;
+import id.agristreet.agristreetapp.ui.adapter.LowonganAdapter;
 
 public class BerandaFragment extends Fragment implements BerandaPresenter.View, FloatingSearchView.OnSearchListener {
 

@@ -1,11 +1,11 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter.viewholder;
+package id.agristreet.agristreetapp.ui.adapter.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import id.agristreet.agristreetapp.ui.fragment.adapter.ItemClickListener;
-import id.agristreet.agristreetapp.ui.fragment.adapter.ItemLongClickListener;
+import id.agristreet.agristreetapp.ui.adapter.ItemClickListener;
+import id.agristreet.agristreetapp.ui.adapter.ItemLongClickListener;
 
 public abstract class BaseItemViewHolder<Data> extends RecyclerView.ViewHolder implements
         View.OnClickListener,

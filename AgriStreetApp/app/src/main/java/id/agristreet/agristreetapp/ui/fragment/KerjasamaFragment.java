@@ -24,7 +24,7 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.presenter.KerjasamaPresenter;
-import id.agristreet.agristreetapp.ui.fragment.adapter.KerjasamaAdapter;
+import id.agristreet.agristreetapp.ui.adapter.KerjasamaAdapter;
 
 public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.View, FloatingSearchView.OnSearchListener {
     @BindView(R.id.recyclerview)

@@ -1,4 +1,4 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter;
+package id.agristreet.agristreetapp.ui.adapter;
 
 import android.view.View;
 
