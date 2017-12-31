@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
+import id.agristreet.agristreetapp.ui.ChooseUserActivity;
 import id.agristreet.agristreetapp.ui.ProfileActivity;
 
 public class AkunkuFragment extends Fragment {
@@ -55,6 +56,14 @@ public class AkunkuFragment extends Fragment {
     public void editProfile() {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         intent.putExtra("isUbahProfile", true);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.logout)
+    public void logout() {
+        PengelolaDataLokal.getInstance(getActivity()).clearData();
+        Intent intent = new Intent(getActivity(), ChooseUserActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
