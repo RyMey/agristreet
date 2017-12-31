@@ -1,9 +1,12 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +22,7 @@ import id.agristreet.agristreetapp.util.Util;
 
 public class DeskripsiLowonganActivity extends AppCompatActivity {
     private static final String LOWONGAN_KEY = "lowongan";
+    private static final int RC_BID = 24;
 
     @BindView(R.id.image)
     ImageView imageView;
@@ -36,6 +40,8 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
     TextView alamat;
     @BindView(R.id.jumlah_pelamar)
     TextView jumlahPelamar;
+    @BindView(R.id.bid)
+    Button btBid;
 
     private Lowongan lowongan;
 
@@ -71,10 +77,29 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         jumlahKomoditas.setText(String.format("%d", lowongan.getJumlahKomoditas()));
         alamat.setText(lowongan.getAlamat().getDeskripsi());
         jumlahPelamar.setText(String.format("%d", lowongan.getJumlahPelamar()));
+        if (lowongan.isBid()) {
+            btBid.setBackgroundColor(ContextCompat.getColor(this, R.color.divider));
+            btBid.setTextColor(ContextCompat.getColor(this, R.color.secondaryTextColor));
+            btBid.setEnabled(false);
+        }
     }
 
     @OnClick(R.id.iv_back)
     public void back() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.bid)
+    public void bid() {
+        startActivityForResult(AjukanBidActivity.generateIntent(this, lowongan.getId()), RC_BID);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_BID && resultCode == Activity.RESULT_OK) {
+            lowongan.setBid(true);
+            showLowongan();
+        }
     }
 }

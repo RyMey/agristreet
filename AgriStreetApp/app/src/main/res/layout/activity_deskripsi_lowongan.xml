@@ -242,7 +242,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@color/secondaryColor"
-                android:enabled="false"
                 android:text="@string/bid"
                 android:textColor="@color/primaryTextColor" />
 

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="id.agristreet.agristreetapp.ui.AjukanBidActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -33,7 +31,7 @@
                     android:paddingRight="8dp"
                     android:paddingStart="0dp"
                     android:paddingTop="8dp"
-                    android:src="@drawable/ic_arrow_back_white"/>
+                    android:src="@drawable/ic_arrow_back_white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,7 +43,7 @@
                     android:paddingStart="4dp"
                     android:text="@string/ajukan_bid"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -72,8 +70,10 @@
                     android:id="@+id/keterangaan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minLines="5"
+                    android:gravity="top"
                     android:hint="@string/keterangan_promosikan"
-                    android:inputType="textAutoComplete"/>
+                    android:inputType="textMultiLine|textAutoComplete" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/harga_tawar"
                 android:inputType="number"
-                android:maxLines="1"/>
+                android:maxLines="1" />
 
             <Button
                 android:id="@+id/bt_simpan"
@@ -94,13 +94,11 @@
                 android:background="@color/divider"
                 android:enabled="false"
                 android:text="@string/bid_sekarang"
-                android:textColor="@color/secondaryTextColor"/>
+                android:textColor="@color/secondaryTextColor" />
 
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 </LinearLayout>
