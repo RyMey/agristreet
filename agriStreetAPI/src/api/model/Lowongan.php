@@ -28,7 +28,7 @@ class Lowongan extends Model{
         $lowongan = new Lowongan();
 
         if ($pebisnis == null){
-            throw new \Exception("Kategori was not exist");
+            throw new \Exception("Pebisnis was not exist");
         } else if ($kategori == null){
             throw new \Exception("Kategori was not exist");
         } else if ( $alamat == null) {
@@ -47,9 +47,20 @@ class Lowongan extends Model{
             $lowongan->status_lowongan = "buka";
 
             $lowongan->save();
-            $result = Manager::table(Lowongan::TABLE_NAME)
-                ->first([Lowongan::PRIMARY_KEY, "deskripsi_lowongan", "jumlah_komoditas", "tgl_buka", "tgl_tutup"]);
-            return $result;
+
+            $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
+            $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
+            $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
+            $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
+
+            $petani = Petani::getPetaniByToken($token);
+            $exist = LamaranPetani::getLamaran($lowongan->id_lowongan,$petani->id_petani);
+            if($exist==null or $petani==null)
+                $lowongan->isBid = false;
+            else
+                $lowongan->isBid = true;
+
+            return $lowongan;
         }
     }
 
@@ -75,7 +86,7 @@ class Lowongan extends Model{
     public static function getAllLowongan($token){
 
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
-                    ->where('tgl_tutup','>=',date('Y-m-d'))
+                    ->where('tgl_tutup','>=',date("Y-m-d"))
                     ->get();
 
         foreach ($lowongans as $lowongan) {
