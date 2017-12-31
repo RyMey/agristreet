@@ -53,15 +53,21 @@ class Lowongan extends Model{
         }
     }
 
-    public static function getLowongan($id_lowongan){
+    public static function getLowongan($id_lowongan, $token){
         $lowongan = Manager::table(Lowongan::TABLE_NAME)->where(Lowongan::PRIMARY_KEY, '=', $id_lowongan)
-            ->first([Lowongan::TABLE_NAME . '.' . Lowongan::PRIMARY_KEY,
-                Lowongan::TABLE_NAME . '.judul_lowongan',
-                Lowongan::TABLE_NAME . '.deskripsi_lowongan',
-                Lowongan::TABLE_NAME . '.foto',
-                Lowongan::TABLE_NAME . '.jumlah_komoditas',
-                Lowongan::TABLE_NAME . '.tgl_buka',
-                Lowongan::TABLE_NAME . '.tgl_tutup']);
+            ->first();
+
+        $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
+        $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
+        $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
+        $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
+
+        $petani = Petani::getPetaniByToken($token);
+        $exist = LamaranPetani::getLamaran($lowongan->id_lowongan,$petani->id_petani);
+        if($exist==null or $petani==null)
+            $lowongan->isBid = false;
+        else
+            $lowongan->isBid = true;
 
         return $lowongan;
     }
@@ -132,7 +138,7 @@ class Lowongan extends Model{
             $lowongan->save();
         }
 
-        return self::getLowongan($id_lowongan);
+        return self::getLowongan($id_lowongan, $token);
     }
 
     public static function searchLowongan($keywoard){

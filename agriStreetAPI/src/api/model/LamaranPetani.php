@@ -19,7 +19,7 @@ class LamaranPetani extends Model{
     public static function makeLamaranPetani($token,$id_lowongan,$tgl_lamar,$harga_tawar,$deskripsi_lamaran){
         $petani = Petani::getPetaniByToken($token);
 
-        $lowongan = Lowongan::getLowongan($id_lowongan);
+        $lowongan = Lowongan::getLowongan($id_lowongan, $token);
 
         $lamaran = new LamaranPetani();
 

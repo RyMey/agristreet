@@ -19,6 +19,34 @@ class Kerjasama extends Model{
     public $table = Kerjasama::TABLE_NAME;
     public $primaryKey = Kerjasama::PRIMARY_KEY;
 
+    public static function getAllKerjasama($token){
+
+        $user = Petani::getPetaniByToken($token);
+        $kerjasamas = null;
+
+        if($user == null) {
+            $user = Pebisnis::getPebisnisByToken($token);
+            $kerjasamas = Manager::table(Kerjasama::TABLE_NAME)
+                ->where('id_pebisnis','=',$user->id_pebisnis)
+                ->get();
+        }else{
+            $kerjasamas = Manager::table(Kerjasama::TABLE_NAME)
+                ->where('id_petani','=',$user->id_petani)
+                ->get();
+        }
+
+        if($user == null) {
+            throw new \Exception("User not exist");
+        }
+
+        foreach ($kerjasamas as $kerjasama) {
+            $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
+        }
+
+        return $kerjasamas;
+
+    }
+
     public static function makeKerjasama($token,$id_petani,$id_lowongan,$status_lamaran,$tgl_kerjasama,$harga_sepakat){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
        
