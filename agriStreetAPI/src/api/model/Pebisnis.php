@@ -7,7 +7,7 @@
  */
 namespace AgriStreet\Api\Model;
 
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use AgriStreet\Api\Util\Nexmo;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
 
@@ -73,31 +73,12 @@ class Pebisnis extends Model{
         return $id;
     }
 
-    public static function verifyPhone($no_telp){
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://Api.nexmo.com/verify/json");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=467d8cb9&api_secret=496197a14e8c1c48&number=$no_telp&brand=AgriStreet");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-
-        $raw_data = curl_exec($ch);
-        curl_close($ch);
-
-        $data = json_decode($raw_data);
-        return $data->request_id;
+    public static function verifyPhone($no_telp) {
+        return Nexmo::sendCode($no_telp);
     }
 
-    public static function auth($no_telp, $request_id, $code){
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://Api.nexmo.com/verify/check/json");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&request_id=$request_id&code=$code");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-
-        $raw_data = curl_exec($ch);
-        curl_close($ch);
-
-        $data = json_decode($raw_data);
+    public static function auth($no_telp, $request_id, $code) {
+        $data = Nexmo::verify($request_id, $code);
         $status = $data->status;
 
         if($status == 0){
