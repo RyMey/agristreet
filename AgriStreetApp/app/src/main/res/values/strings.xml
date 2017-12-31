@@ -64,5 +64,6 @@
     <string name="nama_petani">Nama Petani</string>
     <string name="detail_kerjasama">Detail Kerjasama</string>
     <string name="harga_awal">Harga Awal</string>
+    <string name="pilih_petani">Pilih Petani</string>
 
 </resources>
