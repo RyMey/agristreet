@@ -41,6 +41,10 @@ class Kerjasama extends Model{
 
         foreach ($kerjasamas as $kerjasama) {
             $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
+            $pebisnis = Pebisnis::getPebisnis($kerjasama->id_pebisnis);
+            $petani = Petani::getPetani($kerjasama->id_petani);
+            $kerjasama->nama_pebisnis = $pebisnis->nama_pebisnis;
+            $kerjasama->nama_petani = $petani->nama_petani;
         }
 
         return $kerjasamas;
