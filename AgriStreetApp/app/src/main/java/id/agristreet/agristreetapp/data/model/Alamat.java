@@ -70,11 +70,7 @@ public class Alamat implements Parcelable {
 
     @Override
     public String toString() {
-        return "Alamat{" +
-                "deskripsi='" + deskripsi + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                '}';
+        return deskripsi;
     }
 
     @Override

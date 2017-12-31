@@ -13,14 +13,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
+import id.agristreet.agristreetapp.data.model.Alamat;
 import id.agristreet.agristreetapp.data.model.Kategori;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.data.model.Lowongan;
+import id.agristreet.agristreetapp.util.DateUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -32,6 +35,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import rx.Observable;
 
 public class RestApi {
@@ -201,6 +205,26 @@ public class RestApi {
                 });
     }
 
+    public Observable<List<Alamat>> getAlamat() {
+        Akun akun = PengelolaDataLokal.getInstance(context).getAkun();
+        return api.getAlamat(akun.getToken(), akun.getUser().getId())
+                .map(json -> {
+                    JsonArray jsonArray = json.get("result").getAsJsonArray();
+                    List<Alamat> daftarAlamat = new ArrayList<>();
+                    for (JsonElement jsonElement : jsonArray) {
+                        daftarAlamat.add(ModelParser.parseAlamat(jsonElement.getAsJsonObject()));
+                    }
+                    return daftarAlamat;
+                });
+    }
+
+    public Observable<Lowongan> createLowongan(int idKatgori, int idAlamat, String title, String imgUrl,
+                                               String description, String tglTutup, int jumlahKomoditas, long price) {
+        return api.createLowongan(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idKatgori, idAlamat, title, imgUrl, description, tglTutup, jumlahKomoditas, price)
+                .map(json -> ModelParser.parseLowongan(json.get("result").getAsJsonObject()));
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -250,5 +274,21 @@ public class RestApi {
 
         @GET("/kategori")
         Observable<JsonObject> getKategori(@Header("token") String token);
+
+        @GET("/alamat/pebisnis/{id}")
+        Observable<JsonObject> getAlamat(@Header("token") String token,
+                                         @Path("id") String id);
+
+        @FormUrlEncoded
+        @POST("/lowongan/make-lowongan")
+        Observable<JsonObject> createLowongan(@Header("token") String token,
+                                              @Field("id_kategori") int idKatgori,
+                                              @Field("id_alamat_pengiriman") int idAlamat,
+                                              @Field("judul_lowongan") String title,
+                                              @Field("foto") String imgUrl,
+                                              @Field("deskripsi_lowongan") String description,
+                                              @Field("tgl_tutup") String tglTutup,
+                                              @Field("jumlah_komoditas") int jumlahKomoditas,
+                                              @Field("harga_awal") long price);
     }
 }

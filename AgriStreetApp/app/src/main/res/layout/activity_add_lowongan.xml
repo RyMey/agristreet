@@ -147,7 +147,6 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/secondaryColor"
-                android:enabled="false"
                 android:text="@string/ubah_tanggal_tutup"
                 android:textColor="@color/primaryTextColor" />
 
@@ -226,10 +225,10 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@color/secondaryColor"
+                android:background="@color/divider"
                 android:enabled="false"
                 android:text="@string/simpan"
-                android:textColor="@color/primaryTextColor" />
+                android:textColor="@color/secondaryTextColor" />
 
         </LinearLayout>
 
