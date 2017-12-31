@@ -2,7 +2,6 @@ package id.agristreet.agristreetapp.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -52,7 +51,6 @@ public class PengelolaDataLokal {
     }
 
     public void simpanRequestId(String reqId) {
-        Log.d("ZETRA", "Simpan req id: "+reqId);
         sharedPreferences.edit().putString("reqId", reqId).apply();
     }
 
@@ -76,23 +74,24 @@ public class PengelolaDataLokal {
         return sharedPreferences.getString("last_image_path", "");
     }
 
-    public void addKeywordHistory(String keyword) {
+    public void addKeywordHistory(String bucket, String keyword) {
         if (keyword == null || keyword.trim().equals("")) {
             return;
         }
-        List<KeywordSuggestion> keywordSuggestions = getLastKeyword();
+        List<KeywordSuggestion> keywordSuggestions = getLastKeyword(bucket);
         KeywordSuggestion keywordSuggestion = new KeywordSuggestion(keyword);
         keywordSuggestions.remove(keywordSuggestion);
         keywordSuggestions.add(0, keywordSuggestion);
         if (keywordSuggestions.size() > 5) {
             keywordSuggestions = keywordSuggestions.subList(0, 5);
         }
-        sharedPreferences.edit().putString("last_keywords", gson.toJson(keywordSuggestions)).apply();
+        sharedPreferences.edit().putString(bucket + "_last_keywords", gson.toJson(keywordSuggestions)).apply();
     }
 
-    public List<KeywordSuggestion> getLastKeyword() {
-        List<KeywordSuggestion> keywordSuggestions = gson.fromJson(sharedPreferences.getString("last_keywords", ""),
-                new TypeToken<List<KeywordSuggestion>>() {}.getType());
+    public List<KeywordSuggestion> getLastKeyword(String bukcet) {
+        List<KeywordSuggestion> keywordSuggestions = gson.fromJson(sharedPreferences.getString(bukcet + "_last_keywords", ""),
+                new TypeToken<List<KeywordSuggestion>>() {
+                }.getType());
         if (keywordSuggestions == null) {
             keywordSuggestions = new ArrayList<>();
         }

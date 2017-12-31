@@ -15,7 +15,8 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.ui.fragment.BerandaFragment;
 import id.agristreet.agristreetapp.ui.fragment.KerjasamaFragment;
 
-public class MainActivity extends AppCompatActivity implements OnMenuTabClickListener, BerandaFragment.Listener {
+public class MainActivity extends AppCompatActivity implements OnMenuTabClickListener,
+        BerandaFragment.Listener, KerjasamaFragment.Listener {
     private static final int INDEX_BERANDA = FragNavController.TAB1;
     private static final int INDEX_KERJASAMA = FragNavController.TAB2;
     private static final int INDEX_AKUNKU = FragNavController.TAB3;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
     private BottomBar bottomBar;
     private FragNavController navController;
     private BerandaFragment berandaFragment;
+    private KerjasamaFragment kerjasamaFragment;
     private boolean isSearchViewVisible;
 
     @Override
@@ -30,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         berandaFragment = new BerandaFragment();
+        kerjasamaFragment = new KerjasamaFragment();
         navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
-                Arrays.asList(berandaFragment, new KerjasamaFragment(), berandaFragment));
+                Arrays.asList(berandaFragment, kerjasamaFragment, berandaFragment));
         bottomBar = BottomBar.attach(this, savedInstanceState);
         bottomBar.useOnlyStatusBarTopOffset();
         bottomBar.setMaxFixedTabs(2);
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
     public void onBackPressed() {
         if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == INDEX_BERANDA) {
             berandaFragment.hideSearchView();
+        } else if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == INDEX_KERJASAMA) {
+            kerjasamaFragment.hideSearchView();
         } else {
             super.onBackPressed();
         }

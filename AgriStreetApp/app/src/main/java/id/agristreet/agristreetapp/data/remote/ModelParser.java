@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 
 import id.agristreet.agristreetapp.data.model.Alamat;
 import id.agristreet.agristreetapp.data.model.Kategori;
+import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.data.model.Pebisnis;
 import id.agristreet.agristreetapp.data.model.Petani;
@@ -76,5 +77,19 @@ final class ModelParser {
             e.printStackTrace();
         }
         return lowongan;
+    }
+
+    static Kerjasama parseKerjasama(JsonObject json) {
+        Kerjasama kerjasama = new Kerjasama();
+        kerjasama.setId(json.get("id_kerjasama").getAsInt());
+        kerjasama.setPrice(json.get("harga_sepakat").getAsLong());
+        kerjasama.setStatus(json.get("status_lamaran").getAsString());
+        kerjasama.setLowongan(parseLowongan(json.get("lowongan").getAsJsonObject()));
+        try {
+            kerjasama.setCreatedAt(dateFormat.parse(json.get("tgl_kerjasama").getAsString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return kerjasama;
     }
 }
