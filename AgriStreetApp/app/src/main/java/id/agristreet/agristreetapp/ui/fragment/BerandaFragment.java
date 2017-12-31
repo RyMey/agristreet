@@ -2,6 +2,7 @@ package id.agristreet.agristreetapp.ui.fragment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.presenter.BerandaPresenter;
+import id.agristreet.agristreetapp.ui.AddLowonganActivity;
 import id.agristreet.agristreetapp.ui.DeskripsiLowonganActivity;
 import id.agristreet.agristreetapp.ui.fragment.adapter.LowonganAdapter;
 
@@ -92,6 +94,11 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
 
         berandaPresenter = new BerandaPresenter(getActivity(), this);
         berandaPresenter.loadLowongan();
+    }
+
+    @OnClick(R.id.iv_add_lowongan)
+    public void addLowongan() {
+        startActivity(new Intent(getActivity(), AddLowonganActivity.class));
     }
 
     public void hideSearchView() {
