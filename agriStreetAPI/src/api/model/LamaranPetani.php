@@ -31,7 +31,7 @@ class LamaranPetani extends Model{
         } else {
             $lamaran->id_petani = $petani->id_petani;
             $lamaran->id_lowongan = $lowongan->id_lowongan;
-            $lamaran->tgl_lamar = date("Y-m-d");;
+            $lamaran->tgl_lamar = date("Y-m-d");
             $lamaran->harga_tawar = $harga_tawar;
             $lamaran->deskripsi_lamaran = $deskripsi_lamaran;
 
