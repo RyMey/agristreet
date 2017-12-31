@@ -182,6 +182,12 @@ public class RestApi {
                 });
     }
 
+    public Observable<Void> makeBid(int idLowongan, String keterangan, long harga) {
+        return api.makeBid(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idLowongan, keterangan, harga)
+                .map(jsonObject -> null);
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -221,5 +227,12 @@ public class RestApi {
 
         @GET("/kerjasama")
         Observable<JsonObject> getKerjasama(@Header("token") String token);
+
+        @FormUrlEncoded
+        @POST("/lamaran/make-lamaran-petani")
+        Observable<JsonObject> makeBid(@Header("token") String token,
+                                       @Field("id_lowongan") int idLowongan,
+                                       @Field("deskripsi_lamaran") String keterangan,
+                                       @Field("harga_tawar") long harga);
     }
 }
