@@ -223,17 +223,35 @@
                 android:textColor="@color/secondaryTextColor"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/jumlah_pelamar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jumlah_pelamar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/pelamar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:rotation="180"
+                    android:src="@drawable/ic_arrow_back_white"
+                    android:tint="@color/primaryTextColor"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bid"

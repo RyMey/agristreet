@@ -30,6 +30,8 @@
         <activity android:name=".ui.BeriFeedbackActivity"/>
         <activity android:name=".ui.AddLowonganActivity"/>
         <activity android:name=".ui.DetailKerjasamaActivity"/>
+        <activity android:name=".ui.PilihPetaniActivity">
+        </activity>
     </application>
 
 </manifest>
