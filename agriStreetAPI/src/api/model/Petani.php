@@ -73,7 +73,7 @@ class Petani extends Model{
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://Api.nexmo.com/verify/json");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=b6b121fd&api_secret=e26e5acecfe7189f&number=$no_telp&brand=AgriStreet");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"api_key=467d8cb9&api_secret=496197a14e8c1c48&number=$no_telp&brand=AgriStreet");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 
         $raw_data = curl_exec($ch);
