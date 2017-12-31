@@ -257,7 +257,7 @@ $slim->get("/lowongan/search/{keyword}",function (ServerRequestInterface $req, R
 
 $slim->get("/lowongan/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
-        return ResultWrapper::getResult(Lowongan::getLowongan($id), $res);
+        return ResultWrapper::getResult(Lowongan::getLowongan($id, $req->getHeader('token')), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
@@ -290,6 +290,14 @@ $slim->put("/lowongan/update-lowongan", function (ServerRequestInterface $req, R
             throw new Exception ("Ups, something wrong!");
         }
         return ResultWrapper::getResult($lowongan, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/kerjasama",function (ServerRequestInterface $req, ResponseInterface $res){
+    try {
+        return ResultWrapper::getResult(Kerjasama::getAllKerjasama($req->getHeader('token')), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
