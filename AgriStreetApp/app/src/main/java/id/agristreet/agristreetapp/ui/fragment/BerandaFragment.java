@@ -93,6 +93,11 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
         });
 
         berandaPresenter = new BerandaPresenter(getActivity(), this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         berandaPresenter.loadLowongan();
     }
 
