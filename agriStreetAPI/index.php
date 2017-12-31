@@ -227,7 +227,7 @@ $slim->get("/lamaran/lowongan/{id}",function (ServerRequestInterface $req, Respo
 $slim->post("/lamaran/make-lamaran-petani", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $lamaranPetani = LamaranPetani::makeLamaranPetani($req->getHeader('token'),$params['id_lowongan'],$params['tgl_lamar'],
+        $lamaranPetani = LamaranPetani::makeLamaranPetani($req->getHeader('token'),$params['id_lowongan'],
             $params['harga_tawar'], $params['deskripsi_lamaran']);
 
         if ($lamaranPetani == null) {

@@ -12,11 +12,12 @@ use \AgriStreet\Api\Model\Lowongan;
 class LamaranPetani extends Model{
     const TABLE_NAME = "lamaran_petani";
     const PRIMARY_KEY = "id_lamar";
+    public $timestamps = false;
 
     public $table = LamaranPetani::TABLE_NAME;
     public $primaryKey = LamaranPetani::PRIMARY_KEY;
 
-    public static function makeLamaranPetani($token,$id_lowongan,$tgl_lamar,$harga_tawar,$deskripsi_lamaran){
+    public static function makeLamaranPetani($token,$id_lowongan,$harga_tawar,$deskripsi_lamaran){
         $petani = Petani::getPetaniByToken($token);
 
         $lowongan = Lowongan::getLowongan($id_lowongan, $token);
@@ -30,14 +31,12 @@ class LamaranPetani extends Model{
         } else {
             $lamaran->id_petani = $petani->id_petani;
             $lamaran->id_lowongan = $lowongan->id_lowongan;
-            $lamaran->tgl_lamar = $tgl_lamar;
+            $lamaran->tgl_lamar = date("Y-m-d");;
             $lamaran->harga_tawar = $harga_tawar;
             $lamaran->deskripsi_lamaran = $deskripsi_lamaran;
 
             $lamaran->save();
-            $result = Manager::table(LamaranPetani::TABLE_NAME)
-                ->first([LamaranPetani::PRIMARY_KEY, "tgl_lamar", "harga_tawar", "deskripsi_lamaran"]);
-            return $result;
+            return $lamaran;
         }
     }
 
