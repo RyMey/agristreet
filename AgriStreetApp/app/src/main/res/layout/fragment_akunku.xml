@@ -120,7 +120,6 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/secondaryColor"
-                android:enabled="false"
                 android:text="@string/riwayat"
                 android:textColor="@color/primaryTextColor"
                 android:visibility="gone"/>
@@ -133,7 +132,6 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/secondaryColor"
-                android:enabled="false"
                 android:text="@string/feedback"
                 android:textColor="@color/primaryTextColor"/>
 
@@ -145,7 +143,6 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/secondaryTextColor"
-                android:enabled="false"
                 android:text="@string/logout"
                 android:textColor="@color/white"/>
 
