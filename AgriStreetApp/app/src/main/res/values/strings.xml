@@ -23,6 +23,7 @@
     <string name="alamat">Alamat</string>
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="riwayat">Riwayat</string>
+    <string name="logout">Logout</string>
 
     <!-- Deskripsi Lowongan -->
     <string name="deskripsi_lowongan">Deskripsi Lowongan</string>
