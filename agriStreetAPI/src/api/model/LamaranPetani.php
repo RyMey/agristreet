@@ -44,6 +44,10 @@ class LamaranPetani extends Model{
         $lamarans =  Manager::table(LamaranPetani::TABLE_NAME)->where('id_lowongan', '=', $id_lowongan)
                     ->get();
 
+        foreach ($lamarans as $lamaran){
+            $lamaran->petani = Petani::getPetani($lamaran->id_petani);
+        }
+
         return $lamarans;
     }
 

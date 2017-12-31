@@ -53,20 +53,15 @@ class Alamat extends Model{
         return $alamat;
     }
 	
-	public static function getAlamatByPebisnis($token) {
+	public static function getAlamatByPebisnis($id) {
         $pebisnis = Manager::table(Pebisnis::TABLE_NAME)
-            ->where('token', '=', $token)
-            ->first([Pebisnis::PRIMARY_KEY]);
-	
-	
-		if($pebisnis != null or $token != null or $token !=''){
-             $result2 = Manager::table(Alamat::TABLE_NAME)->where(Alamat::TABLE_NAME.'.id_pebisnis', '=', $pebisnis)
-                ->first([Alamat::TABLE_NAME . '.' . Alamat::PRIMARY_KEY,
-                    Alamat::TABLE_NAME . '.id_pebisnis',
-                    Alamat::TABLE_NAME . '.deskripsi',
-                    Alamat::TABLE_NAME . '.latitude',
-                    Alamat::TABLE_NAME . '.longitude']);
-            return $result2;
+            ->where('id_pebisnis', '=', $id)
+            ->first();
+
+		if($pebisnis != null or $id != null or $id !=''){
+             $result = Manager::table(Alamat::TABLE_NAME)->where(Alamat::TABLE_NAME.'.id_pebisnis', '=', $pebisnis->id_pebisnis)
+                ->get();
+            return $result;
 		}else{
             throw new \Exception("Pebisnis is not exist");
         }
