@@ -1,4 +1,4 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter;
+package id.agristreet.agristreetapp.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.agristreet.agristreetapp.ui.fragment.adapter.viewholder.BaseItemViewHolder;
+import id.agristreet.agristreetapp.ui.adapter.viewholder.BaseItemViewHolder;
 
 public abstract class BaseRecyclerAdapter<Data, Holder extends BaseItemViewHolder> extends RecyclerView.Adapter<Holder> {
     protected Context context;

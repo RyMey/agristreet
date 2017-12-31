@@ -81,12 +81,7 @@ public class Kategori implements Parcelable {
 
     @Override
     public String toString() {
-        return "Kategori{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        return name;
     }
 
     @Override

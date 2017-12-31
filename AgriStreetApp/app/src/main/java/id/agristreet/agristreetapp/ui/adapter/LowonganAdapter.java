@@ -1,4 +1,4 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter;
+package id.agristreet.agristreetapp.ui.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lowongan;
-import id.agristreet.agristreetapp.ui.fragment.adapter.viewholder.LowonganViewHolder;
+import id.agristreet.agristreetapp.ui.adapter.viewholder.LowonganViewHolder;
 import rx.Observable;
 
 public class LowonganAdapter extends BaseRecyclerAdapter<Lowongan, LowonganViewHolder> {

@@ -1,4 +1,4 @@
-package id.agristreet.agristreetapp.ui.fragment.adapter;
+package id.agristreet.agristreetapp.ui.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
-import id.agristreet.agristreetapp.ui.fragment.adapter.viewholder.KerjasamaViewHolder;
+import id.agristreet.agristreetapp.ui.adapter.viewholder.KerjasamaViewHolder;
 import rx.Observable;
 
 public class KerjasamaAdapter extends BaseRecyclerAdapter<Kerjasama, KerjasamaViewHolder> {
