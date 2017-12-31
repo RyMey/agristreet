@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.agristreet.agristreetapp">
+<manifest package="id.agristreet.agristreetapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -12,23 +12,24 @@
             android:name=".ui.ChooseUserActivity"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.AjukanBidActivity" />
-        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.AjukanBidActivity"/>
+        <activity android:name=".ui.ProfileActivity"/>
         <activity
             android:name=".ui.VerifyPhoneActivity"
-            android:noHistory="true" />
-        <activity android:name=".ui.DeskripsiLowonganActivity" />
+            android:noHistory="true"/>
+        <activity android:name=".ui.DeskripsiLowonganActivity"/>
         <activity
             android:name=".ui.PutCodeActivity"
-            android:noHistory="true" />
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.BeriFeedbackActivity" />
-        <activity android:name=".ui.AddLowonganActivity" />
+            android:noHistory="true"/>
+        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.BeriFeedbackActivity"/>
+        <activity android:name=".ui.AddLowonganActivity"/>
+        <activity android:name=".ui.DetailKerjasamaActivity"/>
     </application>
 
 </manifest>
