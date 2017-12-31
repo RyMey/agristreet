@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -178,5 +177,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfilePresent
         Snackbar.make(etNama.getRootView(), "Photo berhasil diubah", Snackbar.LENGTH_LONG).show();
         akun = PengelolaDataLokal.getInstance(this).getAkun();
         bindUserData();
+    }
+
+    @OnClick(R.id.iv_back)
+    public void back() {
+        onBackPressed();
     }
 }

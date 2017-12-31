@@ -12,6 +12,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import java.util.Arrays;
 
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.ui.fragment.AkunkuFragment;
 import id.agristreet.agristreetapp.ui.fragment.BerandaFragment;
 import id.agristreet.agristreetapp.ui.fragment.KerjasamaFragment;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
         berandaFragment = new BerandaFragment();
         kerjasamaFragment = new KerjasamaFragment();
         navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
-                Arrays.asList(berandaFragment, kerjasamaFragment, berandaFragment));
+                Arrays.asList(berandaFragment, kerjasamaFragment, new AkunkuFragment()));
         bottomBar = BottomBar.attach(this, savedInstanceState);
         bottomBar.useOnlyStatusBarTopOffset();
         bottomBar.setMaxFixedTabs(2);
