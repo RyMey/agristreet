@@ -29,6 +29,7 @@
             android:noHistory="true"/>
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.BeriFeedbackActivity"/>
+        <activity android:name=".ui.AddLowonganActivity"/>
     </application>
 
 </manifest>
