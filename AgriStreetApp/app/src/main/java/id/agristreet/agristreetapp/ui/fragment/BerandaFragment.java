@@ -75,7 +75,7 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
         });
         searchView.setOnQueryChangeListener((oldQuery, newQuery) -> {
             keyword = newQuery.trim();
-            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword());
+            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword("beranda"));
         });
         searchView.setOnSearchListener(this);
         searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
@@ -141,7 +141,7 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
     @Override
     public void onSearchAction(String currentQuery) {
         searchView.setSearchBarTitle(keyword);
-        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory(keyword);
+        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory("beranda", keyword);
         lowonganAdapter.filter(keyword);
     }
 

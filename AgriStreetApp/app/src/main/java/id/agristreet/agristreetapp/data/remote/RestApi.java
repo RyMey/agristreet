@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
+import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -169,6 +170,18 @@ public class RestApi {
                 });
     }
 
+    public Observable<List<Kerjasama>> getKerjasama() {
+        return api.getKerjasama(PengelolaDataLokal.getInstance(context).getAkun().getToken())
+                .map(json -> {
+                    JsonArray jsonArray = json.get("result").getAsJsonArray();
+                    List<Kerjasama> daftarKerjasama = new ArrayList<>();
+                    for (JsonElement jsonElement : jsonArray) {
+                        daftarKerjasama.add(ModelParser.parseKerjasama(jsonElement.getAsJsonObject()));
+                    }
+                    return daftarKerjasama;
+                });
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -205,5 +218,8 @@ public class RestApi {
 
         @GET("/lowongan")
         Observable<JsonObject> getLowongan(@Header("token") String token);
+
+        @GET("/kerjasama")
+        Observable<JsonObject> getKerjasama(@Header("token") String token);
     }
 }
