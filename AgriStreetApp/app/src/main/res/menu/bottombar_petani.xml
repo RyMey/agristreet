@@ -8,7 +8,7 @@
     <item
         android:id="@+id/bar_kerja_sama"
         android:icon="@drawable/ic_kerjasama"
-        android:title="Kerja Sama"/>
+        android:title="Kerjasama"/>
 
     <item
         android:id="@+id/bar_akunku"

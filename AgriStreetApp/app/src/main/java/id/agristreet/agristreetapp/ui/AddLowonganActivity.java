@@ -172,7 +172,8 @@ public class AddLowonganActivity extends AppCompatActivity implements AddLowonga
 
     @Override
     public void onLowonganCreated(Lowongan lowongan) {
-
+        startActivity(DeskripsiLowonganActivity.generateIntent(this, lowongan));
+        finish();
     }
 
     @OnClick(R.id.iv_back)

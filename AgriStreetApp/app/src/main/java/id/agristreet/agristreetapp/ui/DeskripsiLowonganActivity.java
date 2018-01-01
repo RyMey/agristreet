@@ -94,6 +94,11 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         startActivityForResult(AjukanBidActivity.generateIntent(this, lowongan.getId()), RC_BID);
     }
 
+    @OnClick(R.id.bt_pelamar)
+    public void pilihPetani() {
+        startActivity(PilihPetaniActivity.generateIntent(this, lowongan.getId()));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

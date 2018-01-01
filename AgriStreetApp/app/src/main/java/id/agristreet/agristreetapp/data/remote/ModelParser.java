@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import id.agristreet.agristreetapp.data.model.Alamat;
 import id.agristreet.agristreetapp.data.model.Kategori;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
+import id.agristreet.agristreetapp.data.model.Lamaran;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.data.model.Pebisnis;
 import id.agristreet.agristreetapp.data.model.Petani;
@@ -91,5 +92,19 @@ final class ModelParser {
             e.printStackTrace();
         }
         return kerjasama;
+    }
+
+    static Lamaran parseLamaran(JsonObject json){
+        Lamaran lamaran = new Lamaran();
+        lamaran.setId(json.get("id_lamar").getAsInt());
+        lamaran.setPrice(json.get("harga_tawar").getAsLong());
+        lamaran.setDescription(json.get("deskripsi_lamaran").getAsString());
+        lamaran.setCreator(parsePetani(json.get("petani").getAsJsonObject()));
+        try {
+            lamaran.setCreatedAt(dateFormat.parse(json.get("tgl_lamar").getAsString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lamaran;
     }
 }

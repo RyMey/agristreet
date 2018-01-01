@@ -2,7 +2,6 @@ package id.agristreet.agristreetapp.ui.fragment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,29 +23,27 @@ import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Lowongan;
-import id.agristreet.agristreetapp.presenter.BerandaPresenter;
-import id.agristreet.agristreetapp.ui.AddLowonganActivity;
+import id.agristreet.agristreetapp.presenter.LowongankuPresenter;
 import id.agristreet.agristreetapp.ui.DeskripsiLowonganActivity;
 import id.agristreet.agristreetapp.ui.adapter.LowonganAdapter;
 
-public class BerandaFragment extends Fragment implements BerandaPresenter.View, FloatingSearchView.OnSearchListener {
-
+public class LowongankuFragment extends Fragment implements LowongankuPresenter.View, FloatingSearchView.OnSearchListener {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     @BindView(R.id.search_view)
     FloatingSearchView searchView;
 
-    private BerandaPresenter berandaPresenter;
+    private LowongankuPresenter lowongankuPresenter;
     private ProgressDialog progressDialog;
     private LowonganAdapter lowonganAdapter;
 
-    private Listener listener;
+    private LowongankuFragment.Listener listener;
     private String keyword = "";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_beranda, container, false);
+        View view = inflater.inflate(R.layout.fragment_lowonganku, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -54,11 +51,12 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
-        if (activity == null || !(activity instanceof Listener)) {
-            throw new RuntimeException("Please implement BerandaFragment.Listener to use BerandaFragment");
+        if (activity == null || !(activity instanceof LowongankuFragment.Listener)) {
+            throw new RuntimeException("Please implement LowongankuFragment.Listener to use LowongankuFragment");
         }
-        listener = (Listener) getActivity();
+        listener = (LowongankuFragment.Listener) getActivity();
         listener.onToggleSearchViewVisibility(searchView.getVisibility() == View.VISIBLE);
 
         progressDialog = new ProgressDialog(getActivity());
@@ -77,7 +75,7 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
         });
         searchView.setOnQueryChangeListener((oldQuery, newQuery) -> {
             keyword = newQuery.trim();
-            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword("beranda"));
+            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword("lowonganku"));
         });
         searchView.setOnSearchListener(this);
         searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
@@ -92,18 +90,13 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
             }
         });
 
-        berandaPresenter = new BerandaPresenter(getActivity(), this);
+        lowongankuPresenter = new LowongankuPresenter(getActivity(), this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        berandaPresenter.loadLowongan();
-    }
-
-    @OnClick(R.id.iv_add_lowongan)
-    public void addLowongan() {
-        startActivity(new Intent(getActivity(), AddLowonganActivity.class));
+        lowongankuPresenter.loadLowonganku();
     }
 
     public void hideSearchView() {
@@ -153,7 +146,7 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
     @Override
     public void onSearchAction(String currentQuery) {
         searchView.setSearchBarTitle(keyword);
-        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory("beranda", keyword);
+        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory("lowonganku", keyword);
         lowonganAdapter.filter(keyword);
     }
 

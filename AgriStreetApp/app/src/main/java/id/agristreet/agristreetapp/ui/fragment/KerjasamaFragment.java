@@ -24,6 +24,7 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.presenter.KerjasamaPresenter;
+import id.agristreet.agristreetapp.ui.DetailKerjasamaActivity;
 import id.agristreet.agristreetapp.ui.adapter.KerjasamaAdapter;
 
 public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.View, FloatingSearchView.OnSearchListener {
@@ -90,6 +91,11 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
         });
 
         kerjasamaPresenter = new KerjasamaPresenter(getActivity(), this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         kerjasamaPresenter.loadKerjasama();
     }
 
@@ -108,7 +114,7 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
     }
 
     private void onItemClick(Kerjasama kerjasama) {
-        //TODO
+        startActivity(DetailKerjasamaActivity.generateIntent(getActivity(), kerjasama));
     }
 
     @Override
