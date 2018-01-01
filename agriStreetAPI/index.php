@@ -200,13 +200,13 @@ $slim->get("/lamaran/{id}",function (ServerRequestInterface $req, ResponseInterf
     }
 });
 
-$slim->get("/lamaran/{id_lowongan}/{id_petani}",function (ServerRequestInterface $req, ResponseInterface $res, $id_lowongan, $id_petani){
+/*$slim->get("/lamaran/{id_lowongan}/{id_petani}",function (ServerRequestInterface $req, ResponseInterface $res, $id_lowongan, $id_petani){
     try {
         return ResultWrapper::getResult(LamaranPetani::getLamaran($id_lowongan,$id_petani), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
-});
+});*/
 
 $slim->get("/lamaran/petani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
