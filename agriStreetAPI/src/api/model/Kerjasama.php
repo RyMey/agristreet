@@ -41,30 +41,30 @@ class Kerjasama extends Model{
 
         foreach ($kerjasamas as $kerjasama) {
             $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
-            $pebisnis = Pebisnis::getPebisnis($kerjasama->id_pebisnis);
             $petani = Petani::getPetani($kerjasama->id_petani);
-            $kerjasama->nama_pebisnis = $pebisnis->nama_pebisnis;
-            $kerjasama->nama_petani = $petani->nama_petani;
+            $kerjasama->petani = $petani;
         }
 
         return $kerjasamas;
 
     }
 
-    public static function makeKerjasama($token,$id_petani,$id_lowongan,$status_lamaran,$tgl_kerjasama,$harga_sepakat){
+    public static function makeKerjasama($token,$id_lowongan,$id_lamaran){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
+        $lowongan = Lowongan::getLowongan($id_lowongan,$token);
+        $lamaran = LamaranPetani::getLamaranById($id_lamaran);
        
         $kerjasama = new Kerjasama();
 
         if ($pebisnis == null){
-            throw new \Exception("Kategori was not exist");
+            throw new \Exception("Pebisnis was not exist");
         } else {
             $kerjasama->id_pebisnis = $pebisnis->id_pebisnis;
-            $kerjasama->id_petani = $id_petani;
+            $kerjasama->id_petani = $lamaran->id_petani;
             $kerjasama->id_lowongan = $id_lowongan;
-            $kerjasama->id_lowongan = $status_lamaran;
-            $kerjasama->id_lowongan = $tgl_kerjasama;
-            $kerjasama->id_lowongan = $harga_sepakat;
+            $kerjasama->tgl_kerjasama = date("Y-m-d");
+            $kerjasama->harga_sepakat = $lamaran->harga_tawar;
+            $kerjasama->status_lamaran = "proses";
            
             $kerjasama->save();
 
@@ -81,8 +81,8 @@ class Kerjasama extends Model{
         return $kerjasama;
     }
 
-    public static function updateStatusLamaran($token,$id_kerjasama, $status_lamaran){
-         $pebisnis = Pebisnis::getPebisnisByToken($token);
+    public static function updateStatusLamaran($token,$id_kerjasama){
+        $pebisnis = Pebisnis::getPebisnisByToken($token);
         $kerjasama = Kerjasama::query()
             ->where(Kerjasama::PRIMARY_KEY, '=', $id_kerjasama)
             ->first();
@@ -92,10 +92,7 @@ class Kerjasama extends Model{
         }else if($pebisnis == null){
             throw new \Exception("Session expired");
         }else{
-           
-            if($status_lamaran!=null){
-                $kerjasama->status_lamaran = $status_lamaran;
-            }
+            $kerjasama->status_lamaran = "selesai";
             $kerjasama->save();
         }
 
