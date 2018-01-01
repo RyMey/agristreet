@@ -32,6 +32,8 @@
         <activity android:name=".ui.DetailKerjasamaActivity"/>
         <activity android:name=".ui.PilihPetaniActivity">
         </activity>
+        <activity android:name=".ui.DetailLamaranActivity">
+        </activity>
     </application>
 
 </manifest>

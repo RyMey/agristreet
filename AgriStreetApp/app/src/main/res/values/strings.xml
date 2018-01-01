@@ -67,5 +67,7 @@
     <string name="pilih_petani">Pilih Petani</string>
     <string name="selesai">Selesai</string>
     <string name="beri_feedback">Beri Feedback</string>
+    <string name="detail_ajukan_bid">Detail Ajukan Bid</string>
+    <string name="keterangan">Keterangan</string>
 
 </resources>

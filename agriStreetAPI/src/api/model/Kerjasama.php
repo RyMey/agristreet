@@ -51,7 +51,6 @@ class Kerjasama extends Model{
 
     public static function makeKerjasama($token,$id_lowongan,$id_lamaran){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
-        $lowongan = Lowongan::getLowongan($id_lowongan,$token);
         $lamaran = LamaranPetani::getLamaranById($id_lamaran);
        
         $kerjasama = new Kerjasama();
@@ -68,15 +67,17 @@ class Kerjasama extends Model{
            
             $kerjasama->save();
 
-            $result = Manager::table(Kerjasama::TABLE_NAME)
-                ->first([Kerjasama::PRIMARY_KEY, "id_petani", "status_lamaran", "tgl_kerjasama", "harga_sepakat"]);
-            return $result;
+            return Kerjasama::getKerjasama($token, $kerjasama->id_kerjasama);
         }
     }
 
-    public static function getKerjasama($id_kerjasama){
+    public static function getKerjasama($token, $id_kerjasama){
         $kerjasama = Manager::table(Kerjasama::TABLE_NAME)->where(Kerjasama::PRIMARY_KEY, '=', $id_kerjasama)
             ->first();
+
+        $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
+        $petani = Petani::getPetani($kerjasama->id_petani);
+        $kerjasama->petani = $petani;
 
         return $kerjasama;
     }
