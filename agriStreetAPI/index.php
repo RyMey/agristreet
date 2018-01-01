@@ -336,8 +336,8 @@ $slim->get("/kerjasama/{id}",function (ServerRequestInterface $req, ResponseInte
 $slim->post("/kerjasama/make-kerjasama", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $kerjasama = Kerjasama::makeKerjasama($req->getHeader('token'),$params['id_petani'],$params['id_lowongan'],
-            $params['status_lamaran'], $params['tgl_kerjasama'], $params['harga_sepakat']);
+        $kerjasama = Kerjasama::makeKerjasama($req->getHeader('token'),$params['id_lowongan'],
+            $params['id_lamaran']);
 
         if ($kerjasama == null) {
             throw new Exception ("Ups, something wrong!");

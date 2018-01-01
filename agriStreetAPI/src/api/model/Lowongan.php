@@ -86,6 +86,7 @@ class Lowongan extends Model{
     public static function getAllLowongan($token){
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
                     ->where('tgl_tutup','>=',date("Y-m-d"))
+                    ->where('status_lowongan','=','buka')
                     ->get();
 
         foreach ($lowongans as $lowongan) {
