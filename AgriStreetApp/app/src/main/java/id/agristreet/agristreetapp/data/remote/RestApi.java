@@ -248,6 +248,12 @@ public class RestApi {
                 });
     }
 
+    public Observable<Kerjasama> makeKerjasama(int idLowongan, int idLamaran) {
+        return api.makeKerjasama(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idLowongan, idLamaran)
+                .map(json -> ModelParser.parseKerjasama(json.get("result").getAsJsonObject()));
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -320,5 +326,11 @@ public class RestApi {
         @GET("/lamaran/lowongan/{id}")
         Observable<JsonObject> getPelamar(@Header("token") String token,
                                           @Path("id") int idLowongan);
+
+        @FormUrlEncoded
+        @POST("/kerjasama/make-kerjasama")
+        Observable<JsonObject> makeKerjasama(@Header("token") String token,
+                                             @Field("id_lowongan") int idLowongan,
+                                             @Field("id_lamaran") int idLamaran);
     }
 }
