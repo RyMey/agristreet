@@ -224,6 +224,7 @@
                 android:textSize="14sp" />
 
             <LinearLayout
+                android:id="@+id/bt_pelamar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

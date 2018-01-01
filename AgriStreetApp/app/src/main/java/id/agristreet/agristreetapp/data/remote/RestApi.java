@@ -13,7 +13,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,8 +21,8 @@ import id.agristreet.agristreetapp.data.model.Akun;
 import id.agristreet.agristreetapp.data.model.Alamat;
 import id.agristreet.agristreetapp.data.model.Kategori;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
+import id.agristreet.agristreetapp.data.model.Lamaran;
 import id.agristreet.agristreetapp.data.model.Lowongan;
-import id.agristreet.agristreetapp.util.DateUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -225,6 +224,18 @@ public class RestApi {
                 .map(json -> ModelParser.parseLowongan(json.get("result").getAsJsonObject()));
     }
 
+    public Observable<List<Lamaran>> getLamaran(int idLowongan) {
+        return api.getPelamar(PengelolaDataLokal.getInstance(context).getAkun().getToken(), idLowongan)
+                .map(json -> {
+                    JsonArray jsonArray = json.get("result").getAsJsonArray();
+                    List<Lamaran> daftarLamaran = new ArrayList<>();
+                    for (JsonElement jsonElement : jsonArray) {
+                        daftarLamaran.add(ModelParser.parseLamaran(jsonElement.getAsJsonObject()));
+                    }
+                    return daftarLamaran;
+                });
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -290,5 +301,9 @@ public class RestApi {
                                               @Field("tgl_tutup") String tglTutup,
                                               @Field("jumlah_komoditas") int jumlahKomoditas,
                                               @Field("harga_awal") long price);
+
+        @GET("/lamaran/lowongan/{id}")
+        Observable<JsonObject> getPelamar(@Header("token") String token,
+                                          @Path("id") int idLowongan);
     }
 }
