@@ -79,8 +79,8 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
         jumlahKomoditas.setText(String.format("%d", kerjasama.getLowongan().getJumlahKomoditas()));
         alamat.setText(kerjasama.getLowongan().getAlamat().getDeskripsi());
         namaPebisnis.setText(kerjasama.getLowongan().getCreator().getNama());
+        namaPetani.setText(kerjasama.getPetani().getNama());
         hargaSepakat.setText(CurrencyFormatter.format(kerjasama.getPrice()));
-        //TODO set nama petani
     }
 
     @OnClick(R.id.iv_back)

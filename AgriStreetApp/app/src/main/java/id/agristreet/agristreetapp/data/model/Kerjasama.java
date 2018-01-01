@@ -11,6 +11,7 @@ public class Kerjasama implements Parcelable {
     private long price;
     private String status;
     private Lowongan lowongan;
+    private Petani petani;
 
     public Kerjasama() {
 
@@ -22,6 +23,7 @@ public class Kerjasama implements Parcelable {
         price = in.readLong();
         status = in.readString();
         lowongan = in.readParcelable(Lowongan.class.getClassLoader());
+        petani = in.readParcelable(Petani.class.getClassLoader());
     }
 
     public static final Creator<Kerjasama> CREATOR = new Creator<Kerjasama>() {
@@ -76,6 +78,14 @@ public class Kerjasama implements Parcelable {
         this.lowongan = lowongan;
     }
 
+    public Petani getPetani() {
+        return petani;
+    }
+
+    public void setPetani(Petani petani) {
+        this.petani = petani;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,6 +109,7 @@ public class Kerjasama implements Parcelable {
                 ", price=" + price +
                 ", status='" + status + '\'' +
                 ", lowongan=" + lowongan +
+                ", petani=" + petani +
                 '}';
     }
 
@@ -114,5 +125,6 @@ public class Kerjasama implements Parcelable {
         dest.writeLong(price);
         dest.writeString(status);
         dest.writeParcelable(lowongan, flags);
+        dest.writeParcelable(petani, flags);
     }
 }
