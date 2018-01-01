@@ -84,7 +84,6 @@ class Lowongan extends Model{
     }
 
     public static function getAllLowongan($token){
-
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
                     ->where('tgl_tutup','>=',date("Y-m-d"))
                     ->get();
@@ -190,6 +189,19 @@ class Lowongan extends Model{
             $lowongan->isBid = false;
         else
             $lowongan->isBid = true;
+
+        return $lowongan;
+    }
+
+    public static function finishLowongan($token, $id_lowongan){
+        $pebisnis = Pebisnis::getPebisnisByToken($token);
+        $lowongan = Lowongan::getLowongan($id_lowongan,$token);
+
+        if($lowongan->pebisnis->id_pebisnis != $pebisnis->id_pebisnis)
+            throw new \Exception("Pebisnis don't have authoritation");
+
+        $lowongan->status_lowongan = "tutup";
+        $lowongan->save();
 
         return $lowongan;
     }

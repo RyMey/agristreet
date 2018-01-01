@@ -81,7 +81,7 @@ class Kerjasama extends Model{
         return $kerjasama;
     }
 
-    public static function updateStatusLamaran($token,$id_kerjasama){
+    public static function finishKerjasama($token,$id_kerjasama){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
         $kerjasama = Kerjasama::query()
             ->where(Kerjasama::PRIMARY_KEY, '=', $id_kerjasama)
