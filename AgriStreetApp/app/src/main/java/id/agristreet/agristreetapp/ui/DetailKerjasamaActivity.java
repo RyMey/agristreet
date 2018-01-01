@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
 import id.agristreet.agristreetapp.util.CurrencyFormatter;
 import id.agristreet.agristreetapp.util.DateUtil;
@@ -43,8 +46,11 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
     TextView alamat;
     @BindView(R.id.harga_sepakat)
     TextView hargaSepakat;
+    @BindView(R.id.finish)
+    Button btFinish;
 
     private Kerjasama kerjasama;
+    private PengelolaDataLokal.UserType userType;
 
     public static Intent generateIntent(Context context, Kerjasama kerjasama) {
         Intent intent = new Intent(context, DetailKerjasamaActivity.class);
@@ -62,6 +68,8 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        userType = PengelolaDataLokal.getInstance(this).getUserType();
 
         showKerjasama();
     }
@@ -81,10 +89,35 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
         namaPebisnis.setText(kerjasama.getLowongan().getCreator().getNama());
         namaPetani.setText(kerjasama.getPetani().getNama());
         hargaSepakat.setText(CurrencyFormatter.format(kerjasama.getPrice()));
+
+        if (userType == PengelolaDataLokal.UserType.PETANI) {
+            btFinish.setVisibility(View.GONE);
+        }
+
+        if (kerjasama.getStatus().equals("selesai")) {
+            btFinish.setText(R.string.beri_feedback);
+            btFinish.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick(R.id.iv_back)
     public void back() {
         onBackPressed();
     }
+
+    @OnClick(R.id.finish)
+    public void finish() {
+        if (kerjasama.getStatus().equals("selesai")) {
+            beriFeedBack();
+        }
+    }
+
+    private void beriFeedBack() {
+        if (userType == PengelolaDataLokal.UserType.PETANI) {
+            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getLowongan().getCreator().getId()));
+        } else {
+            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getPetani().getId()));
+        }
+    }
+
 }
