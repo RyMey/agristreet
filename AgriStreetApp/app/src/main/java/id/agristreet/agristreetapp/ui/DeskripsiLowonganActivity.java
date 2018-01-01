@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
+import id.agristreet.agristreetapp.data.model.Akun;
 import id.agristreet.agristreetapp.data.model.Lowongan;
 import id.agristreet.agristreetapp.util.DateUtil;
 import id.agristreet.agristreetapp.util.Util;
@@ -40,10 +43,13 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
     TextView alamat;
     @BindView(R.id.jumlah_pelamar)
     TextView jumlahPelamar;
+    @BindView(R.id.pelamar)
+    ImageView iconPelamar;
     @BindView(R.id.bid)
     Button btBid;
 
     private Lowongan lowongan;
+    private Akun akun;
 
     public static Intent generateIntent(Context context, Lowongan lowongan) {
         Intent intent = new Intent(context, DeskripsiLowonganActivity.class);
@@ -60,6 +66,14 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         if (lowongan == null) {
             finish();
             return;
+        }
+
+        akun = PengelolaDataLokal.getInstance(this).getAkun();
+        if (PengelolaDataLokal.getInstance(this).getUserType() == PengelolaDataLokal.UserType.PEBISNIS) {
+            if (lowongan.getCreator().getId().equals(akun.getUser().getId())) {
+                iconPelamar.setVisibility(View.VISIBLE);
+            }
+            btBid.setVisibility(View.GONE);
         }
 
         showLowongan();
@@ -96,7 +110,9 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_pelamar)
     public void pilihPetani() {
-        startActivity(PilihPetaniActivity.generateIntent(this, lowongan.getId()));
+        if (lowongan.getCreator().getId().equals(akun.getUser().getId())) {
+            startActivity(PilihPetaniActivity.generateIntent(this, lowongan.getId()));
+        }
     }
 
     @Override
