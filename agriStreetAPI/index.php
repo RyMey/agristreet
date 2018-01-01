@@ -247,6 +247,14 @@ $slim->get("/lowongan",function (ServerRequestInterface $req, ResponseInterface 
     }
 });
 
+$slim->get("/lowongan/pebisnis",function (ServerRequestInterface $req, ResponseInterface $res){
+    try {
+        return ResultWrapper::getResult(Lowongan::getLowonganByPebisnis($req->getHeader('token')), $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->get("/lowongan/search/{keyword}",function (ServerRequestInterface $req, ResponseInterface $res,$keyword){
     try {
         return ResultWrapper::getResult(Lowongan::searchLowongan($keyword), $res);
