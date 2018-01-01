@@ -176,21 +176,26 @@ class Lowongan extends Model{
         if($pebisnis==null)
             throw new \Exception("Pebisnis was not exist");
 
-        $lowongan = Manager::table(Lowongan::TABLE_NAME)->where('id_pebisnis', '=', $pebisnis->id_pebisnis)
+        unset($pebisnis->token);
+        
+        $lowongans = Manager::table(Lowongan::TABLE_NAME)->where('id_pebisnis', '=', $pebisnis->id_pebisnis)
             ->get();
 
-        $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
-        $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
-        $lowongan->pebisnis = Pebisnis::getPebisnis($lowongan->id_pebisnis);
-        $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
+        foreach ($lowongans as $lowongan) {
+            $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
+            $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
+            $lowongan->pebisnis = $pebisnis;
+            $lowongan->pelamar = count(LamaranPetani::getLamaranByLowongan($lowongan->id_lowongan));
 
-        $petani = Petani::getPetaniByToken($token);
-        $exist = LamaranPetani::getLamaran($lowongan->id_lowongan,$petani->id_petani);
-        if($exist==null or $petani==null)
-            $lowongan->isBid = false;
-        else
-            $lowongan->isBid = true;
+            $petani = Petani::getPetaniByToken($token);
+            $exist = LamaranPetani::getLamaran($lowongan->id_lowongan,$petani->id_petani);
+            if($exist==null or $petani==null)
+                $lowongan->isBid = false;
+            else
+                $lowongan->isBid = true;
 
-        return $lowongan;
+        }
+
+        return $lowongans;
     }
 }
