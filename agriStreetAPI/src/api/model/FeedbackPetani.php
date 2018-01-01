@@ -14,10 +14,14 @@ class FeedbackPetani extends Model{
     public $primaryKey = FeedbackPetani::PRIMARY_KEY;
 
 
-    public static function makeFeedbackPetani($id_feedback,$id_petani,$saran,$tipe_ikon){
-        $petani = Petani::getPetaniById($id_petani);
+    public static function makeFeedbackPetani($token,$id_petani,$saran,$tipe_ikon){
+        $pebisnis = Pebisnis::getPebisnisByToken($token);
+        $petani = Petani::getPetani($id_petani);
+
         $feedback = new FeedbackPetani();
 
+        if($pebisnis == null)
+            throw new \Exception("Session expired");
         if ($petani == null){
             throw new \Exception("Petani was not exist");
         } else {
@@ -26,9 +30,8 @@ class FeedbackPetani extends Model{
             $feedback->tipe_ikon = $tipe_ikon;
 
             $feedback->save();
-            $result = Manager::table(FeedbackPetani::TABLE_NAME)
-                ->first([FeedbackPetani::PRIMARY_KEY, "id_petani","saran", "tipe_ikon"]);
-            return $result;
+
+            return $feedback;
         }
     }
 

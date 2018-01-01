@@ -14,10 +14,14 @@ class FeedbackPebisnis extends Model{
     public $primaryKey = FeedbackPebisnis::PRIMARY_KEY;
 
 
-    public static function makeFeedbackPetani($id_feedback,$id_pebisnis,$saran,$tipe_ikon){
-        $petani = Pebisnis::getPebisnisById($id_pebisnis);
+    public static function makeFeedbackPebisnis($token,$id_pebisnis,$saran,$tipe_ikon){
+        $petani = Petani::getPetaniByToken($token);
+        $pebisnis = Pebisnis::getPebisnis($id_pebisnis);
+
         $feedback = new FeedbackPebisnis();
 
+        if($petani == null)
+            throw new \Exception("Sesion expired");
         if ($pebisnis == null){
             throw new \Exception("Pebisnis was not exist");
         } else {
@@ -26,9 +30,8 @@ class FeedbackPebisnis extends Model{
             $feedback->tipe_ikon = $tipe_ikon;
 
             $feedback->save();
-            $result = Manager::table(FeedbackPebisnis::TABLE_NAME)
-                ->first([FeedbackPebisnis::PRIMARY_KEY, "id_pebisnis","saran", "tipe_ikon"]);
-            return $result;
+
+            return $feedback;
         }
     }
 
