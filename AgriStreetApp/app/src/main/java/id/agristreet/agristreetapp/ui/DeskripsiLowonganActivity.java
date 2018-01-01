@@ -124,6 +124,7 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_BID && resultCode == Activity.RESULT_OK) {
             lowongan.setBid(true);
+            lowongan.setJumlahPelamar(lowongan.getJumlahPelamar() + 1);
             showLowongan();
         }
     }

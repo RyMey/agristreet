@@ -1,5 +1,6 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -99,7 +100,10 @@ public class AjukanBidActivity extends AppCompatActivity implements AjukanBidPre
     public void onBidSuccess() {
         new AlertDialog.Builder(this)
                 .setMessage("Bid berhasil dibuat!")
-                .setPositiveButton("OK", (dialog, which) -> onBackPressed())
+                .setPositiveButton("OK", (dialog, which) -> {
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                })
                 .show();
     }
 }
