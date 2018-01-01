@@ -20,6 +20,7 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Akun;
 import id.agristreet.agristreetapp.data.model.Lowongan;
+import id.agristreet.agristreetapp.util.CurrencyFormatter;
 import id.agristreet.agristreetapp.util.DateUtil;
 import id.agristreet.agristreetapp.util.Util;
 
@@ -45,6 +46,8 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
     TextView jumlahPelamar;
     @BindView(R.id.pelamar)
     ImageView iconPelamar;
+    @BindView(R.id.harga_awal)
+    TextView harga;
     @BindView(R.id.bid)
     Button btBid;
 
@@ -91,6 +94,7 @@ public class DeskripsiLowonganActivity extends AppCompatActivity {
         jumlahKomoditas.setText(String.format("%d", lowongan.getJumlahKomoditas()));
         alamat.setText(lowongan.getAlamat().getDeskripsi());
         jumlahPelamar.setText(String.format("%d", lowongan.getJumlahPelamar()));
+        harga.setText(CurrencyFormatter.format(lowongan.getHargaAwal()));
         if (lowongan.isBid()) {
             btBid.setBackgroundColor(ContextCompat.getColor(this, R.color.divider));
             btBid.setTextColor(ContextCompat.getColor(this, R.color.secondaryTextColor));

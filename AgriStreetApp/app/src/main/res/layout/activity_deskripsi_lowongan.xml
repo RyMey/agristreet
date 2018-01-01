@@ -254,6 +254,30 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/harga_awal"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/harga_awal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"/>
+
             <Button
                 android:id="@+id/bid"
                 android:layout_width="200dp"
