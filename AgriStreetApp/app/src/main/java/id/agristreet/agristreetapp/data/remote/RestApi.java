@@ -174,6 +174,18 @@ public class RestApi {
                 });
     }
 
+    public Observable<List<Lowongan>> getLowonganku() {
+        return api.getLowonganku(PengelolaDataLokal.getInstance(context).getAkun().getToken())
+                .map(json -> {
+                    JsonArray jsonArray = json.get("result").getAsJsonArray();
+                    List<Lowongan> daftarLowongan = new ArrayList<>();
+                    for (JsonElement jsonElement : jsonArray) {
+                        daftarLowongan.add(ModelParser.parseLowongan(jsonElement.getAsJsonObject()));
+                    }
+                    return daftarLowongan;
+                });
+    }
+
     public Observable<List<Kerjasama>> getKerjasama() {
         return api.getKerjasama(PengelolaDataLokal.getInstance(context).getAkun().getToken())
                 .map(json -> {
@@ -272,6 +284,9 @@ public class RestApi {
 
         @GET("/lowongan")
         Observable<JsonObject> getLowongan(@Header("token") String token);
+
+        @GET("/lowongan/pebisnis")
+        Observable<JsonObject> getLowonganku(@Header("token") String token);
 
         @GET("/kerjasama")
         Observable<JsonObject> getKerjasama(@Header("token") String token);

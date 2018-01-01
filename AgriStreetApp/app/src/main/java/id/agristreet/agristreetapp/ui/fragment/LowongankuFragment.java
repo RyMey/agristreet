@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,28 +22,28 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
-import id.agristreet.agristreetapp.data.model.Kerjasama;
-import id.agristreet.agristreetapp.presenter.KerjasamaPresenter;
-import id.agristreet.agristreetapp.ui.DetailKerjasamaActivity;
-import id.agristreet.agristreetapp.ui.adapter.KerjasamaAdapter;
+import id.agristreet.agristreetapp.data.model.Lowongan;
+import id.agristreet.agristreetapp.presenter.LowongankuPresenter;
+import id.agristreet.agristreetapp.ui.DeskripsiLowonganActivity;
+import id.agristreet.agristreetapp.ui.adapter.LowonganAdapter;
 
-public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.View, FloatingSearchView.OnSearchListener {
+public class LowongankuFragment extends Fragment implements LowongankuPresenter.View, FloatingSearchView.OnSearchListener {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     @BindView(R.id.search_view)
     FloatingSearchView searchView;
 
-    private KerjasamaPresenter kerjasamaPresenter;
+    private LowongankuPresenter lowongankuPresenter;
     private ProgressDialog progressDialog;
-    private KerjasamaAdapter kerjasamaAdapter;
+    private LowonganAdapter lowonganAdapter;
 
-    private KerjasamaFragment.Listener listener;
+    private LowongankuFragment.Listener listener;
     private String keyword = "";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_kerjasama, container, false);
+        View view = inflater.inflate(R.layout.fragment_lowonganku, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -53,21 +53,21 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
         super.onActivityCreated(savedInstanceState);
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
-        if (activity == null || !(activity instanceof KerjasamaFragment.Listener)) {
-            throw new RuntimeException("Please implement KerjasamaFragment.Listener to use KerjasamaFragment");
+        if (activity == null || !(activity instanceof LowongankuFragment.Listener)) {
+            throw new RuntimeException("Please implement LowongankuFragment.Listener to use LowongankuFragment");
         }
-        listener = (KerjasamaFragment.Listener) getActivity();
+        listener = (LowongankuFragment.Listener) getActivity();
         listener.onToggleSearchViewVisibility(searchView.getVisibility() == View.VISIBLE);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Mohon Tunggu...");
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        kerjasamaAdapter = new KerjasamaAdapter(getActivity());
-        kerjasamaAdapter.setOnItemClickListener((view, position) ->
-                onItemClick(kerjasamaAdapter.getData().get(position)));
-        recyclerView.setAdapter(kerjasamaAdapter);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        lowonganAdapter = new LowonganAdapter(getActivity());
+        lowonganAdapter.setOnItemClickListener((view, position) ->
+                onItemClick(lowonganAdapter.getData().get(position)));
+        recyclerView.setAdapter(lowonganAdapter);
 
         searchView.setOnHomeActionClickListener(this::hideSearchView);
         searchView.setOnBindSuggestionCallback((suggestionView, leftIcon, textView, item, itemPosition) -> {
@@ -75,7 +75,7 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
         });
         searchView.setOnQueryChangeListener((oldQuery, newQuery) -> {
             keyword = newQuery.trim();
-            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword("kerjasama"));
+            searchView.swapSuggestions(PengelolaDataLokal.getInstance(getActivity()).getLastKeyword("lowonganku"));
         });
         searchView.setOnSearchListener(this);
         searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
@@ -90,13 +90,13 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
             }
         });
 
-        kerjasamaPresenter = new KerjasamaPresenter(getActivity(), this);
+        lowongankuPresenter = new LowongankuPresenter(getActivity(), this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        kerjasamaPresenter.loadKerjasama();
+        lowongankuPresenter.loadLowonganku();
     }
 
     public void hideSearchView() {
@@ -113,8 +113,8 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
         listener.onToggleSearchViewVisibility(true);
     }
 
-    private void onItemClick(Kerjasama kerjasama) {
-        startActivity(DetailKerjasamaActivity.generateIntent(getActivity(), kerjasama));
+    private void onItemClick(Lowongan lowongan) {
+        startActivity(DeskripsiLowonganActivity.generateIntent(getActivity(), lowongan));
     }
 
     @Override
@@ -133,8 +133,8 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
     }
 
     @Override
-    public void showKerjasama(List<Kerjasama> daftarKerjasama) {
-        kerjasamaAdapter.addOrUpdate(daftarKerjasama);
+    public void showLowongan(List<Lowongan> daftarLowongan) {
+        lowonganAdapter.addOrUpdate(daftarLowongan);
     }
 
     @Override
@@ -146,8 +146,8 @@ public class KerjasamaFragment extends Fragment implements KerjasamaPresenter.Vi
     @Override
     public void onSearchAction(String currentQuery) {
         searchView.setSearchBarTitle(keyword);
-        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory("kerjasama", keyword);
-        kerjasamaAdapter.filter(keyword);
+        PengelolaDataLokal.getInstance(getActivity()).addKeywordHistory("lowonganku", keyword);
+        lowonganAdapter.filter(keyword);
     }
 
     public interface Listener {

@@ -12,49 +12,70 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import java.util.Arrays;
 
 import id.agristreet.agristreetapp.R;
+import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.ui.fragment.AkunkuFragment;
 import id.agristreet.agristreetapp.ui.fragment.BerandaFragment;
 import id.agristreet.agristreetapp.ui.fragment.KerjasamaFragment;
+import id.agristreet.agristreetapp.ui.fragment.LowongankuFragment;
 
 public class MainActivity extends AppCompatActivity implements OnMenuTabClickListener,
-        BerandaFragment.Listener, KerjasamaFragment.Listener {
+        BerandaFragment.Listener, LowongankuFragment.Listener, KerjasamaFragment.Listener {
     private static final int INDEX_BERANDA = FragNavController.TAB1;
-    private static final int INDEX_KERJASAMA = FragNavController.TAB2;
-    private static final int INDEX_AKUNKU = FragNavController.TAB3;
+    private static final int INDEX_LOWONGANKU = FragNavController.TAB2;
+    private static final int INDEX_KERJASAMA = FragNavController.TAB3;
+    private static final int INDEX_AKUNKU = FragNavController.TAB4;
 
     private BottomBar bottomBar;
     private FragNavController navController;
     private BerandaFragment berandaFragment;
+    private LowongankuFragment lowongankuFragment;
     private KerjasamaFragment kerjasamaFragment;
     private boolean isSearchViewVisible;
+
+    private PengelolaDataLokal.UserType userType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userType = PengelolaDataLokal.getInstance(this).getUserType();
+
         berandaFragment = new BerandaFragment();
         kerjasamaFragment = new KerjasamaFragment();
-        navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
-                Arrays.asList(berandaFragment, kerjasamaFragment, new AkunkuFragment()));
+
+        if (userType == PengelolaDataLokal.UserType.PEBISNIS) {
+            lowongankuFragment = new LowongankuFragment();
+            navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
+                    Arrays.asList(berandaFragment, lowongankuFragment, kerjasamaFragment, new AkunkuFragment()));
+        } else {
+            navController = new FragNavController(getSupportFragmentManager(), R.id.fragment_container,
+                    Arrays.asList(berandaFragment, kerjasamaFragment, new AkunkuFragment()));
+        }
+
         bottomBar = BottomBar.attach(this, savedInstanceState);
         bottomBar.useOnlyStatusBarTopOffset();
         bottomBar.setMaxFixedTabs(2);
-        bottomBar.setItems(R.menu.bottombar_home);
+
+        bottomBar.setItems(userType == PengelolaDataLokal.UserType.PEBISNIS ? R.menu.bottombar_pebisnis : R.menu.bottombar_petani);
+
         bottomBar.setOnMenuTabClickListener(this);
-        bottomBar.setDefaultTabPosition(INDEX_BERANDA);
+        bottomBar.setDefaultTabPosition(getTabIndex(INDEX_BERANDA));
     }
 
     @Override
     public void onMenuTabSelected(@IdRes int menuItemId) {
         switch (menuItemId) {
             case R.id.bar_beranda:
-                navController.switchTab(INDEX_BERANDA);
+                navController.switchTab(getTabIndex(INDEX_BERANDA));
+                break;
+            case R.id.bar_lowongaku:
+                navController.switchTab(getTabIndex(INDEX_LOWONGANKU));
                 break;
             case R.id.bar_kerja_sama:
-                navController.switchTab(INDEX_KERJASAMA);
+                navController.switchTab(getTabIndex(INDEX_KERJASAMA));
                 break;
             case R.id.bar_akunku:
-                navController.switchTab(INDEX_AKUNKU);
+                navController.switchTab(getTabIndex(INDEX_AKUNKU));
                 break;
         }
     }
@@ -63,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
     public void onMenuTabReSelected(@IdRes int menuItemId) {
         switch (menuItemId) {
             case R.id.bar_beranda:
+                break;
+            case R.id.bar_lowongaku:
                 break;
             case R.id.bar_kerja_sama:
                 break;
@@ -84,12 +107,22 @@ public class MainActivity extends AppCompatActivity implements OnMenuTabClickLis
 
     @Override
     public void onBackPressed() {
-        if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == INDEX_BERANDA) {
+        if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == getTabIndex(INDEX_BERANDA)) {
             berandaFragment.hideSearchView();
-        } else if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == INDEX_KERJASAMA) {
+        } else if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == getTabIndex(INDEX_LOWONGANKU)
+                && lowongankuFragment != null) {
+            lowongankuFragment.hideSearchView();
+        } else if (isSearchViewVisible && bottomBar.getCurrentTabPosition() == getTabIndex(INDEX_KERJASAMA)) {
             kerjasamaFragment.hideSearchView();
         } else {
             super.onBackPressed();
         }
+    }
+
+    private int getTabIndex(int index) {
+        if (userType == PengelolaDataLokal.UserType.PETANI && index > 1) {
+            return index - 1;
+        }
+        return index;
     }
 }
