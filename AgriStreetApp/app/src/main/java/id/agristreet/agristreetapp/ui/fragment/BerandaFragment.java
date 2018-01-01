@@ -12,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
@@ -35,6 +36,8 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
     RecyclerView recyclerView;
     @BindView(R.id.search_view)
     FloatingSearchView searchView;
+    @BindView(R.id.iv_add_lowongan)
+    ImageView addLowongan;
 
     private BerandaPresenter berandaPresenter;
     private ProgressDialog progressDialog;
@@ -60,6 +63,10 @@ public class BerandaFragment extends Fragment implements BerandaPresenter.View, 
         }
         listener = (Listener) getActivity();
         listener.onToggleSearchViewVisibility(searchView.getVisibility() == View.VISIBLE);
+
+        if (PengelolaDataLokal.getInstance(getActivity()).getUserType() == PengelolaDataLokal.UserType.PETANI) {
+            addLowongan.setVisibility(View.GONE);
+        }
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Mohon Tunggu...");
