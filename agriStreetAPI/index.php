@@ -303,6 +303,20 @@ $slim->put("/lowongan/update-lowongan", function (ServerRequestInterface $req, R
     }
 });
 
+$slim->put("/lowongan/finish-lowongan", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $lowongan = Lowongan::finishLowongan($req->getHeader('token'),$params['id_lowongan']);
+
+        if ($lowongan == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($lowongan, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
 $slim->get("/kerjasama",function (ServerRequestInterface $req, ResponseInterface $res){
     try {
         return ResultWrapper::getResult(Kerjasama::getAllKerjasama($req->getHeader('token')), $res);
@@ -334,10 +348,10 @@ $slim->post("/kerjasama/make-kerjasama", function (ServerRequestInterface $req, 
     }
 });
 
-$slim->put("/kerjasama/update-status-lamaran", function (ServerRequestInterface $req, ResponseInterface $res) {
+$slim->put("/kerjasama/finish-kerjasama", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $kerjasama = Kerjasama::updateStatusLamaran($req->getHeader('token'),$params['kerjasama'],$params['status_lamaran']);
+        $kerjasama = Kerjasama::finishKerjasama($req->getHeader('token'),$params['kerjasama'],$params['status_lamaran']);
 
         if ($kerjasama == null) {
             throw new Exception ("Ups, something wrong!");
