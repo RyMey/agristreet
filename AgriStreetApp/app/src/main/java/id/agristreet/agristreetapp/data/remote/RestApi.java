@@ -254,6 +254,11 @@ public class RestApi {
                 .map(json -> ModelParser.parseKerjasama(json.get("result").getAsJsonObject()));
     }
 
+    public Observable<Void> finishKerjasama(int idKerjasama) {
+        return api.finishKerjasama(PengelolaDataLokal.getInstance(context).getAkun().getToken(), idKerjasama)
+                .map(jsonObject -> null);
+    }
+
     public Observable<Void> sendFeedbackToPetani(String idPetani, String saran, int tipeIkon) {
         return api.sendFeedbackToPetani(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
                 idPetani, saran, tipeIkon)
@@ -358,5 +363,10 @@ public class RestApi {
                                                       @Field("id_pebisnis") String idPebisnis,
                                                       @Field("saran") String saran,
                                                       @Field("tipe_ikon") int tipeIkon);
+
+        @FormUrlEncoded
+        @PUT("/kerjasama/finish-kerjasama")
+        Observable<JsonObject> finishKerjasama(@Header("token") String token,
+                                               @Field("id_kerjasama") int idKerjasama);
     }
 }
