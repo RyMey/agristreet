@@ -43,6 +43,7 @@ class Kerjasama extends Model{
             $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
             $petani = Petani::getPetani($kerjasama->id_petani);
             $kerjasama->petani = $petani;
+            $kerjasama->butuh_feedback = Feedback::getFeedbackByPengirim($token, $kerjasama->id_kerjasama) == null;
         }
 
         return $kerjasamas;
@@ -80,6 +81,7 @@ class Kerjasama extends Model{
         $kerjasama->lowongan = Lowongan::getLowongan($kerjasama->id_lowongan, $token);
         $petani = Petani::getPetani($kerjasama->id_petani);
         $kerjasama->petani = $petani;
+        $kerjasama->butuh_feedback = true;
 
         return $kerjasama;
     }

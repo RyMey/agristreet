@@ -46,7 +46,7 @@ class Feedback extends Model{
         }
     }
 
-    public static function getFeedbackById($id_feedback){
+    public static function getFeedbackById($id_feedback) {
         $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_feedback', '=', $id_feedback)
                 ->first();
         return $feedback;
@@ -71,6 +71,29 @@ class Feedback extends Model{
             $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_penerima', '=', $user->id_pebisnis)
                 ->get();
         }
+        return $feedback;
+    }
+
+    public static function getFeedbackByPengirim($token, $id_kerjasama) {
+        $pengirim = Petani::getPetaniByToken($token);
+        if ($pengirim == null) {
+            $pengirim = Pebisnis::getPebisnisByToken($token);
+        }
+
+        if($pengirim == null) {
+            throw new \Exception("User not exist");
+        }
+
+        if(isset($pengirim->id_pebisnis)){
+            $id_pengirim = $pengirim->id_pebisnis;
+        }else{
+            $id_pengirim = $pengirim->id_petani;
+        }
+
+        $feedback = Manager::table(Feedback::TABLE_NAME)
+            ->where('id_kerjasama', '=', $id_kerjasama)
+            ->where("id_pengirim", "=", $id_pengirim)
+            ->first();
         return $feedback;
     }
 }
