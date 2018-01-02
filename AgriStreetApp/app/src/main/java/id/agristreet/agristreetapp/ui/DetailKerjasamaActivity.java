@@ -184,7 +184,7 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
     @Override
     public void onFinishKerjasamaSuccess() {
         new AlertDialog.Builder(this)
-                .setMessage("Feedback berhasil disimpan!")
+                .setMessage("Kerjasama diakhiri!")
                 .setPositiveButton("OK", (dialog, which) -> {
                     kerjasama.setStatus("selesai");
                     showKerjasama();
