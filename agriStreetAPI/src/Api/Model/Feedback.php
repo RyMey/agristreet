@@ -53,18 +53,16 @@ class Feedback extends Model{
     }
 
     public static function getFeedbackByPenerima($token){
-        $penerimaIsPetani = false;
         $user = Pebisnis::getPebisnisByToken($token);
 
         if($user == null) {
             $user = Petani::getPetaniByToken($token);
-            $penerimaIsPetani = true;
         }
 
         if($user == null)
             throw new \Exception("Session was expired");
 
-        if($penerimaIsPetani) {
+        if(isset($user->id_petani)) {
             $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_penerima', '=', $user->id_petani)
                 ->get();
         }else{
@@ -96,4 +94,5 @@ class Feedback extends Model{
             ->first();
         return $feedback;
     }
+
 }
