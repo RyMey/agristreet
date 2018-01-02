@@ -259,15 +259,9 @@ public class RestApi {
                 .map(jsonObject -> null);
     }
 
-    public Observable<Void> sendFeedbackToPetani(String idPetani, String saran, int tipeIkon) {
-        return api.sendFeedbackToPetani(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
-                idPetani, saran, tipeIkon)
-                .map(jsonObject -> null);
-    }
-
-    public Observable<Void> sendFeedbackToPebisnis(String idPetani, String saran, int tipeIkon) {
-        return api.sendFeedbackToPebisnis(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
-                idPetani, saran, tipeIkon)
+    public Observable<Void> sendFeedback(String idPetani, int idKerjasama, String saran, int tipeIkon) {
+        return api.sendFeedback(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idPetani, idKerjasama, saran, tipeIkon)
                 .map(jsonObject -> null);
     }
 
@@ -351,18 +345,12 @@ public class RestApi {
                                              @Field("id_lamaran") int idLamaran);
 
         @FormUrlEncoded
-        @POST("/feedback/make-feedback-petani")
-        Observable<JsonObject> sendFeedbackToPetani(@Header("token") String token,
-                                                    @Field("id_petani") String idPetani,
-                                                    @Field("saran") String saran,
-                                                    @Field("tipe_ikon") int tipeIkon);
-
-        @FormUrlEncoded
-        @POST("/feedback/make-feedback-pebisnis")
-        Observable<JsonObject> sendFeedbackToPebisnis(@Header("token") String token,
-                                                      @Field("id_pebisnis") String idPebisnis,
-                                                      @Field("saran") String saran,
-                                                      @Field("tipe_ikon") int tipeIkon);
+        @POST("/feedback/make-feedback")
+        Observable<JsonObject> sendFeedback(@Header("token") String token,
+                                            @Field("id_penerima") String idPenerima,
+                                            @Field("id_kerjasama") int idKerjasama,
+                                            @Field("saran") String saran,
+                                            @Field("tipe_ikon") int tipeIkon);
 
         @FormUrlEncoded
         @PUT("/kerjasama/finish-kerjasama")

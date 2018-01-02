@@ -38,13 +38,15 @@ public class BeriFeedbackActivity extends AppCompatActivity implements BeriFeedb
     private int deactiveColor;
 
     private String userId;
+    private int idKerjasama;
     private int tipeIkon;
     private BeriFeedbackPresenter beriFeedbackPresenter;
     private ProgressDialog progressDialog;
 
-    public static Intent generateIntent(Context context, String userId) {
+    public static Intent generateIntent(Context context, String userId, int idKerjasama) {
         Intent intent = new Intent(context, BeriFeedbackActivity.class);
         intent.putExtra("user_id", userId);
+        intent.putExtra("id_kerjasama", idKerjasama);
         return intent;
     }
 
@@ -55,7 +57,8 @@ public class BeriFeedbackActivity extends AppCompatActivity implements BeriFeedb
         ButterKnife.bind(this);
 
         userId = getIntent().getStringExtra("user_id");
-        if (userId == null) {
+        idKerjasama = getIntent().getIntExtra("id_kerjasama", -1);
+        if (idKerjasama == -1 || userId == null) {
             return;
         }
 
@@ -106,7 +109,7 @@ public class BeriFeedbackActivity extends AppCompatActivity implements BeriFeedb
 
     @OnClick(R.id.simpan)
     public void simpan() {
-        beriFeedbackPresenter.sendFeedback(userId, kesan.getText().toString(), tipeIkon);
+        beriFeedbackPresenter.sendFeedback(userId, idKerjasama, kesan.getText().toString(), tipeIkon);
     }
 
     @OnClick(R.id.iv_back)

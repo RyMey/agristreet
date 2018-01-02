@@ -48,7 +48,7 @@ class Feedback extends Model{
 
     public static function getFeedbackById($id_feedback){
         $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_feedback', '=', $id_feedback)
-            ->first();
+                ->first();
         return $feedback;
     }
 
