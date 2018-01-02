@@ -28,6 +28,7 @@ import id.agristreet.agristreetapp.util.Util;
 
 public class DetailKerjasamaActivity extends AppCompatActivity implements DetailKerjasamaPresenter.View {
     private static final String KERJASAMA_KEY = "kerjasama";
+    private static final String CLEAR_TASK_KEY = "clear_task";
     private static final int RC_FEEDBACK = 25;
 
     @BindView(R.id.image)
@@ -56,14 +57,20 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
     Button btFinish;
 
     private Kerjasama kerjasama;
+    private boolean clearTask;
     private PengelolaDataLokal.UserType userType;
 
     private DetailKerjasamaPresenter detailKerjasamaPresenter;
     private ProgressDialog progressDialog;
 
     public static Intent generateIntent(Context context, Kerjasama kerjasama) {
+        return generateIntent(context, kerjasama, false);
+    }
+
+    public static Intent generateIntent(Context context, Kerjasama kerjasama, boolean clearTask) {
         Intent intent = new Intent(context, DetailKerjasamaActivity.class);
         intent.putExtra(KERJASAMA_KEY, kerjasama);
+        intent.putExtra(CLEAR_TASK_KEY, clearTask);
         return intent;
     }
 
@@ -77,6 +84,8 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
             finish();
             return;
         }
+
+        clearTask = getIntent().getBooleanExtra(CLEAR_TASK_KEY, false);
 
         userType = PengelolaDataLokal.getInstance(this).getUserType();
 
@@ -115,6 +124,17 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
     @OnClick(R.id.iv_back)
     public void back() {
         onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (clearTask) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @OnClick(R.id.finish)
