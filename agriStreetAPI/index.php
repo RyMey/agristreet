@@ -351,7 +351,7 @@ $slim->post("/kerjasama/make-kerjasama", function (ServerRequestInterface $req, 
 $slim->put("/kerjasama/finish-kerjasama", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $kerjasama = Kerjasama::finishKerjasama($req->getHeader('token'),$params['kerjasama']);
+        $kerjasama = Kerjasama::finishKerjasama($req->getHeader('token'),$params['id_kerjasama']);
 
         if ($kerjasama == null) {
             throw new Exception ("Ups, something wrong!");
