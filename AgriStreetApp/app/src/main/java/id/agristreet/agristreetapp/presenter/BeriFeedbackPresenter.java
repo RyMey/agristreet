@@ -19,34 +19,10 @@ public class BeriFeedbackPresenter extends BasePresenter<BeriFeedbackPresenter.V
         this.context = context;
     }
 
-    public void sendFeedback(String userId, String saran, int tipeIkon) {
-        if (PengelolaDataLokal.getInstance(context).getUserType() == PengelolaDataLokal.UserType.PEBISNIS) {
-            sendFeedbackToPetani(userId, saran, tipeIkon);
-        } else {
-            sendFeedbackToPebisnis(userId, saran, tipeIkon);
-        }
-    }
-
-    private void sendFeedbackToPetani(String userId, String saran, int tipeIkon) {
+    public void sendFeedback(String userId, int idKerjasama, String saran, int tipeIkon) {
         view.showLoading();
         RestApi.getInstance(context)
-                .sendFeedbackToPetani(userId, saran, tipeIkon)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(bindToLifecycle())
-                .subscribe(aVoid -> {
-                    view.onFeedbackSent();
-                    view.dismissLoading();
-                }, throwable -> {
-                    view.showError(throwable.getMessage());
-                    view.dismissLoading();
-                });
-    }
-
-    private void sendFeedbackToPebisnis(String userId, String saran, int tipeIkon) {
-        view.showLoading();
-        RestApi.getInstance(context)
-                .sendFeedbackToPebisnis(userId, saran, tipeIkon)
+                .sendFeedback(userId, idKerjasama, saran, tipeIkon)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(bindToLifecycle())
