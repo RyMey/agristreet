@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FeedbackPetani extends Model{
     const TABLE_NAME = "feedback_petani";
     const PRIMARY_KEY = "id_feedback";
-    //public $timestamps = false;
+    public $timestamps = false;
 
     public $table = FeedbackPetani::TABLE_NAME;
     public $primaryKey = FeedbackPetani::PRIMARY_KEY;
