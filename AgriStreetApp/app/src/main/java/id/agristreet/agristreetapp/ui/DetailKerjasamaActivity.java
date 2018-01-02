@@ -1,5 +1,6 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import id.agristreet.agristreetapp.util.Util;
 
 public class DetailKerjasamaActivity extends AppCompatActivity {
     private static final String KERJASAMA_KEY = "kerjasama";
+    private static final int RC_FEEDBACK = 25;
 
     @BindView(R.id.image)
     ImageView imageView;
@@ -106,17 +108,28 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.finish)
-    public void finish() {
+    public void finishKerjasama() {
         if (kerjasama.getStatus().equals("selesai")) {
             beriFeedBack();
         }
     }
 
     private void beriFeedBack() {
+        String userId;
         if (userType == PengelolaDataLokal.UserType.PETANI) {
-            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getLowongan().getCreator().getId()));
+            userId = kerjasama.getLowongan().getCreator().getId();
         } else {
-            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getPetani().getId()));
+            userId = kerjasama.getPetani().getId();
+        }
+
+        startActivityForResult(BeriFeedbackActivity.generateIntent(this, userId), RC_FEEDBACK);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_FEEDBACK && resultCode == Activity.RESULT_OK) {
+            //TODO disabled feedback
         }
     }
 

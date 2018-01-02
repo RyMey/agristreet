@@ -254,6 +254,18 @@ public class RestApi {
                 .map(json -> ModelParser.parseKerjasama(json.get("result").getAsJsonObject()));
     }
 
+    public Observable<Void> sendFeedbackToPetani(String idPetani, String saran, int tipeIkon) {
+        return api.sendFeedbackToPetani(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idPetani, saran, tipeIkon)
+                .map(jsonObject -> null);
+    }
+
+    public Observable<Void> sendFeedbackToPebisnis(String idPetani, String saran, int tipeIkon) {
+        return api.sendFeedbackToPebisnis(PengelolaDataLokal.getInstance(context).getAkun().getToken(),
+                idPetani, saran, tipeIkon)
+                .map(jsonObject -> null);
+    }
+
     private interface Api {
 
         @FormUrlEncoded
@@ -332,5 +344,19 @@ public class RestApi {
         Observable<JsonObject> makeKerjasama(@Header("token") String token,
                                              @Field("id_lowongan") int idLowongan,
                                              @Field("id_lamaran") int idLamaran);
+
+        @FormUrlEncoded
+        @POST("/feedback/make-feedback-petani")
+        Observable<JsonObject> sendFeedbackToPetani(@Header("token") String token,
+                                                    @Field("id_petani") String idPetani,
+                                                    @Field("saran") String saran,
+                                                    @Field("tipe_ikon") int tipeIkon);
+
+        @FormUrlEncoded
+        @POST("/feedback/make-feedback-pebisnis")
+        Observable<JsonObject> sendFeedbackToPebisnis(@Header("token") String token,
+                                                      @Field("id_pebisnis") String idPebisnis,
+                                                      @Field("saran") String saran,
+                                                      @Field("tipe_ikon") int tipeIkon);
     }
 }
