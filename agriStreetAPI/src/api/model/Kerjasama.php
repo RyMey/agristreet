@@ -14,7 +14,7 @@ class Kerjasama extends Model{
 
     const TABLE_NAME = "kerjasama";
     const PRIMARY_KEY = "id_kerjasama";
-    public $timestamps = true;
+    public $timestamps = false;
 
     public $table = Kerjasama::TABLE_NAME;
     public $primaryKey = Kerjasama::PRIMARY_KEY;
