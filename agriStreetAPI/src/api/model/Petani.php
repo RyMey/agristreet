@@ -20,19 +20,22 @@ class Petani extends Model{
     public $primaryKey = Petani::PRIMARY_KEY;
 
     public static function generateId(){
-        $lastId = Manager::table(Petani::TABLE_NAME)
-            ->orderBy(Petani::PRIMARY_KEY,'DESC')
+        $output = Manager::table(Pebisnis::TABLE_NAME)
+            ->orderBy(Pebisnis::PRIMARY_KEY,'DESC')
             ->limit(1)
-            ->first([Petani::PRIMARY_KEY]);
+            ->first([Pebisnis::PRIMARY_KEY]);
+
+        $lastId = $output->id_pebisnis;
 
         if($lastId != null){
-            $id = (int) substr($lastId,2);
+            $id = (int) substr($lastId,2,strlen($lastId)-2);
             $id = $id + 1;
-            $new_id = 'pt'.$id;
+            $newId = 'pt'.$id;
         }else{
-            $new_id = 'pt1';
+            $newId = 'pt1';
         }
-        return $new_id;
+
+        return $newId;
     }
 
     public static function getPetani($id_petani){
@@ -83,7 +86,7 @@ class Petani extends Model{
             if($id != null or $id != ""){
                 return self::getSelfPetani($id->id_petani);
             }else{
-                return self::register("",$no_telp,"","","","");
+                return self::register("",$no_telp,"","",0,0);
             }
         }
 
