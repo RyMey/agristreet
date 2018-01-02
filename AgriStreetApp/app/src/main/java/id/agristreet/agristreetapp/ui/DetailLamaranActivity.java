@@ -1,13 +1,15 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -18,7 +20,6 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lamaran;
 import id.agristreet.agristreetapp.data.model.Petani;
 import id.agristreet.agristreetapp.util.CurrencyFormatter;
-import id.agristreet.agristreetapp.util.Util;
 
 public class DetailLamaranActivity extends AppCompatActivity {
     private static final String LAMARAN_KEY = "lamaran";
@@ -31,7 +32,7 @@ public class DetailLamaranActivity extends AppCompatActivity {
     TextView etNama;
     @BindView(R.id.sms)
     ImageView ivSms;
-    @BindView(R.id.keterangaan)
+    @BindView(R.id.keterangan)
     TextView etKeterangan;
     @BindView(R.id.harga_tawar)
     TextView etHarga;
@@ -60,7 +61,6 @@ public class DetailLamaranActivity extends AppCompatActivity {
     }
 
     private void showLamaran() {
-        ivPhoto.setBackgroundColor(Util.randomColor());
         Glide.with(this)
                 .load(petani.getFoto())
                 .into(ivPhoto);
@@ -71,10 +71,13 @@ public class DetailLamaranActivity extends AppCompatActivity {
 
     @OnClick(R.id.sms)
     public void sms() {
-        Uri uri = Uri.parse(petani.getNoTelp());
+        Uri uri = Uri.parse("smsto:" + petani.getNoTelp());
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        intent.putExtra("sms_body", "The SMS text");
-        startActivity(intent);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Tidak ada aplikasi SMS!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.bt_pilih)
