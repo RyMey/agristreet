@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class KategoriKomoditas extends Model{
 	const TABLE_NAME = "kategori_komoditas";
 	const PRIMARY_KEY = "id_kategori";
+    public $timestamps = false;
 
 	public $table = KategoriKomoditas::TABLE_NAME;
 	public $primaryKey = KategoriKomoditas::PRIMARY_KEY;

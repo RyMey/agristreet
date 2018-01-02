@@ -1,8 +1,12 @@
 package id.agristreet.agristreetapp.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +21,14 @@ import butterknife.OnClick;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.data.model.Kerjasama;
+import id.agristreet.agristreetapp.presenter.DetailKerjasamaPresenter;
 import id.agristreet.agristreetapp.util.CurrencyFormatter;
 import id.agristreet.agristreetapp.util.DateUtil;
 import id.agristreet.agristreetapp.util.Util;
 
-public class DetailKerjasamaActivity extends AppCompatActivity {
+public class DetailKerjasamaActivity extends AppCompatActivity implements DetailKerjasamaPresenter.View {
     private static final String KERJASAMA_KEY = "kerjasama";
+    private static final int RC_FEEDBACK = 25;
 
     @BindView(R.id.image)
     ImageView imageView;
@@ -52,6 +58,9 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
     private Kerjasama kerjasama;
     private PengelolaDataLokal.UserType userType;
 
+    private DetailKerjasamaPresenter detailKerjasamaPresenter;
+    private ProgressDialog progressDialog;
+
     public static Intent generateIntent(Context context, Kerjasama kerjasama) {
         Intent intent = new Intent(context, DetailKerjasamaActivity.class);
         intent.putExtra(KERJASAMA_KEY, kerjasama);
@@ -72,6 +81,9 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
         userType = PengelolaDataLokal.getInstance(this).getUserType();
 
         showKerjasama();
+
+        detailKerjasamaPresenter = new DetailKerjasamaPresenter(this, this);
+        progressDialog = new ProgressDialog(this);
     }
 
     private void showKerjasama() {
@@ -106,18 +118,57 @@ public class DetailKerjasamaActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.finish)
-    public void finish() {
+    public void finishKerjasama() {
         if (kerjasama.getStatus().equals("selesai")) {
             beriFeedBack();
+        } else {
+            detailKerjasamaPresenter.finisKerjasam(kerjasama.getId());
         }
     }
 
     private void beriFeedBack() {
+        String userId;
         if (userType == PengelolaDataLokal.UserType.PETANI) {
-            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getLowongan().getCreator().getId()));
+            userId = kerjasama.getLowongan().getCreator().getId();
         } else {
-            startActivity(BeriFeedbackActivity.generateIntent(this, kerjasama.getPetani().getId()));
+            userId = kerjasama.getPetani().getId();
+        }
+
+        startActivityForResult(BeriFeedbackActivity.generateIntent(this, userId), RC_FEEDBACK);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_FEEDBACK && resultCode == Activity.RESULT_OK) {
+            //TODO disabled feedback
         }
     }
 
+    @Override
+    public void showError(String errorMessage) {
+        Snackbar.make(btFinish.getRootView(), errorMessage, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoading() {
+        progressDialog.setMessage("Mohon Tunggu...");
+        progressDialog.show();
+    }
+
+    @Override
+    public void dismissLoading() {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onFinishKerjasamaSuccess() {
+        new AlertDialog.Builder(this)
+                .setMessage("Feedback berhasil disimpan!")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    kerjasama.setStatus("selesai");
+                    showKerjasama();
+                })
+                .show();
+    }
 }
