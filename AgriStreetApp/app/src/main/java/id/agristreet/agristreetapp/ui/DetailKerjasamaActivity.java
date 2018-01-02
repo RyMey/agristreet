@@ -119,6 +119,10 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
             btFinish.setText(R.string.beri_feedback);
             btFinish.setVisibility(View.VISIBLE);
         }
+
+        if (!kerjasama.isNeedFeedback()) {
+            btFinish.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.iv_back)
@@ -161,7 +165,8 @@ public class DetailKerjasamaActivity extends AppCompatActivity implements Detail
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_FEEDBACK && resultCode == Activity.RESULT_OK) {
-            //TODO disabled feedback
+            kerjasama.setNeedFeedback(false);
+            showKerjasama();
         }
     }
 

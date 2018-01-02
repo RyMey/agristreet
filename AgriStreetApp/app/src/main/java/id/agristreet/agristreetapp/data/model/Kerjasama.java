@@ -12,6 +12,7 @@ public class Kerjasama implements Parcelable {
     private String status;
     private Lowongan lowongan;
     private Petani petani;
+    private boolean needFeedback;
 
     public Kerjasama() {
 
@@ -24,6 +25,7 @@ public class Kerjasama implements Parcelable {
         status = in.readString();
         lowongan = in.readParcelable(Lowongan.class.getClassLoader());
         petani = in.readParcelable(Petani.class.getClassLoader());
+        needFeedback = in.readByte() == 1;
     }
 
     public static final Creator<Kerjasama> CREATOR = new Creator<Kerjasama>() {
@@ -86,6 +88,14 @@ public class Kerjasama implements Parcelable {
         this.petani = petani;
     }
 
+    public boolean isNeedFeedback() {
+        return needFeedback;
+    }
+
+    public void setNeedFeedback(boolean needFeedback) {
+        this.needFeedback = needFeedback;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,6 +120,7 @@ public class Kerjasama implements Parcelable {
                 ", status='" + status + '\'' +
                 ", lowongan=" + lowongan +
                 ", petani=" + petani +
+                ", needFeedback=" + needFeedback +
                 '}';
     }
 
@@ -126,5 +137,6 @@ public class Kerjasama implements Parcelable {
         dest.writeString(status);
         dest.writeParcelable(lowongan, flags);
         dest.writeParcelable(petani, flags);
+        dest.writeByte((byte) (needFeedback ? 0 : 1));
     }
 }

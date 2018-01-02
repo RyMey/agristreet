@@ -87,6 +87,7 @@ final class ModelParser {
         kerjasama.setStatus(json.get("status_lamaran").getAsString());
         kerjasama.setLowongan(parseLowongan(json.get("lowongan").getAsJsonObject()));
         kerjasama.setPetani(parsePetani(json.get("petani").getAsJsonObject()));
+        kerjasama.setNeedFeedback(!json.get("butuh_feedback").getAsBoolean());
         try {
             kerjasama.setCreatedAt(dateFormat.parse(json.get("tgl_kerjasama").getAsString()));
         } catch (ParseException e) {
