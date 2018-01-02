@@ -18,7 +18,6 @@ import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.model.Lamaran;
 import id.agristreet.agristreetapp.presenter.PilihPetaniPresenter;
 import id.agristreet.agristreetapp.ui.adapter.LamaranAdapter;
-import id.agristreet.agristreetapp.ui.DetailLamaranActivity;
 
 public class PilihPetaniActivity extends AppCompatActivity implements PilihPetaniPresenter.View {
 
@@ -59,7 +58,7 @@ public class PilihPetaniActivity extends AppCompatActivity implements PilihPetan
     }
 
     private void pilihLamaran(Lamaran lamaran) {
-        startActivity(DetailLamaranActivity.generateIntent(this, lamaran));
+        startActivity(DetailLamaranActivity.generateIntent(this, idLowongan, lamaran));
     }
 
     @Override
