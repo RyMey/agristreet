@@ -32,11 +32,11 @@ class Feedback extends Model{
             throw new \Exception("User not exist");
         } else {
             if($penerimaIsPetani){
-                $feedback->pengirim = $pebisnis->id_pebisnis;
-                $feedback->penerima = $petani->id_petani;
+                $feedback->id_pengirim = $pebisnis->id_pebisnis;
+                $feedback->id_penerima = $petani->id_petani;
             }else{
-                $feedback->pengirim = $petani->id_pebisnis;
-                $feedback->penerima = $pebisnis->id_petani;
+                $feedback->id_pengirim = $petani->id_pebisnis;
+                $feedback->id_penerima = $pebisnis->id_petani;
             }
             $feedback->id_kerjasama = $kerjasama->id_kerjasama;
             $feedback->saran = $saran;
@@ -50,7 +50,7 @@ class Feedback extends Model{
 
     public static function getFeedbackById($id_feedback){
         $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_feedback', '=', $id_feedback)
-                ->first();
+            ->first();
         return $feedback;
     }
 
