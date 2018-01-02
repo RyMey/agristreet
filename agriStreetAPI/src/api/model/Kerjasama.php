@@ -67,6 +67,8 @@ class Kerjasama extends Model{
            
             $kerjasama->save();
 
+            Lowongan::finishLowongan($token, $id_lowongan);
+
             return Kerjasama::getKerjasama($token, $kerjasama->id_kerjasama);
         }
     }

@@ -178,7 +178,9 @@ class Lowongan extends Model{
 
         unset($pebisnis->token);
         
-        $lowongans = Manager::table(Lowongan::TABLE_NAME)->where('id_pebisnis', '=', $pebisnis->id_pebisnis)
+        $lowongans = Manager::table(Lowongan::TABLE_NAME)
+            ->where('id_pebisnis', '=', $pebisnis->id_pebisnis)
+            ->where('status_lowongan','=','buka')
             ->get();
 
         foreach ($lowongans as $lowongan) {
@@ -201,9 +203,9 @@ class Lowongan extends Model{
 
     public static function finishLowongan($token, $id_lowongan){
         $pebisnis = Pebisnis::getPebisnisByToken($token);
-        $lowongan = Lowongan::getLowongan($id_lowongan,$token);
+        $lowongan = Lowongan::query()->where(Lowongan::PRIMARY_KEY, '=', $id_lowongan)->first();
 
-        if($lowongan->pebisnis->id_pebisnis != $pebisnis->id_pebisnis)
+        if($lowongan->id_pebisnis != $pebisnis->id_pebisnis)
             throw new \Exception("Pebisnis don't have authoritation");
 
         $lowongan->status_lowongan = "tutup";
