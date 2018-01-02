@@ -15,28 +15,26 @@ class Feedback extends Model{
 
 
     public static function makeFeedback($token,$id_penerima,$id_kerjasama,$saran,$tipe_ikon){
-        $penerimaIsPetani = false;
-        $petani = Petani::getPetaniByToken($token);
-        $pebisnis = Pebisnis::getPebisnis($id_penerima);
+        $pengirim = Petani::getPetaniByToken($token);
+        $penerima = Pebisnis::getPebisnis($id_penerima);
         $kerjasama = Kerjasama::getKerjasama($token,$id_kerjasama);
 
-        if($petani == null or $pebisnis == null){
-            $penerimaIsPetani = true;
-            $petani = Petani::getPetani($id_penerima);
-            $pebisnis = Pebisnis::getPebisnisByToken($token);
+        if ($pengirim == null) {
+            $pengirim = Pebisnis::getPebisnisByToken($token);
+            $penerima = Petani::getPetani($id_penerima);
         }
 
         $feedback = new Feedback();
 
-        if($petani == null or $pebisnis == null){
+        if($pengirim == null or $penerima == null) {
             throw new \Exception("User not exist");
         } else {
-            if($penerimaIsPetani){
-                $feedback->id_pengirim = $pebisnis->id_pebisnis;
-                $feedback->id_penerima = $petani->id_petani;
-            }else{
-                $feedback->id_pengirim = $petani->id_pebisnis;
-                $feedback->id_penerima = $pebisnis->id_petani;
+            if(isset($pengirim->id_pebisnis)) {
+                $feedback->id_pengirim = $pengirim->id_pebisnis;
+                $feedback->id_penerima = $penerima->id_petani;
+            } else {
+                $feedback->id_pengirim = $pengirim->id_petani;
+                $feedback->id_penerima = $penerima->id_pebisnis;
             }
             $feedback->id_kerjasama = $kerjasama->id_kerjasama;
             $feedback->saran = $saran;
@@ -50,7 +48,7 @@ class Feedback extends Model{
 
     public static function getFeedbackById($id_feedback){
         $feedback = Manager::table(Feedback::TABLE_NAME)->where('id_feedback', '=', $id_feedback)
-            ->first();
+                ->first();
         return $feedback;
     }
 
