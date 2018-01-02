@@ -381,7 +381,7 @@ $slim->get("/feedback/pebisnis/{id}",function (ServerRequestInterface $req, Resp
 $slim->post("/feedback/make-feedback-petani", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $feedback = FeedbackPetani::makeFeedbackPetani($req->getHeader('id_petani'),$params['saran'],$params['tipe_ikon']);
+        $feedback = FeedbackPetani::makeFeedbackPetani($req->getHeader('token'),$params['id_petani'],$params['saran'],$params['tipe_ikon']);
 
         if ($feedback == null) {
             throw new Exception ("Ups, something wrong!");
@@ -395,7 +395,7 @@ $slim->post("/feedback/make-feedback-petani", function (ServerRequestInterface $
 $slim->post("/feedback/make-feedback-pebisnis", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $feedback = FeedbackPetani::makeFeedbackPetani($req->getHeader('id_pebisnis'),$params['saran'],$params['tipe_ikon']);
+        $feedback = FeedbackPebisnis::makeFeedbackPebisnis($req->getHeader('token'),$params['id_pebisnis'],$params['saran'],$params['tipe_ikon']);
 
         if ($feedback == null) {
             throw new Exception ("Ups, something wrong!");
