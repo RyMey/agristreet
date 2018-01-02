@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/bar_lowongaku"
-        android:icon="@drawable/ic_beranda"
+        android:icon="@drawable/ic_lowonganku"
         android:title="Lowonganku"/>
 
     <item
