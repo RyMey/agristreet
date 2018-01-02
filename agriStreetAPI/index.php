@@ -21,7 +21,7 @@ use AgriStreet\Api\Model\Pebisnis;
 use AgriStreet\Api\Model\Petani;
 use AgriStreet\Api\Model\Kerjasama;
 use AgriStreet\Api\Model\FeedbackPetani;
-use AgriStreet\Api\Model\FeedbackPebisnis;
+use AgriStreet\Api\Model\Feedback;
 use AgriStreet\Api\Util\ResultWrapper;
 
 $configuration = [
@@ -362,40 +362,26 @@ $slim->put("/kerjasama/finish-kerjasama", function (ServerRequestInterface $req,
     }
 });
 
-$slim->get("/feedback/petani/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/feedback/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
-        return ResultWrapper::getResult(FeedbackPetani::getFeedPetani($id), $res);
+        return ResultWrapper::getResult(Feedback::getFeedbackById($id), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
 
-$slim->get("/feedback/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/feedback/penerima",function (ServerRequestInterface $req, ResponseInterface $res){
     try {
-        return ResultWrapper::getResult(FeedbackPebisnis::getFeedPebisnis($id), $res);
+        return ResultWrapper::getResult(Feedback::getFeedbackByPenerima($req->getHeader('token')), $res);
     } catch (Exception $e) {
         return ResultWrapper::getError($e->getMessage(), $res);
     }
 });
 
-$slim->post("/feedback/make-feedback-petani", function (ServerRequestInterface $req, ResponseInterface $res) {
+$slim->post("/feedback/make-feedback", function (ServerRequestInterface $req, ResponseInterface $res) {
     try {
         $params = $req->getParsedBody();
-        $feedback = FeedbackPetani::makeFeedbackPetani($req->getHeader('token'),$params['id_petani'],$params['saran'],$params['tipe_ikon']);
-
-        if ($feedback == null) {
-            throw new Exception ("Ups, something wrong!");
-        }
-        return ResultWrapper::getResult($feedback, $res);
-    } catch (Exception $e) {
-        return ResultWrapper::getError($e->getMessage(), $res);
-    }
-});
-
-$slim->post("/feedback/make-feedback-pebisnis", function (ServerRequestInterface $req, ResponseInterface $res) {
-    try {
-        $params = $req->getParsedBody();
-        $feedback = FeedbackPebisnis::makeFeedbackPebisnis($req->getHeader('token'),$params['id_pebisnis'],$params['saran'],$params['tipe_ikon']);
+        $feedback = Feedback::makeFeedback($req->getHeader('token'),$params['id_penerima'],$params['id_kerjasama'],$params['saran'],$params['tipe_ikon']);
 
         if ($feedback == null) {
             throw new Exception ("Ups, something wrong!");
