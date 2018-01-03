@@ -106,6 +106,9 @@ class Pebisnis extends Model{
             $result = Manager::table(Pebisnis::TABLE_NAME)
                 ->where('no_telp', '=', $no_telp)
                 ->first([Pebisnis::PRIMARY_KEY, "nama_pebisnis", "no_telp", "foto", "token"]);
+
+            Alamat::makeAlamat($result->id_pebisnis,"Jalan Malabar Ujung Ke Ujung", 0,0);
+
             return $result;
 
         } else {

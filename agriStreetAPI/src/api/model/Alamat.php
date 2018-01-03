@@ -27,7 +27,7 @@ class Alamat extends Model{
             ->first();
 
         if($id_pebisnis == null or $id_pebisnis == '' or $pebisnis == null) {
-            throw new \Exception("Pebisnis is not exist");
+            throw new \Exception("Pebisnis $id_pebisnis is not exist");
         }else{
             $alamat = new Alamat();
             $alamat->id_pebisnis = $id_pebisnis;

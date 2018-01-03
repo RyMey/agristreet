@@ -44,7 +44,7 @@ $slim->get("/", function (ServerRequestInterface $req, ResponseInterface $res) {
     }
 });
 
-$slim->get("/pebisnis/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
+$slim->get("/pebisnis/id/{id}",function (ServerRequestInterface $req, ResponseInterface $res, $id){
     try {
         return ResultWrapper::getResult(Pebisnis::getPebisnis($id), $res);
     } catch (Exception $e) {
@@ -56,6 +56,20 @@ $slim->post("/pebisnis/verify-phone", function (ServerRequestInterface $req, Res
     try {
         $params = $req->getParsedBody();
         $data = Pebisnis::verifyPhone($params['no_telp']);
+
+        if ($data == null) {
+            throw new Exception ("Ups, something wrong!");
+        }
+        return ResultWrapper::getResult($data, $res);
+    } catch (Exception $e) {
+        return ResultWrapper::getError($e->getMessage(), $res);
+    }
+});
+
+$slim->get("/pebisnis/register", function (ServerRequestInterface $req, ResponseInterface $res) {
+    try {
+        $params = $req->getParsedBody();
+        $data = Pebisnis::register("Rya test","0856789320","");
 
         if ($data == null) {
             throw new Exception ("Ups, something wrong!");

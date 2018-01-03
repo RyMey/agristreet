@@ -10,8 +10,8 @@ namespace AgriStreet\Api\Util;
 
 class Nexmo {
 
-    const API_KEY = "f8ae05ee";
-    const API_SECRET = "68ea79c43a4a414b";
+    const API_KEY = "6eac948b";
+    const API_SECRET = "7837827144d30a29";
 
     public static function sendCode($no_telp){
         $ch = curl_init();
