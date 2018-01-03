@@ -65,8 +65,14 @@ class Lowongan extends Model{
     }
 
     public static function getLowongan($id_lowongan, $token){
-        $lowongan = Manager::table(Lowongan::TABLE_NAME)->where(Lowongan::PRIMARY_KEY, '=', $id_lowongan)
+        $lowongan = Lowongan::query()
+            ->where(Lowongan::PRIMARY_KEY, '=', $id_lowongan)
             ->first();
+
+        if($lowongan->tgl_tutup < date("Y-m-d")) {
+            $lowongan->status_lowongan = 'tutup';
+            $lowongan->save();
+        }
 
         $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
         $lowongan->alamat = Alamat::getAlamatById($lowongan->id_alamat_pengiriman);
@@ -85,9 +91,9 @@ class Lowongan extends Model{
 
     public static function getAllLowongan($token){
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
-                    ->where('tgl_tutup','>=',date("Y-m-d"))
-                    ->where('status_lowongan','=','buka')
-                    ->get();
+            ->where('tgl_tutup','>=',date("Y-m-d"))
+            ->where('status_lowongan','=','buka')
+            ->get();
 
         foreach ($lowongans as $lowongan) {
             $lowongan->kategori = KategoriKomoditas::getKategoriKomoditas($lowongan->id_kategori);
@@ -177,7 +183,7 @@ class Lowongan extends Model{
             throw new \Exception("Pebisnis was not exist");
 
         unset($pebisnis->token);
-        
+
         $lowongans = Manager::table(Lowongan::TABLE_NAME)
             ->where('id_pebisnis', '=', $pebisnis->id_pebisnis)
             ->where('status_lowongan','=','buka')
