@@ -18,9 +18,10 @@ import butterknife.OnTextChanged;
 import id.agristreet.agristreetapp.R;
 import id.agristreet.agristreetapp.data.local.PengelolaDataLokal;
 import id.agristreet.agristreetapp.presenter.PutCodePresenter;
+import id.agristreet.agristreetapp.presenter.VerifyPhonePresenter;
 import id.agristreet.agristreetapp.util.Util;
 
-public class PutCodeActivity extends AppCompatActivity implements PutCodePresenter.View {
+public class PutCodeActivity extends AppCompatActivity implements PutCodePresenter.View, VerifyPhonePresenter.View {
 
     @BindView(R.id.tv_desc_nomor)
     TextView tvDescNomor;
@@ -35,6 +36,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
     private ProgressDialog progressDialog;
 
     private PutCodePresenter putCodePresenter;
+    private VerifyPhonePresenter verifyPhonePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
         tvDescNomor.setText(getString(R.string.desc_nomor_telepon) + " +" + phoneNumber);
 
         putCodePresenter = new PutCodePresenter(this, this);
+        verifyPhonePresenter = new VerifyPhonePresenter(this,this);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Mohon Tunggu...");
     }
@@ -85,7 +88,7 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
             Util.hideKeyboard(this);
             putCodePresenter.verifyCode(etKodeVerifikasi.getText().toString());
         } else {
-            //TODO kirim ulang kode
+            verifyPhonePresenter.verifyPhone(phoneNumber);
         }
     }
 
@@ -109,5 +112,10 @@ public class PutCodeActivity extends AppCompatActivity implements PutCodePresent
     @Override
     public void dismissLoading() {
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void onVerifyPhoneSuccess() {
+        Snackbar.make(btKirimUlang.getRootView(), "Kode telah dikirim ulang", Snackbar.LENGTH_LONG).show();
     }
 }
