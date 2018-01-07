@@ -21,6 +21,8 @@ public class LowonganViewHolder extends BaseItemViewHolder<Lowongan> {
     ImageView imageView;
     @BindView(R.id.expired_date)
     TextView expiredDate;
+    @BindView(R.id.kilos)
+    TextView kilos;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.price)
@@ -37,7 +39,9 @@ public class LowonganViewHolder extends BaseItemViewHolder<Lowongan> {
                 .load(lowongan.getImageUrl())
                 .into(imageView);
         expiredDate.setText("Tutup: " + DateUtil.format(lowongan.getExpiredAt()));
+        kilos.setText("Butuh: "+lowongan.getJumlahKomoditas()+"kg");
         title.setText(lowongan.getTitle());
-        price.setText(CurrencyFormatter.format(lowongan.getHargaAwal()));
+        long p = lowongan.getHargaAwal()/lowongan.getJumlahKomoditas();
+        price.setText(CurrencyFormatter.format(p)+"/kg");
     }
 }

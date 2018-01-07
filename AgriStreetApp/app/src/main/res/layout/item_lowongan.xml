@@ -34,6 +34,20 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/kilos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/primaryColor"
+            android:textSize="12sp" />
+
+        <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,6 +73,7 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text=""
             android:textColor="@color/primaryTextColor"
             android:textSize="14sp" />
 
