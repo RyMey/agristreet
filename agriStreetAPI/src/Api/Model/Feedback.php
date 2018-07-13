@@ -1,7 +1,6 @@
 <?php
 
 namespace AgriStreet\Api\Model;
-
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
 

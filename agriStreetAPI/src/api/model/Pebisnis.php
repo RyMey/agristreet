@@ -147,4 +147,20 @@ class Pebisnis extends Model{
         return Pebisnis::getPebisnisByToken($token);
     }
 
+    public function lowongan(){
+        return $this->hasMany('ApAgriStreet/api/Lowongan');
+    }
+
+    public function feedback(){
+        return $this->hasMany('AgriStreet/api/Feedback');
+    }
+
+    public function alamat(){
+        return $this->hasMany('AgriStreet/api/Alamat');
+    }
+
+    public function kerjasama(){
+        return $this->hasMany('AgriStreet/api/Kerjasama');
+    }
+
 }

@@ -6,7 +6,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
 
-
 class KategoriKomoditas extends Model{
 	const TABLE_NAME = "kategori_komoditas";
 	const PRIMARY_KEY = "id_kategori";

@@ -147,4 +147,16 @@ class Petani extends Model{
         return Petani::getPetaniByToken($token);
     }
 
+    public function lamaran_petani(){
+        return $this->hasMany('ApAgriStreet/api/Lamaran-Petani');
+    }
+
+    public function feedback(){
+        return $this->hasMany('AgriStreet/api/Feedback');
+    }
+
+    public function kerjasama(){
+        return $this->hasMany('AgriStreet/api/Kerjasama');
+    }
+
 }

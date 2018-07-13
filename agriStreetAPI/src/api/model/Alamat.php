@@ -13,7 +13,6 @@ use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model;
 use \AgriStreet\Api\Model\Pebisnis;
 
-
 class Alamat extends Model{
     const TABLE_NAME = "alamat";
     const PRIMARY_KEY = "id_alamat";

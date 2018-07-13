@@ -12,9 +12,9 @@ $manager = new Manager();
 $manager->addConnection(array(
     'driver' => 'mysql',
     'host' => 'localhost',
-    'database' => 'agri_street',
-    'username' => 'root',
-    'password' => '',
+    'database' => 'agristreet',
+    'username' => 'agristreet',
+    'password' => 'agristreet',
     'prefix' => '',
     'charset' => 'utf8',
     'collation' => 'utf8_general_ci'
